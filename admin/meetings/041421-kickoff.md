@@ -63,6 +63,8 @@
 - Team Name is OnePage, and primary colors are Blue and White
 - Video idea finalized and members will send video tonight
 
+**Time Concluded:** 5:00PM
+
 ## Action Items
 - Sign and upload the team contract
 - Send the video through email to Brandon for editing
@@ -78,4 +80,3 @@
 - Flexible roles
 - Everyone agreed to team contract
 - Video idea finalized and members will send video tonight
-
