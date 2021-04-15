@@ -42,7 +42,7 @@
 **4. Branding**
 - Discussed team names and chose **OnePage** as our team name
 - Logo Ideas and Design and drafted up the team logo:
-![Logo](admin/branding/logo.png)
+<img src="../../admin/branding/logo.png" width="48">
 - Discussed team colors and theme
     - Primary color: Blue 
     - Secondary color: White
