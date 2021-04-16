@@ -22,6 +22,7 @@ One of my personal goals in life is to find a job that I will love and enjoy. Th
 wait to see what the future has in store for me! 
 
 **Kyle Hu - Backend Coder** - https://falafel72.github.io/cse110-lab1/
+> Hey there! I'm a third year Computer Engineering major in Sixth. I like to play and listen to music, play Super Smash Bros. Ultimate, read, and hang out with friends on Discord. I have no idea what I want to specialize in but my main interests in tech include functional programming languages, robotics, and embedded systems.
 
 **Elias Fang - Frontend Designer** - https://eliasfang.github.io/CSE110-Lab1/
 > What's up! I"m a second-year Computer Engineering major in Warren. I love Jesus, watching sunrises, eating food, singing and playing guitar, and playing video games or watching movies with friends! My career goal is to use my skills and passions to serve others in whatever capacity I can.
