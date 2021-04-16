@@ -21,4 +21,4 @@
 **Julia Xu** - https://juliyaya007.github.io/GitHub-Pages-project/
 
 **James Nguyen** - https://jkn006.github.io/CSE110-Repository/
-
+> Hey! I'm James Nguyen a second year Computer Engineering major. Some thing I enjoy doing in my free time is exercising and eating good food afterwards. I have worked on projects in the past that involved GUI design and data aquisition for project teams I have been a part of. My goals are to work in the aerospace industry some time in the future and build technology that will drive the future.
