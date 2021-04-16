@@ -17,6 +17,7 @@
 **Kyle Hu** - https://falafel72.github.io/cse110-lab1/
 
 **Elias Fang** - https://eliasfang.github.io/CSE110-Lab1/
+> What's up! I"m a second-year Computer Engineering major in Warren. I love Jesus, watching sunrises, eating food, and playing video games or watching movies with friends! My career goal is to use my skills and passions to serve others in whatever capacity I can.
 
 **Julia Xu** - https://juliyaya007.github.io/GitHub-Pages-project/
 
