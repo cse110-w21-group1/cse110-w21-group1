@@ -12,6 +12,7 @@
 **Alvin Mac - Backend Coder** - https://almac-775.github.io/CSE-110-Labs/
 
 **Charles Ting - Frontend Designer** - https://theting641.github.io/CSE-110/
+> Hey! I'm a third-year Computer Science Major from Marshall College. I'm originally from Orange County, California (I live 10 minutes away from Disneyland) and I enjoy watching anime, basketball, and baseball. I love computer science and cannot wait for what the future holds for my cs career!
 
 **Greenwhat Kim - Backend Coder** - https://kgeewhan.github.io/CSE-110-Lab-1/
 
