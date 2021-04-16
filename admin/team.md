@@ -1,5 +1,6 @@
 # Page One <img src="branding/logo.png" width="50">
 
+Our team strives to uphold our core values of open communication, transparency, and active interaction.
 
 ## Meet the Team
 
