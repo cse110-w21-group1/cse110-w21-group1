@@ -6,7 +6,7 @@
 **Brandon Wang** - https://b1wang.github.io/AboutMe/
 
 **Victoria Edeeva** - https://vedeeva.github.io/viedeeva.github.io/
-
+> Hi! I'm one of the Team Leads and I'm a third year Mathematics - Computer Science student. I'm from Moscow, Russia and I enjoy watching horror stories on Youtube. I plan to become Software Engineer and maybe branch out into something more specific that I like.
 **Alvin Mac** - https://almac-775.github.io/CSE-110-Labs/
 
 **Charles Ting** - https://theting641.github.io/CSE-110/
