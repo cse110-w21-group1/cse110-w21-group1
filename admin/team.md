@@ -10,6 +10,7 @@
 > Hi! I'm one of the Team Leads and I'm a third year Mathematics - Computer Science student. I'm from Moscow, Russia and I enjoy watching horror stories on Youtube. I plan to become Software Engineer and maybe branch out into something more specific that I like.  
      
 **Alvin Mac - Backend Coder** - https://almac-775.github.io/CSE-110-Labs/
+> Hey y'all! I'm a 3rd year Math-CS in Sixth College. Some favorite hobbies of mine are binge watching Netflix, grinding RPG games, and canyon carving in my car. My end goal in Software Engineering is to work with a team to develop a game that will top some charts someday!
 
 **Charles Ting - Frontend Designer** - https://theting641.github.io/CSE-110/
 > Hey! I'm a third-year Computer Science Major from Marshall College. I'm originally from Orange County, California (I live 10 minutes away from Disneyland) and I enjoy watching anime, basketball, and baseball. I love computer science and cannot wait for what the future holds for my cs career!
