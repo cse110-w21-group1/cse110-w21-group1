@@ -15,7 +15,10 @@
 **Charles Ting - Frontend Designer** - https://theting641.github.io/CSE-110/
 > Hey! I'm a third-year Computer Science Major from Marshall College. I'm originally from Orange County, California (I live 10 minutes away from Disneyland) and I enjoy watching anime, basketball, and baseball. I love computer science and cannot wait for what the future holds for my cs career!
 
-**Greenwhat Kim - Backend Coder** - https://kgeewhan.github.io/CSE-110-Lab-1/
+**Geewhan Kim - Backend Coder** - https://kgeewhan.github.io/CSE-110-Lab-1/
+> Hello! I'm a junior Computer Engineering major from Warren College. In my free time, I like to play basketball, listen to music, play games, and watch random videos online. 
+One of my personal goals in life is to find a job that I will love and enjoy. Thankfully, computer engineering is something that I feel passionate about, which is why, I can't
+wait to see what the future has in store for me! 
 
 **Kyle Hu - Backend Coder** - https://falafel72.github.io/cse110-lab1/
 
