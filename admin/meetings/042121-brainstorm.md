@@ -12,7 +12,7 @@
 
 - Brandon Wang
 - Victoria Edeeva
-- Greenwhan Kim
+- Geewhan Kim
 - Kyle Hu
 - James Nguyen
 - Elias Fang
