@@ -1,6 +1,6 @@
 # Page One - Brainstorm Meeting (04/21/2021)
 
-**Type of Meeting: ** Brainstorm session
+**Type of Meeting:** Brainstorm session
 
 **Date:** April 21, 2021 @ 2:00PM
 
