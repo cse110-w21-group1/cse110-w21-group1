@@ -36,7 +36,8 @@
 - Tagging, navigation, and basic BuJo templates are under Must haves, while design and other features are under nice-to-haves.
 
 **Conclusion - 3:00pm**
-- Main Idea: Creating a robust note-taking software first, and then implementing the Bullet Journal features over it.
+- Main Idea: Allow the creativity in note taking
+- Creating a robust note-taking software first, and then implementing the Bullet Journal features over it.
 - Organized needed featuers and nice to have features
 - Got a general idea of the implementation order for the Bullet Journal.
 
