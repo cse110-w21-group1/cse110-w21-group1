@@ -49,8 +49,9 @@
 - What design choices have we decided on for the project?
 - Tagging
     - How are we going to tag events on the calendar?
-        - Main concern: If we make a separate note for every event, will you just have an empty note for an event e.g. "Mike's Birthda"?
-        - Solution: Allow tagging of not only the note itself, but also individual text items.
+        - Main concern: If we make a separate note for every event, will you just have an empty note for an event e.g. "Mike's Birthday"?
+        - Considered adding implmenetation through separating the tasks, events, and notes. Concerned though as that might make the experience confusing with different object types. 
+        - Decided Solution: Allow tagging of not only the note itself, but also individual text items.
         - The main page itself will be put on the calendar for the date it was created.
  - Filter
     - Can filter events, tags, notes through search bar
