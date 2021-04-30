@@ -55,6 +55,10 @@
 - Ask TA about coding requirements, are we able to use external libraries in our web app? Database collection?
 - Have TA review our No Gos and Rabbit Holes
 
-
+**After TA Check in**
+- Submit starting pitch to Canvas and plan out when to present in the week
+- No Gos and outside the scope completely, so login and security would not be no gos.
+- Design choices / ADR document 
+- Create a systems diagram (flowchart and system architecture diagram) on the slides as well
 
 
