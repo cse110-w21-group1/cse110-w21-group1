@@ -51,7 +51,7 @@
 
 
 **Closing Notes**
-- Decided to present our pitch the usual time on Thursday (subject to revision if necessary)
+- Decided to present our pitch the usual time on Thursday at 7pm (subject to revision if necessary)
 
 **Meeting End: 6:30 pm**
 
