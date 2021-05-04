@@ -49,9 +49,12 @@
         - Problem: Flexibility and free-form limitation, how will we be able to add regular notes and text to "todo" objects and won't be able to add regular note and text to "event" templates.
     - Spent too much time deliberating, booked for future review after implementation difficulty has been researched.
 
+
+**Closing Notes**
+- Decided to present our pitch the usual time on Thursday (subject to revision if necessary)
+
 ** Meeting End: 6:30 pm **
 
 # For Next Time
-- When2meet and planning for when to present our pitch
 - Implementation Research to decide which direction to go for the events / todo decision.
 - ADR (later today)
