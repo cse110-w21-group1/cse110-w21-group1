@@ -13,7 +13,7 @@ Creating a whole new note just to add an event to the calendar seems redundant
 
 ## Decision
 
-Proposed to implement a functionality that allows the user to add events and to-do lists inside the note.
+Proposed to implement a functionality that allows the user to add events and to-do lists inside of the note.
 
 ## Consequences
 
