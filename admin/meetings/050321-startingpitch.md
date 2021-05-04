@@ -53,7 +53,7 @@
 **Closing Notes**
 - Decided to present our pitch the usual time on Thursday (subject to revision if necessary)
 
-** Meeting End: 6:30 pm **
+**Meeting End: 6:30 pm**
 
 # For Next Time
 - Implementation Research to decide which direction to go for the events / todo decision.
