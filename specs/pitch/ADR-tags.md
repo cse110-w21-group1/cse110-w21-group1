@@ -1,4 +1,4 @@
-# ADR template by Michael Nygard
+# ADR
 
 
 # Tags Decision Record
