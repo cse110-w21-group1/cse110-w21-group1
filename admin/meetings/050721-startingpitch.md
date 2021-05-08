@@ -38,7 +38,8 @@
 
 **Closing Notes**
 
-**Meeting End: **
+**Meeting End: 4:00pm**
 
 # For Next Time
--
+- Have TA revise our systems diagram
+- Start doing exploratory coding
