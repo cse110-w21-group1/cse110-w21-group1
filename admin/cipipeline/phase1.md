@@ -1,5 +1,13 @@
 # Status of the Pipeline
 
+## Branch Structure
+Hierarchy:
+- main
+    - design (HTML/CSS)
+    - development
+        - feature 1
+        - feature 2
+
 ## Linting and code style enforcement (may happen in pipeline and/or in editor)
 - Before commiting formatting should be checked via Visual studio code formatting
 - Install Prettier extension to double check it
