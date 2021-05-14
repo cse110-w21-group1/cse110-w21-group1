@@ -1,4 +1,4 @@
-# Page One - Start Dev Meeting (05/14/2021)
+# Page One - Sprint Planning #2 (05/14/2021)
 
 **Type of Meeting:** 
 
@@ -12,20 +12,18 @@
 - Brandon Wang
 - Victoria Edeeva
 - Geewhan Kim
-- James Nguyen
 - Kyle Hu
 - Alvin Mac
 - Elias Fang
 - Julia Xu
-- Charles Ting
-
 
 **Absent**
-
-
+- Charles Ting
+- James Nguyen
 
 # Agenda
-
+**Planning for the weekend sprints**
+- When          
 
 **Closing Notes**
 
