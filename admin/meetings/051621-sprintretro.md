@@ -42,8 +42,8 @@ Notes Page
 - Framework and interaction not ready yet
 - Requested a pull request to main for the notes page and will accept once sent
 
-Fyrebase
-- Attached the fyrebase to the project
+Firebase
+- Attached the firebase to the project
 - Actual implementation Elias is waiting for the notes and calendar implementation
 
 Navigation Bar STyling
@@ -54,7 +54,7 @@ Navigation Bar STyling
 - Good progress on the log in page and the styling aspect
 - Main notes page still needs interaction
 - The rest of the components are waiting for the other components to finish before they can move on.
-    - Fyrebase waiting for notes and calendar page actual implementation
+    - Firebase waiting for notes and calendar page actual implementation
     - Nav bar waiting for the dummy calendar page to route to
 
 After the meeting:
