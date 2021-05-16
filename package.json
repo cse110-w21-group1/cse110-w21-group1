@@ -1,0 +1,11 @@
+{
+    "name": "cse110-w21-group1",
+    "description": "description",
+    "authors": "author",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha --reporter spec"
+      },
+    "dependencies": {}
+}
