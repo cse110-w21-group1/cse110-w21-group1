@@ -1,6 +1,6 @@
-# Page One - Sprint #2 (05/15/2021)
+# Page One - Sprint Retrospective (05/15/2021)
 
-**Type of Meeting:** Sprint 
+**Type of Meeting:** Sprint Retrospective
 
 **Date:** May 15th, 2021 at 3:00PM
 
