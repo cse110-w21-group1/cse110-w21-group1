@@ -12,22 +12,62 @@
 </head>
 
 <body>
-  <header>
-    
-  </header>
-  <div class="sidenav">
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
 
+  <main>
+  <!-- NAV BAR -->
+  <div class="sidenav">
     <button type="home">Home</button>
     <button type="calendar">Calendar</button>
     <button type="sign_out">Sign Out</button>
-
-    </button></button>
   </div>
-  <main></main>
+  
+  <section class="container">
+    
+    <!-- LEFT HALF -->
+    <div class="left-half">
+      <!-- Search bar -->
+      <form action="/action_page.php">
+        <input type="search" id="gsearch" name="gsearch">
+      </form>
+      
+      <p>Hi, User</p>
+      
+      <!-- New Note -->
+      <button type="new_note">New Note</button>
+
+      <!-- Notes dropdown menu -->
+      <div class="Notes">
+        <form action="/action_page.php">
+          <label for="Notes">Notes</label>
+          <select name="Notes" id="Notes">
+            <option value="volvo">Times New Roman</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+        </div>
+      </div>
+      
+      <p>4/22/2021</p>
+    </div>
+    
+    <!-- RIGHT HALF -->
+    <div class="right-half">
+
+      <form action="/action_page.php">
+        <select name="cars" id="cars">
+          <option value="volvo">Times New Roman</option>
+          <option value="saab">Dummy</option>
+          <option value="opel">Foo</option>
+          <option value="audi">Bar</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
+
+    </div>
+  </section>
+  </main>
 
   <entry-page></entry-page>
 
