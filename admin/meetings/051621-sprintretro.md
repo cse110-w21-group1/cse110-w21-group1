@@ -69,5 +69,5 @@ After the meeting:
 # For Next Time
 - Finish the router.js so nav bar works (preferably before the team status video) - Estimated time of completion at 6
 - Start implmementing API for calendar
-- Retrospective - Monday
-- Next sprint on Wednesday 
+- Retrospective - fill out survey
+- Next sprint on Wednesday @ 4pm
