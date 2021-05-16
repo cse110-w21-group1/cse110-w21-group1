@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
   <header>
     
   </header>
@@ -24,8 +25,104 @@
     <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 55 height = 55>
     <img src = "images/logout-icon.png" alt = "Logout Button" id = "logout" class = "icon" width = 70 height = 70>
 
+
+
+  <main>
+  <!-- NAV BAR -->
+  <div class="sidenav">
+    <button type="home">Home</button>
+    <button type="calendar">Calendar</button>
+    <button type="sign_out">Sign Out</button>
+
   </div>
-  <main></main>
+  
+  <section class="container">
+    
+    <!-- LEFT HALF -->
+    <div class="left-half">
+      <!-- Search bar -->
+      <div class="search">
+        <form action="/action_page.php">
+          <input type="search" id="search" placeholder="Search...">
+        </form>
+      </div>
+      
+      <div class = "greeting">
+        <p>Hi, User</p>
+      </div>
+      
+      
+      <!-- New Note -->
+      <button class="button" type="new_note">New Note</button>
+
+      <!-- Notes dropdown menu -->
+      <div class="notes_dropdown">
+        <form action="/action_page.php">
+          <select class="Notes" name="Notes" id="Notes">
+            <option value="note1">Notes</option>
+          </select>
+        </form>
+      </div>
+      
+      <ul class = "dates">
+        <li> 4/22/2021 </li>
+      </ul>
+
+    </div>
+    
+    <!-- RIGHT HALF -->
+    <div class="right-half">
+      <div class="float-container">
+
+        <div class="float-child">
+          <form action="/action_page.php">
+            <select name="font" id="font">
+              <option value="Times New Roman">Times New Roman</option>
+            </select>
+          </form>
+        </div>
+
+        <div class="float-child">
+          <form action="/action_page.php">
+            <select name="font_size" id="font_size">
+              <option value="12">12</option>
+            </select>
+          </form>
+        </div>
+
+        <div class="float-child">
+          <button type="bold"> <img class="bold" src="./components/bold.png"></button>
+          <button type="italics"><img class="italics" src="./components/italic.png"></button>
+          <button type="underline"><img class="underline" src="./components/underline.png"></button>
+        </div>
+      </div>
+
+      <br> <br>
+      <div class = "line">
+        <hr>
+      </div>
+      
+      <div class="float-container">
+        <div class="float-child-two">
+          <p  class = "title">My day today</p> 
+        </div>
+
+        <div class="float-child-three">
+          <form action="/action_page.php">
+            <select name="cars" id="cars">
+              <option value="volvo">Add a tag</option>
+              <option value="saab">Dummy</option>
+              <option value="opel">Foo</option>
+              <option value="audi">Bar</option>
+            </select>
+            <br><br>
+          </form>
+        </div>
+      <div>
+
+    </div>
+  </section>
+  </main>
 
   <entry-page></entry-page>
 

@@ -1,1 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <style>
+        div {
+            background-color: white;
+            width: 350px;
+            height: 450px;
+            /* border: 5px solid dodgserblue; */
+            padding: 50px;
+            /* margin: auto; */
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border-radius: 50px;
+        }
+
+        body {
+            background-image: url("images/gradient.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(106, 184, 244, 255);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: rgb(106, 184, 244, 255);
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+
+        .signupbtn {
+            padding: 14px 20px;
+            background-color: white;
+            color: dodgerblue;
+        }
+
+        .signupbtn2 {
+            background-color: rgb(106, 184, 244, 255);
+            padding: 14px 20px;
+            /* background-color: white; */
+            color: white;
+        }
+
+        .loginbtn2 {
+            background-color: white;
+            padding: 14px 20px;
+            /* background-color: white; */
+            color: dodgerblue;
+        }
+
+        /* Float cancel and signup buttons and add an equal width */
+        .loginbtn,
+        .signupbtn,
+        .loginbtn2,
+        .signupbtn2 {
+            float: left;
+            width: 100%;
+            border-radius: 10px;
+            margin: auto;
+        }
+
+        /* Add padding to container elements */
+        .container {
+            padding: 16px;
+        }
+
+        /* Clear floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Change styles for cancel button and signup button on extra small screens */
+        @media screen and (max-width: 300px) {
+
+            .loginbtn,
+            .signupbtn,
+            .loginbtn2,
+            .signupbtn2 {
+                width: 100%;
+            }
+        }
+
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: rgb(106, 184, 244, 255);
+            opacity: 1;
+            font-size: 15px;
+            /* Firefox */
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6 - Web Components</title>
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <form>
+            <div class="container" style="display:block" id="page1">
+                <h1><b>Login</b></h1>
+                <hr>
+
+                <input type="text" placeholder="Username" name="username" required>
+
+                <input type="password" placeholder="Password" name="psw" required>
+
+                <!-- <div class="clearfix"> -->
+                <button type="submit" class="loginbtn" onclick="changePage();">Login</button> <br><br>
+                <button type="submit" class="signupbtn" onclick="signUp()">Sign Up</button>
+
+                <!-- </div> -->
+            </div>
+            <div class="container" style="display:none" id="page2">
+                <h1><b>Sign Up</b></h1>
+                <hr>
+
+                <input type="text" placeholder="Username" name="username" required>
+
+                <input type="password" placeholder="Password" name="psw" required>
+
+                <!-- <div class="clearfix"> -->
+                <button type="submit" class="signupbtn2" onclick="changePage();">Sign Up</button> <br><br>
+                <button type="submit" class="loginbtn2" onclick="signUp()">Log In</button>
+
+                <!-- </div> -->
+            </div>
+        </form>
+    </main>
+
+    <entry-page></entry-page>
+
+    <script src="./components/login.js"></script>
+
+</body>
+
+</html>
