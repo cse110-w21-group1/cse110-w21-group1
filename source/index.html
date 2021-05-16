@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PageOne Bullet Journal</title>
 
+  <link rel="icon" type="image/png" href="../admin/branding/logo.png">
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,30 +18,26 @@
     
   </header>
   <div class="sidenav">
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+    
+    <img src = "../admin/branding/logo.png" alt = "Page One Logo" id = "logo" width = 80 height = 80>
+    <img src = "images/home.png" alt = "Home Button" id = "home" class = "icon" width = 70 height = 70>
+    <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 55 height = 55>
+    <img src = "images/logout-icon.png" alt = "Logout Button" id = "logout" class = "icon" width = 70 height = 70>
 
-    <button type="home">Home</button>
-    <button type="calendar">Calendar</button>
-    <button type="sign_out">Sign Out</button>
-
-    </button></button>
   </div>
   <main></main>
 
   <entry-page></entry-page>
 
   <!-- journal-entry web component -->
-  <script src="/components/calendar.js" type="module"></script>
-  <script src="/components/notes.js" type="module"></script>
+  <script src="./components/calendar.js" type="module"></script>
+  <script src="./components/notes.js" type="module"></script>
 
   <!-- Router Script -->
-  <script src="/scripts/router.js" type="module"></script>
+  <script src="./scripts/router.js" type="module"></script>
 
   <!-- Main Script -->
-  <script src="/scripts/script.js" type="module"></script>
+  <script src="./scripts/script.js" type="module"></script>
 </body>
 
 </html>
