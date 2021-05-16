@@ -58,7 +58,7 @@ Navigation Bar STyling
     - Nav bar waiting for the dummy calendar page to route to
 
 After the meeting:
-1. ~~Victoria and I resolving the conflicts so the main notes into main~~
+1. ~~Victoria resolving the conflicts so the main notes into main~~
 2. Kyle and James create a dummy component for calendar
 3. Routing between the components
 4. Team status video meeting (Brandon and Victoria)
