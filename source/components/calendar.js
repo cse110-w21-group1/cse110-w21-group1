@@ -1,6 +1,7 @@
 class CalendarElem extends HTMLElement {
   constructor() {
     super();
+
     const template = document.createElement('template');
     template.innerHTML = `
     <style>
@@ -18,3 +19,13 @@ class CalendarElem extends HTMLElement {
 }
 
 customElements.define('calendar-elem', CalendarElem);
+
+    this.attachShadow({ mode: 'open' });
+    const dummy = document.createElement('p');
+    dummy.innerHTML = 'This is the calendar element';
+    this.shadowRoot.appendChild(dummy);
+  }
+}
+
+customElements.define('calendar', CalendarElem);
+
