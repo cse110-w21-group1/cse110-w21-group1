@@ -24,7 +24,7 @@ Hierarchy:
 
 ## Unit tests via automation (ex. Jest, Tape, Ava, Cypress, Mocha/Chai, etc.)*
 - Will install Mocha which is a test framework running on Node.js
-- Decided to pick Mocha bevause it has a clear documentation and we love Mocha(drink)
+- Decided to pick Mocha because it has a clear documentation and we love Mocha(drink)
 - Testing will mostly happen on the devevlopment branch after it has been peer-reviewed
 
 ## Documentation generation via automation (ex. JSDocs)
