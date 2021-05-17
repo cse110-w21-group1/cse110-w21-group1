@@ -21,3 +21,9 @@
 - Adjusting to the github branch hierarchy and actions
 - Getting the team adjusted to the CI/CD pipeline
 - Pushing too early and to the wrong locations
+
+## Update for next sprint
+- Connecting the database (Firebase)
+- Note management system
+- Note-addition functionality
+- Base calendar API
