@@ -1,5 +1,5 @@
 // <notes> custom web component
-class notes extends HTMLElement {
+class Notes extends HTMLElement {
     constructor() {
       super();
   
@@ -105,7 +105,7 @@ class notes extends HTMLElement {
   
   }
   
-  customElements.define('notes', Notes);
+  customElements.define('note-elem', Notes);
   
   /**
    * JSON Format:

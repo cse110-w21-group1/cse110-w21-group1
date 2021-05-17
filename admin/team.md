@@ -27,7 +27,7 @@ wait to see what the future has in store for me!
 **Elias Fang - Frontend Designer** - https://eliasfang.github.io/CSE110-Lab1/
 > What's up! I"m a second-year Computer Engineering major in Warren. I love Jesus, watching sunrises, eating food, singing and playing guitar, and playing video games or watching movies with friends! My career goal is to use my skills and passions to serve others in whatever capacity I can.
 
-**Julia Xu - Graphics Designer** - https://juliyaya007.github.io/GitHub-Pages-project/
+*Julia Xu - Graphics Designer** - https://juliyaya007.github.io/GitHub-Pages-project/
 > Hellooooo! I’m Julia and I’m a junior studying Computer Science. I like hanging out with my friends, exploring boba tea places, baking, art, fashion, skincare, traveling, listening to music, and watching movies/tv shows/anime. I just finished the anime “The Promised Neverland” recently, highly recommend it! Career wise, I’m interested in SWE, but I’m also exploring UIUX for a bit to see what I like the most.
 
 **James Nguyen - Backend Coder** - https://jkn006.github.io/CSE110-Repository/
