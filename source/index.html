@@ -61,7 +61,6 @@
       </div>
       
       <ul class = "dates">
-        <li> 4/22/2021 </li>
       </ul>
 
     </div>
@@ -100,7 +99,15 @@
       
       <div class="float-container">
         <div class="float-child-two">
-          <p  class = "title">My day today!</p> 
+
+          <!-- Textbox for title -->
+          <form>
+            <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
+            <!-- <input type="text" id="note_text" name="note_text" placeholder="Enter notes" onkeydown="return (event.keyCode!=13);">
+             -->
+            <textarea id="info" name="info" rows="30" cols="100">Hello</textarea>
+          </form>
+
         </div>
 
         <div class="float-child-three">
@@ -131,7 +138,7 @@
 
   <!-- Main Script -->
 
-  <script src="/scripts/script.js" type="module"></script>
+  <script src="./scripts/script.js" type="module"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
