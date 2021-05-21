@@ -60,7 +60,8 @@
         </form>
       </div>
       
-      <ul class = "dates">
+      <!-- List of note buttons -->
+      <ul class = "notes_arr", id = "noteslist">
       </ul>
 
     </div>
@@ -69,6 +70,7 @@
     <div class="right-half">
       <div class="float-container">
 
+        <!-- Font selection -->
         <div class="float-child">
           <form action="/action_page.php">
             <select name="font" id="font">
@@ -77,6 +79,7 @@
           </form>
         </div>
 
+        <!-- Font size -->
         <div class="float-child">
           <form action="/action_page.php">
             <select name="font_size" id="font_size">
@@ -103,13 +106,16 @@
           <!-- Textbox for title -->
           <form>
             <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
+            
+            <!-- Textbox for main notes -->
             <!-- <input type="text" id="note_text" name="note_text" placeholder="Enter notes" onkeydown="return (event.keyCode!=13);">
              -->
-            <textarea id="info" name="info" rows="30" cols="100">Hello</textarea>
+            <textarea id="info" name="info" rows="30" cols="100"></textarea>
           </form>
 
         </div>
 
+        <!-- Tags -->
         <div class="float-child-three">
           <form action="/action_page.php">
             <select name="cars" id="cars">
