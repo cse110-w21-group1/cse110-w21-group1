@@ -6,9 +6,10 @@ window.addEventListener('popstate', (e) => {
 });
 
 let calendarLogo = document.querySelector('#calendar');
+let calendar = document.querySelector('calendar-elem');
 calendarLogo.addEventListener('click', function(){
     setState({state: 'calendar'}, false);
-    
+    calendar.render(); 
 })
 
 let homeLogo = document.getElementById('home');
