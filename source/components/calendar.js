@@ -27,4 +27,18 @@ class CalendarElem extends HTMLElement {
   }
 }
 
+
+// customElements.define('calendar-elem', CalendarElem);
+
+//     this.attachShadow({ mode: 'open' });
+//     const dummy = document.createElement('p');
+//     dummy.innerHTML = 'This is the calendar element';
+//     this.shadowRoot.appendChild(dummy);
+  
+
+
+// customElements.define('calendar', CalendarElem);
+
+
 customElements.define('calendar-elem', CalendarElem);
+
