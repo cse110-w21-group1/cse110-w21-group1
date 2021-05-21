@@ -9,14 +9,24 @@ class CalendarElem extends HTMLElement {
         padding-left: 140px;
       }
     </style>
+    <link rel="stylesheet" href="./fullcalendar-5.7.0/lib/main.css">
     <div class="calendar-wrapper">
-      <p>This is the calendar element</p>
+      <div id='calendar' ></div>
     </div>
     ` 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
+
+  render() {
+    const calDiv = this.shadowRoot.getElementById('calendar');
+    const cal = new FullCalendar.Calendar(calDiv, {
+      initialView: 'dayGridMonth'
+    });
+    cal.render();
+  }
 }
+
 
 // customElements.define('calendar-elem', CalendarElem);
 
@@ -28,4 +38,7 @@ class CalendarElem extends HTMLElement {
 
 
 // customElements.define('calendar', CalendarElem);
+
+
+customElements.define('calendar-elem', CalendarElem);
 
