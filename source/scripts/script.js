@@ -1,6 +1,6 @@
 import { router } from './router.js'
 const setState = router.setState;
-var tempArray = [];
+var tempArray = {};
 
 window.addEventListener('popstate', (e) => {
   setState(e.state, true);
@@ -64,25 +64,30 @@ new_note.addEventListener('click', function () {
   // shadow.querySelector(".entry-title") = title;
   // shadow.querySelector(".entry-content") = content;
   newPost.entry = { "title": title, "content": content, "date": "10/10/10" }
-  tempArray.push(newPost);
+  tempArray[title] = newPost;
   document.getElementById("title").value = "";
   title = undefined;
   document.getElementById("info").value = "";
-  console.log(tempArray[0])
+  //console.log(tempArray[0])
 
   var buttons = document.getElementsByClassName("notes");
-  var buttonsCount = buttons.length;
-  //console.log(buttonsCount);
+  //console.log(buttons.length);
   //for (var i = 0; i <= buttonsCount; i += 1) {
-  for (var i = 0; i < buttonsCount; i++) {
-    buttons[i].addEventListener('click', function () {
-      console.log(i);
-      console.log(tempArray[i-1])
-      var temp = tempArray[i-1];
+  console.log(tempArray)
+  for (let button of buttons) {
+    button.addEventListener('click', function () {
+      console.log(button.id);
+      console.log(tempArray[button.id].entry)
+      //console.log(buttons[i].id)
+      var temp = tempArray[button.id];
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
     });
   }
-  
+
+
+
+
+
   //}
 });
