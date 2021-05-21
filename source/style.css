@@ -101,14 +101,31 @@ body.calendar main {
       padding-top: 0%;
   }  
 
-  .dates{
-    font-size: 25px;
+  /* list of notes */
+  .notes_arr{
+    font-size: 20px;
     background-color: #ebf7ff; 
-    padding-top: 4%;
-    padding-bottom: 4%;
+    /* padding-top: 4%;
+    padding-bottom: 4%; */
     list-style: none;
-    padding-left:5%;
-    /* padding-right:10%; */
+    /* padding-left:10%;
+    padding-right:30%; */
+    width: 100%;
+  }
+
+  .notes{
+    border: 0;
+    font-size: 20px;
+    color: rgb(106, 184, 244, 255); 
+    background-color: #ebf7ff;
+    /* padding-top: 4%;
+    padding-bottom: 4%; */
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 95%;
+    align-items: center;
+    text-align: left;
+    border: 1px solid grey;
   }
 
   .float-child-three {
@@ -139,8 +156,8 @@ body.calendar main {
     padding-top: 4%;
     padding-bottom: 4%;
     font-size: 25px;
-    border: none;
     cursor: pointer;
+    border: none;
     padding-left:10%;
     padding-right:10%;
     margin-left: 5%;
@@ -185,6 +202,7 @@ body.calendar main {
     border: none;
   }
 
+  /* Notes dropdown */
   .Notes{
     background-color: #cacaca;
     color: white;
