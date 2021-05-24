@@ -116,6 +116,13 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+    <!-- Additional Firebase libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 </head>
 
 <body>
@@ -125,9 +132,9 @@
                 <h1><b>Login</b></h1>
                 <hr>
 
-                <input type="text" placeholder="Username" name="username" required>
+                <input type="text" id="username" placeholder="Username" name="username" required>
 
-                <input type="password" placeholder="Password" name="psw" required>
+                <input type="password" id="password" placeholder="Password" name="psw" required>
 
                 <!-- <div class="clearfix"> -->
                 <button type="submit" class="loginbtn" onclick="changePage();">Login</button> <br><br>
@@ -139,9 +146,9 @@
                 <h1><b>Sign Up</b></h1>
                 <hr>
 
-                <input type="text" placeholder="Username" name="username" required>
+                <input type="text" id="username2" placeholder="Username" name="username" required>
 
-                <input type="password" placeholder="Password" name="psw" required>
+                <input type="password" id="password2" placeholder="Password" name="psw" required>
 
                 <!-- <div class="clearfix"> -->
                 <button type="submit" class="signupbtn2" onclick="changePage();">Sign Up</button> <br><br>
@@ -156,6 +163,8 @@
 
     <script src="./components/login.js"></script>
 
+    <!-- Firebase functionality -->
+    <script src="./scripts/app.js"></script>
 </body>
 
 </html>
