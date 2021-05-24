@@ -1,4 +1,4 @@
-# Page One - Sprint Stand Up (05/21/2021)
+# Page One - Sprint Stand Up (05/24/2021)
 
 **Type of Meeting:** Stand up Meeting
 
