@@ -2,6 +2,9 @@ import { router } from './router.js'
 const setState = router.setState;
 var tempArray = {};
 
+var index = 0;
+var searchArr = {};
+
 window.addEventListener('popstate', (e) => {
   setState(e.state, true);
 });
@@ -61,6 +64,8 @@ new_note.addEventListener('click', function () {
   newButton.className = "notes";
   notes_list.appendChild(newButton);
 
+  searchArr[index] = title;
+  index++;
 
   var content = document.getElementById('info').value
   let newPost = document.createElement('note-elem');
@@ -94,4 +99,42 @@ new_note.addEventListener('click', function () {
 
 
   //}
+});
+
+var search = document.getElementById('search');
+search.addEventListener('input', function() {
+  console.log(searchArr);
+  //Delete current note list to make room for filtered search
+  let currList = document.getElementById('noteslist');
+  currList.remove();
+  //Create new list which we will append searched values to
+  let newList = document.createElement('ul');
+  newList.setAttribute('class', 'notes_arr');
+  newList.setAttribute('id', 'noteslist');
+  let searchDiv = document.querySelector('.left-half');
+
+  let searchStr = search.value;
+  for(let i = 0; i < index; i++){
+    console.log(searchArr[i]);
+    if(searchArr[i].includes(searchStr)){
+      let currButton = document.createElement('button');
+      let currTitle = searchArr[i];
+      currButton.innerHTML = currTitle;
+      currButton.id = currTitle;
+      currButton.className = "notes";
+      newList.appendChild(currButton);
+    }
+  }
+  searchDiv.appendChild(newList);
+
+  let buttons2 = document.getElementsByClassName("notes");
+
+  for (let button of buttons2) {
+    button.addEventListener('click', function () {
+      var temp = tempArray[button.id];
+      document.getElementById('title').value = temp.entry.title;
+      document.getElementById('info').value = temp.entry.content;
+    });
+  }
+
 });
