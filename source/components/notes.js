@@ -64,7 +64,7 @@ class Notes extends HTMLElement {
         'title': this.shadowRoot.querySelector('.entry-title').innerText,
         'date': this.shadowRoot.querySelector('.entry-date').innerText,
         'content': this.shadowRoot.querySelector('.entry-content').innerText,
-        'tasks': this.shadowRoot.querySelector('.entry-tasks').innerText,
+        //'tasks': this.shadowRoot.querySelector('.entry-tasks').innerText,
       };
   
       if (this.shadowRoot.querySelector('.entry-image')) {
@@ -86,7 +86,7 @@ class Notes extends HTMLElement {
       this.shadowRoot.querySelector('.entry-title').innerText = entry.title;
       this.shadowRoot.querySelector('.entry-date').innerText = entry.date;
       this.shadowRoot.querySelector('.entry-content').innerText = entry.content;
-      this.shadowRoot.querySelector('.entry-tasks').innerText = entry.tasks;
+      //this.shadowRoot.querySelector('.entry-tasks').innerText = entry.tasks;
       if (entry.image) {
         let entryImage = document.createElement('img');
         entryImage.classList.add('entry-image');
