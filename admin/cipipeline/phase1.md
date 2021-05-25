@@ -33,3 +33,4 @@ Hierarchy:
 - Decided to go with JSDocs to automate the creation of the documentation
 - This will run only after all the tests were cleared
 
+<img src="./phase1.png">
