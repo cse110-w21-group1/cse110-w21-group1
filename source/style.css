@@ -104,27 +104,24 @@ body.calendar main {
   /* list of notes */
   .notes_arr{
     font-size: 20px;
-    background-color: #ebf7ff; 
-    /* padding-top: 4%;
-    padding-bottom: 4%; */
+    /* background-color: #ebf7ff; */
     list-style: none;
-    /* padding-left:10%;
-    padding-right:30%; */
     width: 100%;
+    margin-left: -2.5%;
   }
 
+  /* Each individual note button */
   .notes{
     font-size: 20px;
     color: rgb(106, 184, 244, 255); 
     background-color: #ebf7ff;
-    /* padding-top: 4%;
-    padding-bottom: 4%; */
-    margin-top: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
     margin-bottom: 5%;
-    width: 95%;
+    width: 100%;
     align-items: center;
     text-align: left;
-    border: 1px solid grey;
+    border: none;
   }
 
   .float-child-three {
@@ -134,6 +131,7 @@ body.calendar main {
     padding-top: 0%;
 }  
 
+  /* All the stuff inside the gray block */
   .left-half {
     height: 100%;
     background-color: #f0f0f0;
@@ -141,14 +139,14 @@ body.calendar main {
     left: 0px;
     width: 30%;
     top: 0;
-    padding-left: 10%;
+    padding-left: 7%;
     padding-top: 0%;
     color: rgb(106, 184, 244, 255);
     font-family: 'Open Sans', sans-serif;
     font-size: 40px;
   }
 
-  .button{
+  .newNotesButton{
     background-color: #3498DB;
     color: white;
     width: 90%;
@@ -215,6 +213,7 @@ body.calendar main {
     cursor: pointer;
   }
 
+  /* All the stuff in the white block */
   .right-half {
     height: 100%;
     background-color: #ffffff;
