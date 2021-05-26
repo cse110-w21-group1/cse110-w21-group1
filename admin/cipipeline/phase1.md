@@ -34,3 +34,9 @@ Hierarchy:
 - This will run only after all the tests were cleared
 
 <img src="./phase1.png">
+
+
+# Phase 2 Update
+
+- Switched from Mocha Testing to Jest Testing
+- Testing and JSDocs run automatically as a github action when there is a pull request to the development branch
