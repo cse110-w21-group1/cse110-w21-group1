@@ -62,17 +62,18 @@ new_note.addEventListener('click', function () {
   notes_list.appendChild(newButton);
 
 
-  var content = document.getElementById('info').value
+  var content = document.getElementById('info').value;
   let newPost = document.createElement('note-elem');
+  var tag = document.getElementById('tag').value;
   // var shadow = newPost.shadowRoot;
   // shadow.querySelector(".entry-title") = title;
   // shadow.querySelector(".entry-content") = content;
-  newPost.entry = { "title": title, "content": content, "date": "10/10/10" }
+  newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
   tempArray[title] = newPost;
   document.getElementById("title").value = "";
   title = undefined;
   document.getElementById("info").value = "";
-  //console.log(tempArray[0])
+  console.log(tempArray[0])
 
   var buttons = document.getElementsByClassName("notes");
   //console.log(buttons.length);
@@ -86,6 +87,7 @@ new_note.addEventListener('click', function () {
       var temp = tempArray[button.id];
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
+      document.getElementById('tag').value = temp.entry.tag;
     });
   }
 
