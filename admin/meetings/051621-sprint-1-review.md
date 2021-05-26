@@ -1,4 +1,4 @@
-# Page One - Sprint Retrospective (05/16/2021)
+# Page One - Sprint Review Meeting (05/16/2021)
 
 **Type of Meeting:** Sprint Retrospective
 

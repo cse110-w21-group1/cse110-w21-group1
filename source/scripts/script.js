@@ -13,8 +13,8 @@ let calendar = document.querySelector('calendar-elem');
 calendarLogo.addEventListener('click', function(){
     setState({state: 'calendar'}, false);
     calendar.render(); 
-
 })
+
 
 let homeLogo = document.getElementById('home');
 homeLogo.addEventListener('click', function () {
@@ -22,6 +22,8 @@ homeLogo.addEventListener('click', function () {
 });
 
 let logoutLogo = document.querySelector('#logout');
+
+
 logoutLogo.addEventListener('click', function () {
   window.location.href = "login.html";
 });
@@ -94,4 +96,5 @@ new_note.addEventListener('click', function () {
 
 
   //}
+
 });
