@@ -17,9 +17,9 @@ let calendarLogo = document.querySelector('#calendar')
 
 
 let calendar = document.querySelector('calendar-elem');
-calendarLogo.addEventListener('click', function(){
-    setState({state: 'calendar'}, false);
-    calendar.render(); 
+calendarLogo.addEventListener('click', function () {
+  setState({ state: 'calendar' }, false);
+  calendar.render();
 
 })
 
@@ -69,15 +69,18 @@ new_note.addEventListener('click', function () {
   var newButton = document.createElement("button");       // button for the new note
   var notes_list = document.getElementById('noteslist');  // list of note buttons
 
+  if (!(title in tempArray) && title != '') {
+    console.log("test");
+    newButton.innerHTML = title;
+    newButton.id = title;
+    newButton.className = "notes";
+    notes_list.appendChild(newButton);
 
-  newButton.innerHTML = title;
-  newButton.id = title;
-  newButton.className = "notes";
-  notes_list.appendChild(newButton);
 
+    searchArr[index] = title;
+    index++;
+  }
 
-  searchArr[index] = title;
-  index++;
 
 
   var content = document.getElementById('info').value;  // main text; the body of the note
@@ -85,24 +88,21 @@ new_note.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
   // Also resets the forms to be empty
-  newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
+  if (!(title in tempArray) && title != '') {
+    newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
 
-  tempArray[title] = newPost;
-  document.getElementById("title").value = "";
-  title = undefined;
-  document.getElementById("info").value = "";
+    tempArray[title] = newPost;
+    document.getElementById("title").value = "";
+    title = undefined;
+    document.getElementById("info").value = "";
+  }
 
-  //console.log(tempArray[0])
+
 
   var buttons = document.getElementsByClassName("notes");
-  //console.log(buttons.length);
-  //for (var i = 0; i <= buttonsCount; i += 1) {
-  console.log(tempArray)
+
   for (let button of buttons) {
     button.addEventListener('click', function () {
-      console.log(button.id);
-      console.log(tempArray[button.id].entry)
-      //console.log(buttons[i].id)
       var temp = tempArray[button.id];
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
@@ -117,7 +117,7 @@ new_note.addEventListener('click', function () {
 });
 
 var search = document.getElementById('search');
-search.addEventListener('input', function() {
+search.addEventListener('input', function () {
   console.log(searchArr);
   //Delete current note list to make room for filtered search
   let currList = document.getElementById('noteslist');
@@ -129,9 +129,9 @@ search.addEventListener('input', function() {
   let searchDiv = document.querySelector('.left-half');
 
   let searchStr = search.value;
-  for(let i = 0; i < index; i++){
+  for (let i = 0; i < index; i++) {
     console.log(searchArr[i]);
-    if(searchArr[i].includes(searchStr)){
+    if (searchArr[i].includes(searchStr)) {
       let currButton = document.createElement('button');
       let currTitle = searchArr[i];
       currButton.innerHTML = currTitle;
@@ -141,6 +141,7 @@ search.addEventListener('input', function() {
     }
   }
   searchDiv.appendChild(newList);
+
 
   let buttons2 = document.getElementsByClassName("notes");
 
@@ -153,7 +154,7 @@ search.addEventListener('input', function() {
 
 
 
-  
+
     });
   }
 
