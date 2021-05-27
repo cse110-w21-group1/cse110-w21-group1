@@ -111,10 +111,13 @@ body.calendar main {
   }
 
   /* Each individual note button */
+
   .notes{
     font-size: 20px;
     color: rgb(106, 184, 244, 255); 
     background-color: #ebf7ff;
+
+
     padding-top: 5%;
     padding-bottom: 5%;
     margin-bottom: 5%;
@@ -122,6 +125,7 @@ body.calendar main {
     align-items: center;
     text-align: left;
     border: none;
+
   }
 
   .float-child-three {
