@@ -25,21 +25,35 @@
 **Check in to progress**
 
 Finished:
+
     - Search bar (James)
+    
     - Tags (Julia)
    
 In progress:
+
     - Calendar popup on event tag (James)
+    
     - Database: Issue with connection
+    
         - Elias
+        
         - Geewhan
+        
         - Alvin
+        
     - Calendar: fix styling and start connecting entries
+    
         - Kyle
+        
         - Brandon
+        
     - Fix notes entries design
+    
         - Julia
+        
     - Filter by tags and fix the double entries
+        
         - Charles
 
 Design decisions
