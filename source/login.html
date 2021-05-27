@@ -6,7 +6,7 @@
         div {
             background-color: white;
             width: 350px;
-            height: 450px;
+            height: 500px;
             /* border: 5px solid dodgserblue; */
             padding: 50px;
             /* margin: auto; */
@@ -41,7 +41,7 @@
             cursor: pointer;
             width: 100%;
             opacity: 0.9;
-            position: relative; top:10px;
+            position: relative; top:20px;
         }
 
         button:hover {
@@ -132,7 +132,7 @@
             <div class="container" style="display:block" id="page1">
                 <h1><b>Login</b></h1>
                 <hr>
-                <input type="text" id="username" placeholder="Username" name="username" required>
+                <input type="text" id="username" placeholder="Email" name="username" required>
 
                 <input type="password" id="password" placeholder="Password" name="psw" required>
 
@@ -140,11 +140,7 @@
 
                 <!-- login/signup buttons -->
                 <button type="submit" class="loginbtn">Login</button> <br><br>
-                <button type="reset" class="signupbtn" onclick="signUp()">Sign Up</button>
-                
-                <!--***TESTING PURPOSES ONLY***-->
-                <!--***DELETE AFTER LINKING TO MAIN PAGE***-->
-                <button type="button" class="logout">Log Out (TEST ONLY)</button>
+                <button type="reset" class="signupbtn" onclick="moveSignup()">Sign Up</button>
             </div>
         </form>
 
@@ -153,7 +149,9 @@
             <div class="container" style="display:none" id="page2">
                 <h1><b>Sign Up</b></h1>
                 <hr>
-                <input type="text" id="username2" placeholder="Enter Username*" name="username" required>
+                <input type="text" id="nameUser" placeholder="Enter Name*" name="nameUser" required>
+
+                <input type="text" id="username2" placeholder="Enter Email*" name="username" required>
 
                 <input type="password" id="password2" placeholder="Enter Password*" name="psw" required>
 
@@ -161,9 +159,15 @@
 
                 <!-- login/signup buttons -->
                 <button type="submit" class="signupbtn2">Sign Up</button> <br><br>
-                <button type="reset" class="loginbtn2" onclick="signUp()">Log In</button>
+                <button type="reset" class="loginbtn2" onclick="moveLogin()">Log In</button>
             </div>
         </form>
+
+        <div class="container" style="display:none" id="page3">
+            <h1><b>Congratulations!</b></h1>
+            <h1><b>You have signed up.</b></h1>
+            <button type="button" class="" onclick="moveLogin()">Go to Log In</button>
+        </div>
     </main>
 
     <entry-page></entry-page>

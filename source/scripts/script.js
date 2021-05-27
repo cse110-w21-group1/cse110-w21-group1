@@ -1,3 +1,14 @@
+// Initialize Firebase
+var firebaseConfig = {
+  apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
+  authDomain: "pageone-c741e.firebaseapp.com",
+  projectId: "pageone-c741e",
+  storageBucket: "pageone-c741e.appspot.com",
+  messagingSenderId: "752294608481",
+  appId: "1:752294608481:web:2bad0f544ed9d91584b420"
+};
+firebase.initializeApp(firebaseConfig);
+
 import { router } from './router.js'
 const setState = router.setState;
 
@@ -32,6 +43,9 @@ homeLogo.addEventListener('click', function () {
 let logoutLogo = document.querySelector('#logout');
 
 logoutLogo.addEventListener('click', function () {
+  firebase.auth().signOut().then(() => {
+    console.log('user signed out');
+  })
   window.location.href = "login.html";
 });
 
@@ -158,3 +172,25 @@ search.addEventListener('input', function() {
   }
 
 });
+
+// *********************************************
+//
+// Firebase
+//
+// *********************************************
+
+// Sets the main page with firebase properties
+firebase.auth().onAuthStateChanged(firebaseUser => {
+  if (firebaseUser) {
+      console.log(firebaseUser);
+      var greeting = document.getElementsByClassName("greeting")[0].children[0];
+      greeting.innerHTML = "Hi, " + firebaseUser.displayName;
+  } else {
+      console.log('Not logged in');
+  }
+});
+
+
+
+
+
