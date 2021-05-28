@@ -73,6 +73,7 @@ bold.addEventListener('click', function () {
 // *********************************************
 // 'New Note' onclick
 // *********************************************
+var currentButton = null;
 let newNote = document.querySelector('button[type="new_note"]');
 newNote.addEventListener('click', function () {
   // shows input form when pressing 'New Note' button
@@ -102,48 +103,69 @@ newNote.addEventListener('click', function () {
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
-  
+
   // Saves the new Note obj in tempArray, then empties the form
   tempArray.set(newButton.id, newPost);
+
+  var buttons = document.getElementsByClassName("notes");
+  for (let button of buttons) {
+    (function (button) {
+      button.addEventListener('click', function () {
+        document.getElementById('title').value = "";
+        document.getElementById('info').value = "";
+        currentButton = button;
+        console.log(button.id);
+      });
+    })(button);;
+  }
 });
 
-// *********************************************
-// Scans if any of the buttons are clicked, 
-// and if one does get clicked, load the title and contents
-// *********************************************
-var buttons = document.getElementsByClassName("notes");
-console.log(tempArray)
-for (let button of buttons) {
-  button.addEventListener('click', function () {
-    var loadNote = tempArray.get(button.id);
-    document.getElementById('title').value = loadNote.entry.title;
-    document.getElementById('info').value = loadNote.entry.content;
-  });
-}
 
 // *********************************************
 // 'Save" onclick
 // *********************************************
 let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
-  
+
+
+
+  // // *********************************************
+  // // Scans if any of the buttons are clicked, 
+  // // and if one does get clicked, load the title and contents
+  // // *********************************************
+  // var buttons = document.getElementsByClassName("notes");
+  // var button;
+  // for (button of buttons) {
+  //   (function (button) {
+  //     button.addEventListener('click', function () {
+  //       var loadNote = tempArray.get(this.id);
+  //       //console.log(button.id);
+  //       document.getElementById('title').value = loadNote.entry.title;
+  //       document.getElementById('info').value = loadNote.entry.content;
+  //     });
+  //   })(button);
+  // }
+
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
-  var noteButton = notes_list[];
   var content = document.getElementById('info').value;  // main text; the body of the note
   let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
   var tag = document.getElementById('tag').value;       // note tag
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
+  currentButton.id = title + time;
+  currentButton.innerHTML = title;
+
+  // search
   searchArr[index] = title;
   index++;
 
   newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
 
-  // Saves the new Note obj in tempArray, then empties the form
-  tempArray.set(newButton.id, newPost);
-  //console.log(tempArray.size);
+  // Updates the note in tempArray
+  tempArray.set(currentButton.id, newPost);
 });
 
 
