@@ -11,6 +11,13 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+  <!-- Additional Firebase libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 </head>
 
 <body>
@@ -38,9 +45,7 @@
     <div class="left-half">
       <!-- Search bar -->
       <div class="search">
-        <form action="/action_page.php">
-          <input type="search" id="search" placeholder="Search...">
-        </form>
+        <input type="search" id="search" placeholder="Search..." size=29>
       </div>
       
       <div class = "greeting">
@@ -49,7 +54,7 @@
       
       
       <!-- New Note -->
-      <button class="button" type="new_note">New Note</button>
+      <button class="newNotesButton" type="new_note">New Note</button>
 
       <!-- Notes dropdown menu -->
       <div class="notes_dropdown">
@@ -60,8 +65,8 @@
         </form>
       </div>
       
-      <ul class = "dates">
-        <li> 4/22/2021 </li>
+      <!-- List of note buttons -->
+      <ul class = "notes_arr", id = "noteslist">
       </ul>
 
     </div>
@@ -70,6 +75,7 @@
     <div class="right-half">
       <div class="float-container">
 
+        <!-- Font selection -->
         <div class="float-child">
           <form action="/action_page.php">
             <select name="font" id="font">
@@ -78,6 +84,7 @@
           </form>
         </div>
 
+        <!-- Font size -->
         <div class="float-child">
           <form action="/action_page.php">
             <select name="font_size" id="font_size">
@@ -86,6 +93,7 @@
           </form>
         </div>
 
+        <!-- Font formatting -->
         <div class="float-child">
           <button type="bold"> <img class="bold" src="./components/bold.png"></button>
           <button type="italics"><img class="italics" src="./components/italic.png"></button>
@@ -100,16 +108,26 @@
       
       <div class="float-container">
         <div class="float-child-two">
-          <p  class = "title">My day today</p> 
+
+          <!-- Textbox for title -->
+          <form>
+            <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
+            
+            <!-- Textbox for main notes -->
+            <!-- <input type="text" id="note_text" name="note_text" placeholder="Enter notes" onkeydown="return (event.keyCode!=13);">
+             -->
+            <textarea id="info" name="info" rows="30" cols="100"></textarea>
+          </form>
+
         </div>
 
+        <!-- Tags -->
         <div class="float-child-three">
           <form action="/action_page.php">
-            <select name="cars" id="cars">
+            <select name="type" id="tag">
               <option value="volvo">Add a tag</option>
-              <option value="saab">Dummy</option>
-              <option value="opel">Foo</option>
-              <option value="audi">Bar</option>
+              <option value="saab">Event</option>
+              <option value="opel">Notes</option>
             </select>
             <br><br>
           </form>
@@ -123,15 +141,19 @@
   <calendar-elem></calendar-elem>
 
   <!-- journal-entry web component -->
-  <script src="./components/calendar.js" type="module"></script>
   <script src="./components/notes.js" type="module"></script>
+
+  <!-- calendar web component -->
+  <script src="./components/calendar.js" type="module"></script>
+  <script src="./fullcalendar-5.7.0/lib/main.js"></script>
 
   <!-- Router Script -->
   <script src="./scripts/router.js" type="module"></script>
 
   <!-- Main Script -->
 
-  <script src="/scripts/script.js" type="module"></script>
+  <script src="./scripts/script.js" type="module"></script>
+
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
@@ -141,7 +163,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 
   <script>
-    // Your web app's Firebase configuration
     var firebaseConfig = {
       apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
       authDomain: "pageone-c741e.firebaseapp.com",
@@ -150,11 +171,8 @@
       messagingSenderId: "752294608481",
       appId: "1:752294608481:web:2bad0f544ed9d91584b420"
     };
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   </script>
-
-  <script src="./scripts/script.js" type="module"></script>
 
 </body>
 

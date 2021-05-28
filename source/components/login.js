@@ -1,27 +1,29 @@
 function signUp() {
-    var x = document.getElementById("page1");
-    var y = document.getElementById("page2");
+    // reset error output box
+    document.querySelector('.error').innerHTML = "";
+    document.querySelectorAll('.error')[1].innerHTML = "";
+
+    // changes tabs
+    var loginPage = document.getElementById("page1");
+    var signupPage = document.getElementById("page2");
     if (document.querySelector("h1").innerHTML == "Sign Up") {
         document.querySelector("h1").innerHTML = "Login";
     } else {
         document.querySelector("h1").innerHTML = "Sign Up";
     }
     
-    if (x.style.display === "none") {
-      x.style.display = "block";
+    if (loginPage.style.display === "none") {
+      loginPage.style.display = "block";
     } else {
-      x.style.display = "none";
+      loginPage.style.display = "none";
     }
-    if (y.style.display === "block") {
-        y.style.display = "none";
+    if (signupPage.style.display === "block") {
+        signupPage.style.display = "none";
     } else {
-        y.style.display = "block";
+        signupPage.style.display = "block";
     }
 }
 
-function changePage(){
-    window.location.href = "index.html";
-} 
-
-// document.querySelector(".loginbutton")
-
+export{
+    signUp
+};
