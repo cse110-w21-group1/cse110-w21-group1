@@ -24,3 +24,6 @@ function signUp() {
     }
 }
 
+export{
+    signUp
+};
