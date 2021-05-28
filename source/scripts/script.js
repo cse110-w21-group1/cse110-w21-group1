@@ -4,7 +4,9 @@ const setState = router.setState;
 var tempArray = {};
 
 var index = 0;
-var searchArr = {};
+var searchArr = {}; // arr to search for a specific note
+
+var filterArr = {}; // arr to filter for specific notes
 
 var tempArray = {};   // temp arr for storing notes until Firebase is fully implemented
 
@@ -69,14 +71,11 @@ new_note.addEventListener('click', function () {
   var newButton = document.createElement("button");       // button for the new note
   var notes_list = document.getElementById('noteslist');  // list of note buttons
 
-  if (!(title in tempArray) && title != '') {
-    console.log("test");
+  if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
     newButton.innerHTML = title;
     newButton.id = title;
     newButton.className = "notes";
     notes_list.appendChild(newButton);
-
-
     searchArr[index] = title;
     index++;
   }
@@ -88,13 +87,15 @@ new_note.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
   // Also resets the forms to be empty
-  if (!(title in tempArray) && title != '') {
+  if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
     newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
-
     tempArray[title] = newPost;
-    document.getElementById("title").value = "";
+    document.getElementsByName('title')[0].value = ''; // did this to fix a strange bug
+    document.getElementById("info").value = '';
+    document.getElementById('tag').selectedIndex = 0;
+    filterArr[title] = tag;
+    console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
     title = undefined;
-    document.getElementById("info").value = "";
   }
 
 
@@ -106,6 +107,7 @@ new_note.addEventListener('click', function () {
       var temp = tempArray[button.id];
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
+      document.getElementById('tag').value = temp.entry.tag;
     });
   }
 
@@ -151,11 +153,64 @@ search.addEventListener('input', function () {
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
       document.getElementById('tag').value = temp.entry.tag;
-
+      
 
 
 
     });
   }
 
+});
+
+// works very similarly to the search method
+var dropMenu = document.getElementById('Notes');
+dropMenu.addEventListener('change', function () {
+  console.log('test');
+  //console.log(filterArr);
+  //Delete current note list to make room for filtered search
+  let currList = document.getElementById('noteslist');
+  currList.remove();
+  //Create new list which we will append searched values to
+  let newList = document.createElement('ul');
+  newList.setAttribute('class', 'notes_arr');
+  newList.setAttribute('id', 'noteslist');
+  let searchDiv = document.querySelector('.left-half');
+
+  let filterStr = dropMenu.value;
+  if (filterStr == 'All') {
+    for (let title in filterArr) {
+      let currButton = document.createElement('button');
+      currButton.innerHTML = title;
+      currButton.id = title;
+      currButton.className = "notes";
+      newList.appendChild(currButton);
+    }
+  } else {
+    for (let title in filterArr) {
+      if (filterArr[title] == filterStr) {
+        let currButton = document.createElement('button');
+        currButton.innerHTML = title;
+        currButton.id = title;
+        currButton.className = "notes";
+        newList.appendChild(currButton);
+      }
+    }
+  }
+  searchDiv.appendChild(newList);
+
+
+  let buttons2 = document.getElementsByClassName("notes");
+
+  for (let button of buttons2) {
+    button.addEventListener('click', function () {
+      var temp = tempArray[button.id];
+      document.getElementById('title').value = temp.entry.title;
+      document.getElementById('info').value = temp.entry.content;
+      document.getElementById('tag').value = temp.entry.tag;
+
+
+
+
+    });
+  }
 });
