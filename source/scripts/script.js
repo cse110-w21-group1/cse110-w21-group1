@@ -10,6 +10,8 @@ var filterArr = {}; // arr to filter for specific notes
 
 var tempArray = {};   // temp arr for storing notes until Firebase is fully implemented
 
+var eventArr = {};
+
 
 window.addEventListener('popstate', (e) => {
   setState(e.state, true);
@@ -80,11 +82,18 @@ new_note.addEventListener('click', function () {
     index++;
   }
 
-
+  
 
   var content = document.getElementById('info').value;  // main text; the body of the note
   let newPost = document.createElement('note-elem');      // new Notes obj as defined in notes.js
   var tag = document.getElementById('tag').value;      // note tag
+
+  if (!(title in tempArray) && title != '' && tag == 'Event'){
+    let eventDate = document.getElementById('date').value;
+    eventArr[title] = eventDate;
+    console.log(eventArr);
+  }
+
   // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
   // Also resets the forms to be empty
   if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
@@ -94,11 +103,9 @@ new_note.addEventListener('click', function () {
     document.getElementById("info").value = '';
     document.getElementById('tag').selectedIndex = 0;
     filterArr[title] = tag;
-    console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
+    //console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
     title = undefined;
   }
-
-
 
   var buttons = document.getElementsByClassName("notes");
 
@@ -111,7 +118,12 @@ new_note.addEventListener('click', function () {
     });
   }
 
+  if(document.getElementById('date') != null){
+    let dateElem = document.getElementById('date');
+    dateElem.remove();
+  }
 
+  updateReminders();
 
 
 
@@ -120,7 +132,7 @@ new_note.addEventListener('click', function () {
 
 var search = document.getElementById('search');
 search.addEventListener('input', function () {
-  console.log(searchArr);
+
   //Delete current note list to make room for filtered search
   let currList = document.getElementById('noteslist');
   currList.remove();
@@ -132,7 +144,7 @@ search.addEventListener('input', function () {
 
   let searchStr = search.value;
   for (let i = 0; i < index; i++) {
-    console.log(searchArr[i]);
+
     if (searchArr[i].includes(searchStr)) {
       let currButton = document.createElement('button');
       let currTitle = searchArr[i];
@@ -165,7 +177,7 @@ search.addEventListener('input', function () {
 // works very similarly to the search method
 var dropMenu = document.getElementById('Notes');
 dropMenu.addEventListener('change', function () {
-  console.log('test');
+  //console.log('test');
   //console.log(filterArr);
   //Delete current note list to make room for filtered search
   let currList = document.getElementById('noteslist');
@@ -214,3 +226,135 @@ dropMenu.addEventListener('change', function () {
     });
   }
 });
+
+
+var tagSelect = document.getElementById('tag');
+tagSelect.addEventListener('change', function(){
+  if(tagSelect.value == 'Event'){
+    let tagDiv = document.querySelector('.float-child-three');
+    let dateSelect = document.createElement('input');
+    dateSelect.setAttribute('type', 'date');
+    dateSelect.setAttribute('id', 'date');
+    tagDiv.appendChild(dateSelect);
+  }
+  else{
+    if(document.getElementById('date') != null){
+      let dateSelect = document.getElementById('date');
+      dateSelect.remove();
+    }
+  }
+});
+
+
+function updateReminders(){
+  if(document.getElementById('eventsList') != null){
+    let reminders = document.getElementById('eventsList');
+    reminders.remove()
+  }
+  let container = document.querySelector('.reminders');
+  let remindersUl = document.createElement('ul');
+  remindersUl.setAttribute('id', 'eventsList');
+  for(let title in eventArr){
+    let today = new Date();
+    today.setHours(0,0,0,0)
+    let day = String(today.getDate()).padStart(2, '0');
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let year = today.getFullYear();
+
+    let eventDate = String(eventArr[title]);
+    if(month == '02'){
+      if(Number(day) > 21){
+        let maxDay = 7 - 28 + Number(day);
+        let maxDate = year + '-03-' + String(maxDay);
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+      else{
+        let maxDay = 7 + Number(day);
+        let maxDate = year + '-02-' + String(maxDay);
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+    }
+    else if(month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12'){
+      if(Number(day) > 24){
+        let maxDate;
+        let maxDay = 7 - 31 + Number(day);
+        if(month == '12'){
+          maxDate = year + '-01-' + String(maxDay);
+        }
+        else{
+          let newMonth = Number(month) + 1;
+          maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+        }
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+      else{
+        let maxDay = 7 + Number(day);
+        let maxDate = year + '-' + month + '-' + String(maxDay);
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+    }
+    else{
+      if(Number(day) > 24){
+        let maxDay = 7 - 31 + Number(day);
+        let newMonth = Number(month) + 1;
+        let maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+      else{
+        let maxDay = 7 + Number(day);
+        let maxDate = year + '-' + month + '-' + String(maxDay);
+        let compDate = new Date(maxDate);
+        compDate.setHours(0,0,0,0);
+        let compEvent = new Date(eventDate);
+        compEvent.setHours(0,0,0,0);
+        if(compEvent <= compDate && compEvent >= today){
+          let item = document.createElement('li');
+          item.innerHTML = title;
+          remindersUl.appendChild(item);
+        }
+      }
+    }
+  }
+
+  container.appendChild(remindersUl);
+}
