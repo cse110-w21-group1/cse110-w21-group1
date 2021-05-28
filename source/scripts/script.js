@@ -10,7 +10,6 @@ var filterArr = {}; // arr to filter for specific notes
 
 var tempArray = {};   // temp arr for storing notes until Firebase is fully implemented
 
-
 window.addEventListener('popstate', (e) => {
   setState(e.state, true);
 });
@@ -67,7 +66,8 @@ bold.addEventListener('click', function () {
 let new_note = document.querySelector('button[type="new_note"]');
 new_note.addEventListener('click', function () {
 
-  var title = document.getElementById('title').value;     // title of the note
+  //console.log(document.getElementsByName('title')[0].value);
+  var title = document.getElementsByName('title')[0].value;     // title of the note
   var newButton = document.createElement("button");       // button for the new note
   var notes_list = document.getElementById('noteslist');  // list of note buttons
 
@@ -87,14 +87,16 @@ new_note.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
   // Also resets the forms to be empty
+  console.log(title);
   if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
+    console.log("test");
     newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
     tempArray[title] = newPost;
     document.getElementsByName('title')[0].value = ''; // did this to fix a strange bug
     document.getElementById("info").value = '';
     document.getElementById('tag').selectedIndex = 0;
     filterArr[title] = tag;
-    console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
+    //console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
     title = undefined;
   }
 
@@ -105,7 +107,7 @@ new_note.addEventListener('click', function () {
   for (let button of buttons) {
     button.addEventListener('click', function () {
       var temp = tempArray[button.id];
-      document.getElementById('title').value = temp.entry.title;
+      document.getElementsByName('title')[0].value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
       document.getElementById('tag').value = temp.entry.tag;
     });
@@ -153,7 +155,7 @@ search.addEventListener('input', function () {
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
       document.getElementById('tag').value = temp.entry.tag;
-      
+
 
 
 
