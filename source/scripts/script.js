@@ -327,7 +327,7 @@ function updateReminders(){
     }
     else{
       if(Number(day) > 24){
-        let maxDay = 7 - 31 + Number(day);
+        let maxDay = 7 - 30 + Number(day);
         let newMonth = Number(month) + 1;
         let maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
         let compDate = new Date(maxDate);
