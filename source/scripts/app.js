@@ -5,7 +5,8 @@ var firebaseConfig = {
     projectId: "pageone-c741e",
     storageBucket: "pageone-c741e.appspot.com",
     messagingSenderId: "752294608481",
-    appId: "1:752294608481:web:2bad0f544ed9d91584b420"
+    appId: "1:752294608481:web:2bad0f544ed9d91584b420",
+    databaseURL: "https://pageone-c741e-default-rtdb.firebaseio.com/",
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -52,6 +53,7 @@ signupForm.addEventListener('submit', (e) => {
         // if account succesfully created, goes to confirm page
         console.log('Account successfully created');
         e.user.updateProfile({ displayName: nameUser });
+        writeUserData(firebase.auth().currentUser.uid, nameUser, username);
         document.getElementById("page3").style.display = "block";
     })
     .catch((e) => {
@@ -72,3 +74,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log('Not logged in');
     }
 });
+
+// writes to the database
+function writeUserData(userId, name, email) {
+    firebase.database().ref('users/' + userId).set({
+      username: name,
+      email: email,
+    });
+  }
+

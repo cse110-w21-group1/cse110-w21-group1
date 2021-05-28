@@ -1,3 +1,4 @@
+
 // Initialize Firebase
 var firebaseConfig = {
   apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
@@ -5,21 +6,23 @@ var firebaseConfig = {
   projectId: "pageone-c741e",
   storageBucket: "pageone-c741e.appspot.com",
   messagingSenderId: "752294608481",
-  appId: "1:752294608481:web:2bad0f544ed9d91584b420"
+  appId: "1:752294608481:web:2bad0f544ed9d91584b420",
+  databaseURL: "https://pageone-c741e-default-rtdb.firebaseio.com/",
 };
 firebase.initializeApp(firebaseConfig);
 
 import { router } from './router.js'
 const setState = router.setState;
 
-var tempArray = {};
-
 var index = 0;
 var searchArr = {};
 
-var tempArray = {};   // temp arr for storing notes until Firebase is fully implemented
+var tempArray = new Map();   // temp arr for storing notes until Firebase is fully implemented
+console.log(tempArray.size);
 
-
+// *********************************************
+// state changes
+// *********************************************
 window.addEventListener('popstate', (e) => {
   setState(e.state, true);
 });
@@ -28,9 +31,9 @@ let calendarLogo = document.querySelector('#calendar')
 
 
 let calendar = document.querySelector('calendar-elem');
-calendarLogo.addEventListener('click', function(){
-    setState({state: 'calendar'}, false);
-    calendar.render(); 
+calendarLogo.addEventListener('click', function () {
+  setState({ state: 'calendar' }, false);
+  calendar.render();
 
 })
 
@@ -49,18 +52,9 @@ logoutLogo.addEventListener('click', function () {
   window.location.href = "login.html";
 });
 
-
-// let title = document.getElementById('title_box');
-// title.addEventListener ('input', function() {
-//     console.log(title.value);
-//     document.getElementsByClassName('title').value = title.value;
-//     console.log(document.getElementsByClassName('title').value)
-
-//     title.style.display = 'none';
-// })
-
-
+// *********************************************
 // Enable/Disable 'bold' for notes
+// *********************************************
 var text = document.getElementById("info");
 let bold = document.querySelector('img[class="bold"]');
 bold.addEventListener('click', function () {
@@ -74,64 +68,90 @@ bold.addEventListener('click', function () {
 //   text.value.italics();
 // });
 
-// Saves the current input and creates a button for the corresponding note
-// Also appends the button to the list on the left hand side
-let new_note = document.querySelector('button[type="new_note"]');
-new_note.addEventListener('click', function () {
-
-  var title = document.getElementById('title').value;     // title of the note
-  var newButton = document.createElement("button");       // button for the new note
-  var notes_list = document.getElementById('noteslist');  // list of note buttons
 
 
+// *********************************************
+// 'New Note' onclick
+// *********************************************
+let newNote = document.querySelector('button[type="new_note"]');
+newNote.addEventListener('click', function () {
+  // shows input form when pressing 'New Note' button
+  var form = document.getElementById("noteinput");
+  form.style.display = "block";
+  document.getElementById("title").value = "";
+  document.getElementById("info").value = "";
+  title = undefined;
+
+  // create new entry
+  var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
+  var content = document.getElementById('info').value;  // main text; the body of the note
+  var tag = document.getElementById('tag').value;       // note tag
+  let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
+  var newButton = document.createElement("button");                                                         // button for the new note
+  var notes_list = document.getElementById('noteslist');                                                    // list of note buttons
+
+  // sets the text inside the button to the note's title, then appends it to the list
   newButton.innerHTML = title;
-  newButton.id = title;
+  var today = new Date();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  newButton.id = title + time;
   newButton.className = "notes";
   notes_list.appendChild(newButton);
 
+  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
+  
+  // Saves the new Note obj in tempArray, then empties the form
+  tempArray.set(newButton.id, newPost);
+});
+
+// *********************************************
+// Scans if any of the buttons are clicked, 
+// and if one does get clicked, load the title and contents
+// *********************************************
+var buttons = document.getElementsByClassName("notes");
+console.log(tempArray)
+for (let button of buttons) {
+  button.addEventListener('click', function () {
+    var loadNote = tempArray.get(button.id);
+    document.getElementById('title').value = loadNote.entry.title;
+    document.getElementById('info').value = loadNote.entry.content;
+  });
+}
+
+// *********************************************
+// 'Save" onclick
+// *********************************************
+let saveButton = document.querySelector('button[class="save"]');
+saveButton.addEventListener('click', function () {
+  
+  var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
+  var notes_list = document.getElementById('noteslist');
+  var noteButton = notes_list[];
+  var content = document.getElementById('info').value;  // main text; the body of the note
+  let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
+  var tag = document.getElementById('tag').value;       // note tag
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
   searchArr[index] = title;
   index++;
 
+  newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
 
-  var content = document.getElementById('info').value;  // main text; the body of the note
-  let newPost = document.createElement('note-elem');      // new Notes obj as defined in notes.js
-  var tag = document.getElementById('tag').value;      // note tag
-  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
-  // Also resets the forms to be empty
-  newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
-
-  tempArray[title] = newPost;
-  document.getElementById("title").value = "";
-  title = undefined;
-  document.getElementById("info").value = "";
-
-  //console.log(tempArray[0])
-
-  var buttons = document.getElementsByClassName("notes");
-  //console.log(buttons.length);
-  //for (var i = 0; i <= buttonsCount; i += 1) {
-  console.log(tempArray)
-  for (let button of buttons) {
-    button.addEventListener('click', function () {
-      console.log(button.id);
-      console.log(tempArray[button.id].entry)
-      //console.log(buttons[i].id)
-      var temp = tempArray[button.id];
-      document.getElementById('title').value = temp.entry.title;
-      document.getElementById('info').value = temp.entry.content;
-    });
-  }
-
-
-
-
-
-  //}
+  // Saves the new Note obj in tempArray, then empties the form
+  tempArray.set(newButton.id, newPost);
+  //console.log(tempArray.size);
 });
 
+
+// *********************************************
+// Search bar
+// *********************************************
 var search = document.getElementById('search');
-search.addEventListener('input', function() {
+search.addEventListener('input', function () {
   console.log(searchArr);
   //Delete current note list to make room for filtered search
   let currList = document.getElementById('noteslist');
@@ -143,9 +163,9 @@ search.addEventListener('input', function() {
   let searchDiv = document.querySelector('.left-half');
 
   let searchStr = search.value;
-  for(let i = 0; i < index; i++){
+  for (let i = 0; i < index; i++) {
     console.log(searchArr[i]);
-    if(searchArr[i].includes(searchStr)){
+    if (searchArr[i].includes(searchStr)) {
       let currButton = document.createElement('button');
       let currTitle = searchArr[i];
       currButton.innerHTML = currTitle;
@@ -167,28 +187,34 @@ search.addEventListener('input', function() {
 
 
 
-  
+
     });
   }
 
 });
 
 // *********************************************
-//
 // Firebase
-//
 // *********************************************
 
 // Sets the main page with firebase properties
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-      console.log(firebaseUser);
-      var greeting = document.getElementsByClassName("greeting")[0].children[0];
-      greeting.innerHTML = "Hi, " + firebaseUser.displayName;
+    console.log(firebaseUser);
+    var greeting = document.getElementsByClassName("greeting")[0].children[0];
+    greeting.innerHTML = "Hi, " + firebaseUser.displayName;
   } else {
-      console.log('Not logged in');
+    console.log('Not logged in');
   }
 });
+
+// writes to the database
+function writeUserData(userId) {
+  firebase.database().ref('users/' + userId + '/entries').set({
+
+  });
+}
+
 
 
 
