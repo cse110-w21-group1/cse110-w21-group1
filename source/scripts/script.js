@@ -73,7 +73,6 @@ bold.addEventListener('click', function () {
 // *********************************************
 // 'New Note' onclick
 // *********************************************
-var currentButton = null;
 let newNote = document.querySelector('button[type="new_note"]');
 newNote.addEventListener('click', function () {
   // shows input form when pressing 'New Note' button
@@ -107,17 +106,12 @@ newNote.addEventListener('click', function () {
   // Saves the new Note obj in tempArray, then empties the form
   tempArray.set(newButton.id, newPost);
 
-  var buttons = document.getElementsByClassName("notes");
-  for (let button of buttons) {
-    (function (button) {
-      button.addEventListener('click', function () {
-        document.getElementById('title').value = "";
-        document.getElementById('info').value = "";
-        currentButton = button;
-        console.log(button.id);
-      });
-    })(button);;
-  }
+  newButton.addEventListener('click', function () {
+    document.getElementById('title').value = "";
+    document.getElementById('info').value = "";
+    console.log(newButton.id);
+
+  });
 });
 
 
@@ -126,25 +120,22 @@ newNote.addEventListener('click', function () {
 // *********************************************
 let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
-
-
-
-  // // *********************************************
-  // // Scans if any of the buttons are clicked, 
-  // // and if one does get clicked, load the title and contents
-  // // *********************************************
-  // var buttons = document.getElementsByClassName("notes");
-  // var button;
-  // for (button of buttons) {
-  //   (function (button) {
-  //     button.addEventListener('click', function () {
-  //       var loadNote = tempArray.get(this.id);
-  //       //console.log(button.id);
-  //       document.getElementById('title').value = loadNote.entry.title;
-  //       document.getElementById('info').value = loadNote.entry.content;
-  //     });
-  //   })(button);
-  // }
+  // *********************************************
+  // Scans if any of the buttons are clicked, 
+  // and if one does get clicked, load the title and contents
+  // *********************************************
+  var buttons = document.getElementsByClassName("notes");
+  var button;
+  for (button of buttons) {
+    (function (button) {
+      button.addEventListener('click', function () {
+        var loadNote = tempArray.get(this.id);
+        //console.log(button.id);
+        document.getElementById('title').value = loadNote.entry.title;
+        document.getElementById('info').value = loadNote.entry.content;
+      });
+    })(button);
+  }
 
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
@@ -155,8 +146,8 @@ saveButton.addEventListener('click', function () {
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-  currentButton.id = title + time;
-  currentButton.innerHTML = title;
+  button.id = title + time;
+  button.innerHTML = title;
 
   // search
   searchArr[index] = title;
@@ -165,7 +156,7 @@ saveButton.addEventListener('click', function () {
   newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
 
   // Updates the note in tempArray
-  tempArray.set(currentButton.id, newPost);
+  tempArray.set(button.id, newPost);
 });
 
 
@@ -206,10 +197,6 @@ search.addEventListener('input', function () {
       document.getElementById('title').value = temp.entry.title;
       document.getElementById('info').value = temp.entry.content;
       document.getElementById('tag').value = temp.entry.tag;
-
-
-
-
     });
   }
 
