@@ -18,6 +18,7 @@ var index = 0;
 var searchArr = {};
 
 var tempArray = new Map();   // temp arr for storing notes until Firebase is fully implemented
+var currId = "";
 console.log(tempArray.size);
 
 // *********************************************
@@ -35,7 +36,7 @@ calendarLogo.addEventListener('click', function () {
   setState({ state: 'calendar' }, false);
   calendar.render();
 
-})
+});
 
 
 let homeLogo = document.getElementById('home');
@@ -86,31 +87,40 @@ newNote.addEventListener('click', function () {
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
   var content = document.getElementById('info').value;  // main text; the body of the note
   var tag = document.getElementById('tag').value;       // note tag
-  let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
+  // let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
   var newButton = document.createElement("button");                                                         // button for the new note
   var notes_list = document.getElementById('noteslist');                                                    // list of note buttons
 
   // sets the text inside the button to the note's title, then appends it to the list
   newButton.innerHTML = title;
-  var today = new Date();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  newButton.id = title + time;
+
+  // hashing for unique entry id
+  let id = Math.floor(Math.random() * 1000000000);
+  newButton.id = id;
   newButton.className = "notes";
+
+  
+  // add to notelist
   notes_list.appendChild(newButton);
 
   // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
+  //newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
+  let entry = { "title": title, "content": content, "date": date, "id": id, "tag": tag};
 
   // Saves the new Note obj in tempArray, then empties the form
-  tempArray.set(newButton.id, newPost);
+  tempArray.set(newButton.id, entry);
 
+  // new note, currId should be empty
+  currId = newButton.id;
   newButton.addEventListener('click', function () {
-    document.getElementById('title').value = "";
-    document.getElementById('info').value = "";
+    let entry = tempArray.get(newButton.id);
+    form.style.display = "block";
+    document.getElementById('title').value = entry.title;
+    document.getElementById('info').value = entry.content;
     console.log(newButton.id);
-
+    currId = newButton.id;
   });
 });
 
@@ -120,45 +130,34 @@ newNote.addEventListener('click', function () {
 // *********************************************
 let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
-  // *********************************************
-  // Scans if any of the buttons are clicked, 
-  // and if one does get clicked, load the title and contents
-  // *********************************************
-  var buttons = document.getElementsByClassName("notes");
-  var button;
-  for (button of buttons) {
-    (function (button) {
-      button.addEventListener('click', function () {
-        var loadNote = tempArray.get(this.id);
-        //console.log(button.id);
-        document.getElementById('title').value = loadNote.entry.title;
-        document.getElementById('info').value = loadNote.entry.content;
-      });
-    })(button);
-  }
-
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
   var content = document.getElementById('info').value;  // main text; the body of the note
-  let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
-  var tag = document.getElementById('tag').value;       // note tag
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-  button.id = title + time;
-  button.innerHTML = title;
 
-  // search
+  // entry already exists, update contents only
+  let entry = tempArray.get(currId);
+  console.log(entry);
+  entry.title = title;
+  entry.content = content;
+
+  let currButton = document.querySelector(`button[id="${currId}"]`); 
+  currButton.innerHTML = title;
+
+  // what index is the entry located at?
   searchArr[index] = title;
-  index++;
-
-  newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
-
-  // Updates the note in tempArray
-  tempArray.set(button.id, newPost);
 });
 
+// *********************************************
+// 'Delete" onclick
+// *********************************************
+let deleteButton = document.querySelector('button[class="delete"]');
+deleteButton.addEventListener('click', function () {
+  tempArray.delete(currId);
+  let button = document.querySelector(`button[id="${currId}"]`); 
+  button.remove();
+  document.getElementById("noteinput").style.display = "none";
+});
 
 // *********************************************
 // Search bar
