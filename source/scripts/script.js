@@ -16,8 +16,9 @@ const setState = router.setState;
 
 var index = 0;
 var searchArr = {};
+var userId = "";
 
-var tempArray = new Map();   // temp arr for storing notes until Firebase is fully implemented
+var tempArray = new Map();   // hashmap to store notes locally
 var currId = "";
 console.log(tempArray.size);
 
@@ -59,7 +60,6 @@ logoutLogo.addEventListener('click', function () {
 var text = document.getElementById("info");
 let bold = document.querySelector('img[class="bold"]');
 bold.addEventListener('click', function () {
-  //console.log(text.style);
   text.style.fontWeight = text.style.fontWeight == 'bold' ? 'normal' : 'bold';
 });
 
@@ -99,7 +99,7 @@ newNote.addEventListener('click', function () {
   newButton.id = id;
   newButton.className = "notes";
 
-  
+
   // add to notelist
   notes_list.appendChild(newButton);
 
@@ -107,7 +107,7 @@ newNote.addEventListener('click', function () {
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   //newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
-  let entry = { "title": title, "content": content, "date": date, "id": id, "tag": tag};
+  let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag };
 
   // Saves the new Note obj in tempArray, then empties the form
   tempArray.set(newButton.id, entry);
@@ -122,6 +122,15 @@ newNote.addEventListener('click', function () {
     console.log(newButton.id);
     currId = newButton.id;
   });
+
+  // save to Firebase
+  var pushID = firebase.database().ref().child("users/" + userId + "/entries").push(entry).getKey();
+  console.log(entry.id + " saved");
+  console.log(pushID);
+  firebase.database().ref().child("users/" + userId + "/entries/" + pushID).update({ 'firebaseID': pushID });
+
+  entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "firebaseID": pushID };
+  tempArray.set(newButton.id, entry);
 });
 
 
@@ -136,13 +145,17 @@ saveButton.addEventListener('click', function () {
 
 
   // entry already exists, update contents only
-  let entry = tempArray.get(currId);
+  let entry = tempArray.get(String(currId));
+  console.log(tempArray);
   console.log(entry);
   entry.title = title;
   entry.content = content;
 
-  let currButton = document.querySelector(`button[id="${currId}"]`); 
+  let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
+
+  // save to Firebase
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
   // what index is the entry located at?
   searchArr[index] = title;
@@ -153,8 +166,15 @@ saveButton.addEventListener('click', function () {
 // *********************************************
 let deleteButton = document.querySelector('button[class="delete"]');
 deleteButton.addEventListener('click', function () {
+  // delete from Firebase
+  let entry = tempArray.get(currId);
+  console.log(tempArray);
+  console.log(entry);
+  console.log(currId);
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).remove();
+
   tempArray.delete(currId);
-  let button = document.querySelector(`button[id="${currId}"]`); 
+  let button = document.querySelector(`button[id="${currId}"]`);
   button.remove();
   document.getElementById("noteinput").style.display = "none";
 });
@@ -206,25 +226,33 @@ search.addEventListener('input', function () {
 // *********************************************
 
 // Sets the main page with firebase properties
+// Loads the notes
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     console.log(firebaseUser);
+    var notes_list = document.getElementById('noteslist');
     var greeting = document.getElementsByClassName("greeting")[0].children[0];
     greeting.innerHTML = "Hi, " + firebaseUser.displayName;
+    userId = firebaseUser.uid;
+    firebase.database().ref().child("users/" + userId + "/entries/").once("value").then(function (e) {
+      for (var key in e.val()) {
+        let entry = e.val()[key];
+        let newButton = document.createElement("button");
+        newButton.className = "notes";
+        newButton.innerHTML = entry.title;
+        newButton.id = entry.id;
+        tempArray.set(entry.id, entry);
+        notes_list.appendChild(newButton);
+
+        newButton.addEventListener('click', function () {
+          document.getElementById("noteinput").style.display = "block";
+          document.getElementById('title').value = entry.title;
+          document.getElementById('info').value = entry.content;
+          currId = newButton.id;
+        });
+      }
+    });
   } else {
     console.log('Not logged in');
   }
 });
-
-// writes to the database
-function writeUserData(userId) {
-  firebase.database().ref('users/' + userId + '/entries').set({
-
-  });
-}
-
-
-
-
-
-
