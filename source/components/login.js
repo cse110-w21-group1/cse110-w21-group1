@@ -16,3 +16,6 @@ function moveLogin() {
     document.getElementById("page3").style.display = "none";
 }
 
+export{
+    signUp
+};

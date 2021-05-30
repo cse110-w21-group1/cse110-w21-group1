@@ -54,7 +54,9 @@
       <div class="notes_dropdown">
         <form action="/action_page.php">
           <select class="Notes" name="Notes" id="Notes">
-            <option value="note1">Notes</option>
+            <option value="All">All</option>
+            <option value="Event">Events</option>
+            <option value="Notes">Notes</option>
           </select>
         </form>
       </div>
@@ -119,19 +121,24 @@
 
         </div>
 
-        <!-- Tags -->
+        <!-- Tags --> 
+        <!-- I changed the values of the tag to make it easier to read-->
         <div class="float-child-three">
           <form action="/action_page.php">
             <select name="type" id="tag">
-              <option value="volvo">Add a tag</option>
-              <option value="saab">Event</option>
-              <option value="opel">Notes</option>
+              <option value="Add a tag">Add a tag</option>
+              <option value="Event">Event</option>
+              <option value="Notes">Notes</option>
             </select>
-            <br><br>
+            <!--<br><br> -->
           </form>
         </div>
+        <div class="reminders">
+          <p>Weekly Reminders</p>
+          <ul id='eventsList'></ul>
+        </div>
       <div>
-
+ 
     </div>
   </section>
   </main>
