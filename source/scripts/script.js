@@ -239,7 +239,7 @@ var search = document.getElementById('search');
 search.addEventListener('input', function () {
 
   console.log(searchArr);
-=======
+
 
   //Delete current note list to make room for filtered search
   let currList = document.getElementById('noteslist');
