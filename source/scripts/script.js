@@ -21,7 +21,7 @@ var userId = "";
 var tempArray = new Map();   // hashmap to store notes locally
 var currId = "";
 console.log(tempArray.size);
-=======
+
 var searchArr = {}; // arr to search for a specific note
 
 var filterArr = {}; // arr to filter for specific notes
@@ -322,7 +322,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 });
 
 
-});
+
 
 // works very similarly to the search method
 var dropMenu = document.getElementById('Notes');
