@@ -11,13 +11,6 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-
-  <!-- Additional Firebase libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 </head>
 
 <body>
@@ -48,8 +41,9 @@
         <input type="search" id="search" placeholder="Search..." size=29>
       </div>
       
+      <!-- Firebase Username -->
       <div class = "greeting">
-        <p>Hi, User</p>
+        <p></p>
       </div>
       
       
@@ -108,7 +102,7 @@
         <hr>
       </div>
       
-      <div class="float-container">
+      <div class="float-container" style="display:none" id="noteinput">
         <div class="float-child-two">
 
           <!-- Textbox for title -->
@@ -120,6 +114,10 @@
              -->
             <textarea id="info" name="info" rows="30" cols="100"></textarea>
           </form>
+
+          <button class="save" type="button">Save</button>
+          <button class="delete" type="button">Delete</button>
+        
 
         </div>
 
@@ -168,18 +166,7 @@
   <!-- Additional Firebase libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-
-  <script>
-    var firebaseConfig = {
-      apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
-      authDomain: "pageone-c741e.firebaseapp.com",
-      projectId: "pageone-c741e",
-      storageBucket: "pageone-c741e.appspot.com",
-      messagingSenderId: "752294608481",
-      appId: "1:752294608481:web:2bad0f544ed9d91584b420"
-    };
-    firebase.initializeApp(firebaseConfig);
-  </script>
+  
 
 </body>
 

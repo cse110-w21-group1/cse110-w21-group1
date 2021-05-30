@@ -5,7 +5,8 @@ var firebaseConfig = {
     projectId: "pageone-c741e",
     storageBucket: "pageone-c741e.appspot.com",
     messagingSenderId: "752294608481",
-    appId: "1:752294608481:web:2bad0f544ed9d91584b420"
+    appId: "1:752294608481:web:2bad0f544ed9d91584b420",
+    databaseURL: "https://pageone-c741e-default-rtdb.firebaseio.com/",
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -45,12 +46,15 @@ signupForm.addEventListener('submit', (e) => {
     // Get username and password
     const username = document.getElementById('username2').value;
     const password = document.getElementById('password2').value;
+    const nameUser = document.getElementById('nameUser').value;
 
     // Create account
     firebase.auth().createUserWithEmailAndPassword(username, password).then((e) => {
-        // if account succesfully created, goes to main page
+        // if account succesfully created, goes to confirm page
         console.log('Account successfully created');
-        window.location.href = "index.html";
+        e.user.updateProfile({ displayName: nameUser });
+        writeUserData(firebase.auth().currentUser.uid, nameUser, username);
+        document.getElementById("page3").style.display = "block";
     })
     .catch((e) => {
         // output error message 
@@ -62,17 +66,6 @@ signupForm.addEventListener('submit', (e) => {
     signupForm.reset();
 });
 
-// ***************************
-// logout for testing purposes
-// ***************************
-const logout = document.getElementsByClassName('logout')[0];
-logout.addEventListener('click', (e) => {
-    e.preventDefault();
-    firebase.auth().signOut().then(() => {
-        console.log('user signed out');
-    })
-});
-
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
@@ -81,3 +74,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log('Not logged in');
     }
 });
+
+// writes to the database
+function writeUserData(userId, name, email) {
+    firebase.database().ref('users/' + userId).set({
+      username: name,
+      email: email,
+    });
+  }
+
