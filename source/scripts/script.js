@@ -228,7 +228,7 @@ deleteButton.addEventListener('click', function () {
   button.remove();
   document.getElementById("noteinput").style.display = "none";
 });
-
+ 
 // *********************************************
 // Search bar
 // *********************************************
