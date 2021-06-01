@@ -27,18 +27,18 @@ class CalendarElem extends HTMLElement {
   /**
    * Renders the calendar and pulls the events from the notes array to add onto the calendar.
    * 
-   * @param {*} notesMap - A map containing ids mapped to notes
+   * @param {*} notesMap - A map containing ids mapped to notes 
    */
   render(notesMap) {
     const calDiv = this.shadowRoot.getElementById('calendar');
     let eventsList = []; 
     notesMap.forEach((value) => {
       if (value.tag == "Event") {
-      const event = {
-        id: value.id,
-        title: value.title,
-        start: value.eventDate, // TODO: needs to be changed to the event date instead of the date of creation
-      };
+        const event = {
+          id: value.id,
+          title: value.title,
+          start: value.eventDate, // TODO: needs to be changed to the event date instead of the date of creation
+        };
         allDay: true
         eventsList.push(event);
       }
