@@ -16,30 +16,42 @@ class CalendarElem extends HTMLElement {
     ` 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-  }
 
-  render() {
     const calDiv = this.shadowRoot.getElementById('calendar');
-    const cal = new FullCalendar.Calendar(calDiv, {
+    this.cal = new FullCalendar.Calendar(calDiv, {
       initialView: 'dayGridMonth'
     });
-    cal.render();
+
+  }
+
+  /**
+   * Renders the calendar and pulls the events from the notes array to add onto the calendar.
+   * 
+   * @param {*} notesMap - A map containing ids mapped to notes
+   */
+  render(notesMap) {
+    const calDiv = this.shadowRoot.getElementById('calendar');
+    let eventsList = []; 
+    notesMap.forEach((value) => {
+      if (value.tag == "Event") {
+      const event = {
+        id: value.id,
+        title: value.title,
+        start: value.eventDate, // TODO: needs to be changed to the event date instead of the date of creation
+      };
+        allDay: true
+        eventsList.push(event);
+      }
+    });
+    this.cal = new FullCalendar.Calendar(calDiv, {
+      initialView: 'dayGridMonth', 
+      events: eventsList
+      
+    });
+    console.log(eventsList);
+    this.cal.render();
   }
 }
-
-
-
-// customElements.define('calendar-elem', CalendarElem);
-
-//     this.attachShadow({ mode: 'open' });
-//     const dummy = document.createElement('p');
-//     dummy.innerHTML = 'This is the calendar element';
-//     this.shadowRoot.appendChild(dummy);
-  
-
-
-// customElements.define('calendar', CalendarElem);
-
 
 customElements.define('calendar-elem', CalendarElem);
 
