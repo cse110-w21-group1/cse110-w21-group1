@@ -165,7 +165,8 @@ saveButton.addEventListener('click', function () {
   let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
 
- 
+  // save to Firebase
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
   
   var tag = document.getElementById('tag').value;      // note tag
 
@@ -205,10 +206,6 @@ saveButton.addEventListener('click', function () {
   }
 
   updateReminders();
-
-
-  // save to Firebase
-  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
   // what index is the entry located at?
   searchArr[index] = title;

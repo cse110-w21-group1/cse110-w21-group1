@@ -15,7 +15,3 @@ function moveLogin() {
     document.getElementById("page1").style.display = "block";
     document.getElementById("page3").style.display = "none";
 }
-
-export{
-    signUp
-};
