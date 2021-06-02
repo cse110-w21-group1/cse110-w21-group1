@@ -17,13 +17,14 @@ const setState = router.setState;
 var userId = "";
 
 var tempArray = new Map();   // hashmap to store notes locally
+var taskMap = new Map();   // map to store tasks locally
 var currId = "";
 //console.log(tempArray.size);
 
 
 var filterArr = {}; // arr to filter for specific notes
 
-  // temp arr for storing notes until Firebase is fully implemented
+// temp arr for storing notes until Firebase is fully implemented
 
 var eventArr = {};
 
@@ -164,7 +165,7 @@ saveButton.addEventListener('click', function () {
   entry.title = title;
   entry.content = content;
   entry.tag = tag;
-  if(tag == 'Event'){
+  if (tag == 'Event') {
     let eventDate = document.getElementById('date').value;
     entry.event = eventDate;
   }
@@ -175,7 +176,7 @@ saveButton.addEventListener('click', function () {
 
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
-  
+
   var tag = document.getElementById('tag').value;      // note tag
 
   // if (!(title in tempArray) && title != '' && tag == 'Event'){
@@ -197,7 +198,7 @@ saveButton.addEventListener('click', function () {
     title = undefined;
   }
 
-  if(document.getElementById('date') != null){
+  if (document.getElementById('date') != null) {
     let dateElem = document.getElementById('date');
     dateElem.remove();
   }
@@ -257,7 +258,7 @@ search.addEventListener('input', function () {
         document.getElementById('title').value = value.title;
         document.getElementById('info').value = value.content;
         document.getElementById('tag').value = value.tag;
-  
+
       });
 
       newList.appendChild(currButton);
@@ -279,6 +280,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     //console.log(firebaseUser);
     var notes_list = document.getElementById('noteslist');
     var greeting = document.getElementsByClassName("greeting")[0].children[0];
+    let tasklist = document.getElementById("tasks");
+
     greeting.innerHTML = "Hi, " + firebaseUser.displayName;
     userId = firebaseUser.uid;
     firebase.database().ref().child("users/" + userId + "/entries/").once("value").then(function (e) {
@@ -297,6 +300,62 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
           document.getElementById('info').value = entry.content;
           currId = newButton.id;
         });
+      }
+
+    });
+
+    firebase.database().ref().child("users/" + userId + "/tasks/").once("value").then(function (e) {
+      for (var key in e.val()) {
+        let task = e.val()[key];
+        //BUILD HTML
+        let taskLi = document.createElement("li");
+        if (task.check == true) 
+          taskLi.className = "taskcomplete";
+        else 
+          taskLi.className = "taskincomplete";
+        
+        //CHECKBOX
+        let taskChkbx = document.createElement("input");
+        taskChkbx.setAttribute("type", "checkbox");
+        taskChkbx.checked = task.check;
+
+        //USER TASK
+        let taskVal = document.createTextNode(task.title);
+
+        //DELETE BUTTON
+        let taskBtn = document.createElement("button");
+        taskBtn.innerHTML = "x";
+
+        //APPEND ELEMENTS TO TASKLI
+        taskLi.appendChild(taskChkbx);
+        taskLi.appendChild(taskVal);
+        taskLi.appendChild(taskBtn);
+
+        //ADD TASK TO TASK LIST
+        tasklist.appendChild(taskLi);
+
+        // task on click
+        taskChkbx.addEventListener('click', () => {
+          task.check = taskChkbx.checked;
+          if (task.check == true) {
+            taskLi.className = "taskcomplete";
+          }
+          else {
+            taskLi.className = "taskincomplete";
+          }
+          taskMap.set(task.id, task);
+          firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).update({ 'check': task.check });
+          console.log(taskMap);
+        });
+
+        // delete task
+        taskBtn.addEventListener('click', () => {
+          taskMap.delete(task.id, task);
+          taskLi.remove();
+          firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).remove();
+        });
+
+        taskMap.set(task.id, task);
       }
 
     });
@@ -364,16 +423,16 @@ dropMenu.addEventListener('change', function () {
 
 
 var tagSelect = document.getElementById('tag');
-tagSelect.addEventListener('change', function(){
-  if(tagSelect.value == 'Event'){
+tagSelect.addEventListener('change', function () {
+  if (tagSelect.value == 'Event') {
     let tagDiv = document.querySelector('.float-child-three');
     let dateSelect = document.createElement('input');
     dateSelect.setAttribute('type', 'date');
     dateSelect.setAttribute('id', 'date');
     tagDiv.appendChild(dateSelect);
   }
-  else{
-    if(document.getElementById('date') != null){
+  else {
+    if (document.getElementById('date') != null) {
       let dateSelect = document.getElementById('date');
       dateSelect.remove();
     }
@@ -384,109 +443,109 @@ tagSelect.addEventListener('change', function(){
 // Reminders Tab
 // *********************************************
 // Checks if an event is within the next week and will display the event in the case that it is.
-function updateReminders(){
-  if(document.getElementById('eventsList') != null){
+function updateReminders() {
+  if (document.getElementById('eventsList') != null) {
     let reminders = document.getElementById('eventsList');
     reminders.remove()
   }
   let container = document.querySelector('.reminders');
   let remindersUl = document.createElement('ul');
   remindersUl.setAttribute('id', 'eventsList');
-  for(const [key, value] of tempArray.entries()){
-    if(value.tag == 'Event'){
+  for (const [key, value] of tempArray.entries()) {
+    if (value.tag == 'Event') {
       let today = new Date();
-      today.setHours(0,0,0,0)
+      today.setHours(0, 0, 0, 0)
       let day = String(today.getDate()).padStart(2, '0');
       let month = String(today.getMonth() + 1).padStart(2, '0');
       let year = today.getFullYear();
 
       let eventDate = String(value.event);
-      if(month == '02'){
-        if(Number(day) > 21){
+      if (month == '02') {
+        if (Number(day) > 21) {
           let maxDay = 7 - 28 + Number(day);
           let maxDate = year + '-03-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-02-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
       }
-      else if(month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12'){
-        if(Number(day) > 24){
+      else if (month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12') {
+        if (Number(day) > 24) {
           let maxDate;
           let maxDay = 7 - 31 + Number(day);
-          if(month == '12'){
+          if (month == '12') {
             maxDate = year + '-01-' + String(maxDay);
           }
-          else{
+          else {
             let newMonth = Number(month) + 1;
-            maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+            maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
           }
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-' + month + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
       }
-      else{
-        if(Number(day) > 24){
+      else {
+        if (Number(day) > 24) {
           let maxDay = 7 - 30 + Number(day);
           let newMonth = Number(month) + 1;
-          let maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+          let maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-' + month + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
@@ -499,96 +558,77 @@ function updateReminders(){
   container.appendChild(remindersUl);
 }
 
-// To-do List Functionality
-(function() {
-	'use strict';
-	var tasker = {
-		init: function() {
-			this.cacheDom();
-			this.bindEvents();
-			this.evalTasklist();
-		},
-		cacheDom: function() {
-			this.taskInput = document.getElementById("input-task");
-			this.addBtn = document.getElementById("add-task-btn");
-			this.tasklist = document.getElementById("tasks");
-			this.tasklistChildren = this.tasklist.children;
-			this.errorMessage = document.getElementById("error");
-		},
-		bindEvents: function() {
-			this.addBtn.onclick = this.addTask.bind(this);
-			this.taskInput.onkeypress = this.enterKey.bind(this);
-		},
-		evalTasklist: function() {
-			var i, chkBox, delBtn;
-			//BIND CLICK EVENTS TO ELEMENTS
-			for (i = 0; i < this.tasklistChildren.length; i += 1) {
-				//ADD CLICK EVENT TO CHECKBOXES
-				chkBox = this.tasklistChildren[i].getElementsByTagName("input")[0];
-				chkBox.onclick = this.completeTask.bind(this, this.tasklistChildren[i], chkBox);
-				//ADD CLICK EVENT TO DELETE BUTTON
-				delBtn = this.tasklistChildren[i].getElementsByTagName("button")[0];
-				delBtn.onclick = this.delTask.bind(this, i);
-			}
-		},
-		render: function() {
-			var taskLi, taskChkbx, taskVal, taskBtn, taskTrsh;
-			//BUILD HTML
-			taskLi = document.createElement("li");
-			taskLi.setAttribute("class", "task");
-			//CHECKBOX
-			taskChkbx = document.createElement("input");
-			taskChkbx.setAttribute("type", "checkbox");
-			//USER TASK
-			taskVal = document.createTextNode(this.taskInput.value);
-			//DELETE BUTTON
-			taskBtn = document.createElement("button");
-			taskBtn.innerHTML = "x";
+// *********************************************
+// To-Do Tasks
+// *********************************************
 
-			//APPEND ELEMENTS TO TASKLI
-			taskLi.appendChild(taskChkbx);
-			taskLi.appendChild(taskVal);
-			taskLi.appendChild(taskBtn);
+// *********************************************
+// New Task
+// *********************************************
+var taskbutton = document.getElementById("add-task-btn");
+taskbutton.addEventListener('click', () => {
+  let tasklist = document.getElementById("tasks");
 
-			//ADD TASK TO TASK LIST
-			this.tasklist.appendChild(taskLi);
+  let title = document.getElementById('input-task').value ? document.getElementById('input-task').value : "Untitled";
+  let id = Math.floor(Math.random() * 1000000000);
+  taskId = id;
 
-		},
-		completeTask: function(i, chkBox) {
-			if (chkBox.checked) {
-				i.className = "task-completed";
-			} else {
-				this.incompleteTask(i);
-			}
-		},
-		incompleteTask: function(i) {
-			i.className = "task";
-		},
-		enterKey: function(event) {
-			if (event.keyCode === 13 || event.which === 13) {
-				this.addTask();
-			}
-		},
-		addTask: function() {
-			var value = this.taskInput.value;
-			this.errorMessage.style.display = "none";
 
-			if (value === "") {
-				this.error();
-			} else {
-				this.render();
-				this.taskInput.value = "";
-				this.evalTasklist();
-			}
-		},
-		delTask: function(i) {
-			this.tasklist.children[i].remove();
-			this.evalTasklist();
-		},
-		error: function() {
-			this.errorMessage.style.display = "block";
-		}
-	};
+  //BUILD HTML
+  let taskLi = document.createElement("li");
+  taskLi.setAttribute("class", "taskincomplete");
 
-	tasker.init();
-}());
+  //CHECKBOX
+  let taskChkbx = document.createElement("input");
+  taskChkbx.setAttribute("type", "checkbox");
+
+  //USER TASK
+  let taskVal = document.createTextNode(title);
+
+  //DELETE BUTTON
+  let taskBtn = document.createElement("button");
+  taskBtn.innerHTML = "x";
+
+  //APPEND ELEMENTS TO TASKLI
+  taskLi.appendChild(taskChkbx);
+  taskLi.appendChild(taskVal);
+  taskLi.appendChild(taskBtn);
+
+  //ADD TASK TO TASK LIST
+  tasklist.appendChild(taskLi);
+
+  let task = { "title": taskVal, "id": id, "check": taskChkbx.checked };
+
+  // task on click
+  taskChkbx.addEventListener('click', () => {
+    task.check = taskChkbx.checked;
+    if (task.check == true) {
+      taskLi.className = "taskcomplete";
+    }
+    else {
+      taskLi.className = "taskincomplete";
+    }
+    taskMap.set(id, task);
+    firebase.database().ref().child("users/" + userId + "/tasks/" + pushID).update({ 'check': task.check });
+    console.log(taskMap);
+  });
+
+  // delete task
+  taskBtn.addEventListener('click', () => {
+    taskMap.delete(id, task);
+    taskLi.remove();
+    firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).remove();
+  });
+
+  task = { "title": title, "id": id, "check": taskChkbx.checked };
+
+  // clear input data
+  document.getElementById('input-task').value = "";
+
+  // save to Firebase
+  let pushID = firebase.database().ref().child("users/" + userId + "/tasks").push(task).getKey();
+  firebase.database().ref().child("users/" + userId + "/tasks/" + pushID).update({ 'firebaseID': pushID });
+
+  task = { "title": title, "id": id, "check": taskChkbx.checked, "firebaseID": pushID };
+  taskMap.set(id, task);
+});
