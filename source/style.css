@@ -291,3 +291,16 @@ hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
+
+/* To-do List Styling */
+.error {
+  color: red;
+}
+
+input[id="input-task"] {
+  width: 68%;
+}
+
+.task-completed {
+  text-decoration: line-through;
+}
