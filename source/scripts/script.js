@@ -571,8 +571,6 @@ taskbutton.addEventListener('click', () => {
 
   let title = document.getElementById('input-task').value ? document.getElementById('input-task').value : "Untitled";
   let id = Math.floor(Math.random() * 1000000000);
-  taskId = id;
-
 
   //BUILD HTML
   let taskLi = document.createElement("li");
