@@ -41,6 +41,7 @@ What we got done:
 For next time:
 - Create an event handler for calendar event click that redirects to the note on the notes page
 
+![Calendar](./references/calendar-screenshot.png)
 
 ## Search/Reminders - James
 
