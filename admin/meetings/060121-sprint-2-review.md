@@ -97,6 +97,9 @@ What we got done:
 - signup/login works as intended
 - Hi User displays user name
 
+![Firebase](./references/Firebase.png)
+
+![Sign Up](./references/signup.png)
 
 ## Firebase Database + Notes Buttons - Geewhan/Kyle/Charles/Alvin
 
@@ -113,6 +116,8 @@ What we got done:
 
 For next time:
 - Update Firebase with formatting implementation 
+
+![Save](./references/savenote.png)
 
 ## Form Functionality - Charles & Alvin
 
@@ -132,6 +137,8 @@ For next time:
 - Let the user start formatting once the button is clicked, not have the formatting change the entire input
 - Load up different font styles and sizes
 - Find a way to set a date for an event
+
+![Form](./references/newnote.png)
 
 **Meeting End: 6:10pm**
 
