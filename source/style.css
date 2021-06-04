@@ -293,37 +293,19 @@ hr {
 }
 
 /* To-do List Styling */
-.error {
-  color: red;
-  position: fixed;
-  top: 710px;
-  right: 1270px
+.tasker {
+  width: 25%;
+  float: left;
+  padding-top: 25px;
 }
 
-#input-task {
-  width: 10%;
-  position: fixed;
-  top: 740px;
-  right: 1120px;
-}
-
-#add-task-btn {
-  position: fixed;
-  top: 760px;
-  right: 1090px;
-}
-
-#todoline {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-  position: fixed;
-  width: 100%;
-  top: 690px;
+input[id="input-task"] {
+  width: 85%;
+  margin: 0;
 }
 
 #tasks {
-  position: fixed;
-  top: 780px;
+  margin: 0;
 }
 
 .taskcomplete {
