@@ -24,6 +24,7 @@ var currId = "";
 
 var filterArr = {}; // arr to filter for specific notes
 
+
 // temp arr for storing notes until Firebase is fully implemented
 
 var eventArr = {};
@@ -43,8 +44,7 @@ let calendarLogo = document.querySelector('#calendar')
 let calendar = document.querySelector('calendar-elem');
 calendarLogo.addEventListener('click', function () {
   setState({ state: 'calendar' }, false);
-  calendar.render();
-
+  calendar.render(tempArray);
 });
 
 
@@ -155,55 +155,80 @@ saveButton.addEventListener('click', function () {
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
   var content = document.getElementById('info').value;  // main text; the body of the note
-  var tag = document.getElementById('tag').value;
 
+  var tag = document.getElementById('tag').value;      // note tag
 
   // entry already exists, update contents only
   let entry = tempArray.get(String(currId));
-  // console.log(tempArray);
-  // console.log(entry);
+  console.log(tempArray);
   entry.title = title;
   entry.content = content;
   entry.tag = tag;
+
   if (tag == 'Event') {
     let eventDate = document.getElementById('date').value;
     entry.event = eventDate;
   }
 
 
+
   let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
+
 
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
   var tag = document.getElementById('tag').value;      // note tag
+  entry.tag = tag;
 
-  // if (!(title in tempArray) && title != '' && tag == 'Event'){
-  //   let eventDate = document.getElementById('date').value;
-  //   eventArr[title] = eventDate;
-  //   //console.log(eventArr);
-  // }
+  if (!(currId in eventArr) && title != '' && tag == 'Event'){
+    let eventDate = document.getElementById('date').value;
+    eventArr[title] = eventDate;
+    console.log(eventArr);
 
-  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
-  // Also resets the forms to be empty
-  if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
-    // newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
-    // tempArray[title] = newPost;
-    document.getElementsByName('title')[0].value = ''; // did this to fix a strange bug
-    document.getElementById("info").value = '';
-    document.getElementById('tag').selectedIndex = 0;
-    filterArr[title] = tag;
-    //console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
-    title = undefined;
+    // update event date field and save object in tempArray
+    entry = {...entry, eventDate: eventDate};
+    console.log(entry);
+    tempArray.set(entry.id, entry);
+
   }
 
   if (document.getElementById('date') != null) {
+
     let dateElem = document.getElementById('date');
     dateElem.remove();
   }
 
   updateReminders();
+
+
+
+  // save to Firebase
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
+
+});
+
+// *********************************************
+// Filter
+// *********************************************
+var dropMenu = document.getElementById('Notes');
+dropMenu.addEventListener('change', function () {
+  //console.log('test');
+  var buttons = document.getElementsByClassName("notes");
+  for (let button of buttons) {
+    let entry = tempArray.get(button.id);
+    if (dropMenu.value == 'All') {
+      //console.log('All')
+      button.style.display = "block"
+    } else if (entry.tag != dropMenu.value) {
+      //console.log('hide')
+      button.style.display = "none";
+    } else if (entry.tag == dropMenu.value) {
+      //console.log('none')
+      button.style.display = "block";
+    }
+  }
 
 });
 
@@ -367,61 +392,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
 
-
-// works very similarly to the search method
-var dropMenu = document.getElementById('Notes');
-dropMenu.addEventListener('change', function () {
-  //console.log('test');
-  //console.log(filterArr);
-  //Delete current note list to make room for filtered search
-  let currList = document.getElementById('noteslist');
-  currList.remove();
-  //Create new list which we will append searched values to
-  let newList = document.createElement('ul');
-  newList.setAttribute('class', 'notes_arr');
-  newList.setAttribute('id', 'noteslist');
-  let searchDiv = document.querySelector('.left-half');
-
-  let filterStr = dropMenu.value;
-  if (filterStr == 'All') {
-    for (let title in filterArr) {
-      let currButton = document.createElement('button');
-      currButton.innerHTML = title;
-      currButton.id = title;
-      currButton.className = "notes";
-      newList.appendChild(currButton);
-    }
-  } else {
-    for (let title in filterArr) {
-      if (filterArr[title] == filterStr) {
-        let currButton = document.createElement('button');
-        currButton.innerHTML = title;
-        currButton.id = title;
-        currButton.className = "notes";
-        newList.appendChild(currButton);
-      }
-    }
-  }
-  searchDiv.appendChild(newList);
-
-
-  let buttons2 = document.getElementsByClassName("notes");
-
-  for (let button of buttons2) {
-    button.addEventListener('click', function () {
-      var temp = tempArray[button.id];
-      document.getElementById('title').value = temp.entry.title;
-      document.getElementById('info').value = temp.entry.content;
-      document.getElementById('tag').value = temp.entry.tag;
-
-
-
-
-    });
-  }
-});
-
-
 var tagSelect = document.getElementById('tag');
 tagSelect.addEventListener('change', function () {
   if (tagSelect.value == 'Event') {
@@ -451,6 +421,7 @@ function updateReminders() {
   let container = document.querySelector('.reminders');
   let remindersUl = document.createElement('ul');
   remindersUl.setAttribute('id', 'eventsList');
+
   for (const [key, value] of tempArray.entries()) {
     if (value.tag == 'Event') {
       let today = new Date();
