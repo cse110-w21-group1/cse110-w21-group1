@@ -92,6 +92,10 @@ newNote.addEventListener('click', function () {
   document.getElementById("info").value = "";
   document.getElementById('tag').selectedIndex = 0;
   title = undefined;
+  if(document.getElementById('tagDiv') != null){
+    let tagDiv = document.getElementById('tagDiv');
+    tagDiv.remove();
+  }
 
   // create new entry
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
@@ -117,9 +121,10 @@ newNote.addEventListener('click', function () {
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-  let eventDate = '';
+  let eventStart = '';
+  let eventEnd = '';
   //newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
-  let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "event": eventDate };
+  let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd };
 
   // Saves the new Note obj in tempArray, then empties the form
   tempArray.set(newButton.id, entry);
@@ -132,6 +137,55 @@ newNote.addEventListener('click', function () {
     document.getElementById('title').value = entry.title;
     document.getElementById('info').value = entry.content;
     document.getElementById('tag').value = entry.tag;
+    if(entry.tag == 'Event'){
+      console.log('we in');
+      let mainDiv = document.querySelector('.float-child-three');
+      let tagDiv = document.createElement('div');
+      tagDiv.setAttribute('id', 'tagDiv');
+      let dateInfo = document.createElement('p');
+      dateInfo.innerHTML = 'Select Start And End Date:';
+
+      let dateSelectStart = document.createElement('input');
+      dateSelectStart.setAttribute('type', 'date');
+      dateSelectStart.setAttribute('id', 'date1');
+      let dateSelectEnd = document.createElement('input');
+      dateSelectEnd.setAttribute('type', 'date');
+      dateSelectEnd.setAttribute('id', 'date2');
+
+      tagDiv.appendChild(dateInfo);
+      tagDiv.appendChild(dateSelectStart);
+      tagDiv.appendChild(dateSelectEnd);
+
+      let timeInfo = document.createElement('p');
+      timeInfo.innerHTML = 'Select Start And End Time:';
+      let timeStart = document.createElement('input');
+      timeStart.setAttribute('type', 'time')
+      timeStart.setAttribute('id', 'time1');
+      let timeEnd = document.createElement('input');
+      timeEnd.setAttribute('type', 'time');
+      timeEnd.setAttribute('id', 'time2');
+
+      tagDiv.appendChild(timeInfo);
+      tagDiv.appendChild(timeStart);
+      tagDiv.appendChild(timeEnd);
+      mainDiv.appendChild(tagDiv);
+      let startDate = entry.eventStart;
+      let endDate = entry.eventEnd;
+      if(startDate != ''){
+        document.getElementById('date1').value = startDate.substring(0,10);
+        document.getElementById('time1').value = startDate.substring(11,startDate.length);
+      }
+      if(endDate != ''){
+        document.getElementById('date2').value = endDate.substring(0,10);
+        document.getElementById('time2').value = endDate.substring(11,startDate.length);
+      }
+    }
+    else{
+      if(document.getElementById('tagDiv') != null){
+        let eventSelect = document.getElementById('tagDiv');
+        eventSelect.remove();
+      }
+    }
     console.log(newButton.id);
     currId = newButton.id;
   });
@@ -142,7 +196,7 @@ newNote.addEventListener('click', function () {
   //console.log(pushID);
   firebase.database().ref().child("users/" + userId + "/entries/" + pushID).update({ 'firebaseID': pushID });
 
-  entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "event": eventDate, "firebaseID": pushID };
+  entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd, "firebaseID": pushID };
   tempArray.set(newButton.id, entry);
 });
 
@@ -165,9 +219,18 @@ saveButton.addEventListener('click', function () {
   entry.content = content;
   entry.tag = tag;
 
-  if (tag == 'Event') {
-    let eventDate = document.getElementById('date').value;
-    entry.event = eventDate;
+  if(tag == 'Event'){
+    let eventStartDate = document.getElementById('date1').value;
+    let eventStartTime = document.getElementById('time1').value;
+    let eventStart = eventStartDate + 'T' + eventStartTime;
+    entry.eventStart = eventStart;
+
+    let eventEndDate = document.getElementById('date2').value;
+    let eventEndTime = document.getElementById('time2').value;
+    let eventEnd = eventEndDate + 'T' + eventEndTime;
+    entry.eventEnd = eventEnd;
+
+
   }
 
 
@@ -248,6 +311,7 @@ deleteButton.addEventListener('click', function () {
   let button = document.querySelector(`button[id="${currId}"]`);
   button.remove();
   document.getElementById("noteinput").style.display = "none";
+  updateReminders();
 });
 
 // *********************************************
@@ -393,18 +457,46 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
 var tagSelect = document.getElementById('tag');
-tagSelect.addEventListener('change', function () {
-  if (tagSelect.value == 'Event') {
-    let tagDiv = document.querySelector('.float-child-three');
-    let dateSelect = document.createElement('input');
-    dateSelect.setAttribute('type', 'date');
-    dateSelect.setAttribute('id', 'date');
-    tagDiv.appendChild(dateSelect);
+
+tagSelect.addEventListener('input', function(){
+  if(tagSelect.value == 'Event'){
+    let mainDiv = document.querySelector('.float-child-three');
+    let tagDiv = document.createElement('div');
+    tagDiv.setAttribute('id', 'tagDiv');
+    let dateInfo = document.createElement('p');
+    dateInfo.innerHTML = 'Select Start And End Date:';
+
+    let dateSelectStart = document.createElement('input');
+    dateSelectStart.setAttribute('type', 'date');
+    dateSelectStart.setAttribute('id', 'date1');
+    let dateSelectEnd = document.createElement('input');
+    dateSelectEnd.setAttribute('type', 'date');
+    dateSelectEnd.setAttribute('id', 'date2');
+
+    tagDiv.appendChild(dateInfo);
+    tagDiv.appendChild(dateSelectStart);
+    tagDiv.appendChild(dateSelectEnd);
+
+    let timeInfo = document.createElement('p');
+    timeInfo.innerHTML = 'Select Start And End Time:';
+    let timeStart = document.createElement('input');
+    timeStart.setAttribute('type', 'time')
+    timeStart.setAttribute('id', 'time1');
+    let timeEnd = document.createElement('input');
+    timeEnd.setAttribute('type', 'time');
+    timeEnd.setAttribute('id', 'time2');
+
+    tagDiv.appendChild(timeInfo);
+    tagDiv.appendChild(timeStart);
+    tagDiv.appendChild(timeEnd);
+    mainDiv.appendChild(tagDiv);
   }
-  else {
-    if (document.getElementById('date') != null) {
-      let dateSelect = document.getElementById('date');
-      dateSelect.remove();
+  else{
+    if(document.getElementById('tagDiv') != null){
+      let eventSelect = document.getElementById('tagDiv');
+      eventSelect.remove();
+
+
     }
   }
 });
@@ -430,9 +522,11 @@ function updateReminders() {
       let month = String(today.getMonth() + 1).padStart(2, '0');
       let year = today.getFullYear();
 
-      let eventDate = String(value.event);
-      if (month == '02') {
-        if (Number(day) > 21) {
+
+      let eventDate = String(value.eventStart).substring(0,10);
+      if(month == '02'){
+        if(Number(day) > 21){
+
           let maxDay = 7 - 28 + Number(day);
           let maxDate = year + '-03-' + String(maxDay);
           let compDate = new Date(maxDate);
