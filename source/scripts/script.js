@@ -23,6 +23,8 @@ var currId = "";
 
 var filterArr = {}; // arr to filter for specific notes
 
+
+
 // temp arr for storing notes until Firebase is fully implemented
 
 var eventArr = {};
@@ -42,8 +44,7 @@ let calendarLogo = document.querySelector('#calendar')
 let calendar = document.querySelector('calendar-elem');
 calendarLogo.addEventListener('click', function () {
   setState({ state: 'calendar' }, false);
-  calendar.render();
-
+  calendar.render(tempArray);
 });
 
 
@@ -169,43 +170,21 @@ saveButton.addEventListener('click', function () {
   let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
 
-  // save to Firebase
-  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
+    
+  var tag = document.getElementById('tag').value;      // note tag
+  entry.tag = tag;
 
-
-
-  if (!(title in tempArray) && title != '' && tag == 'Event') {
+  if (!(currId in eventArr) && title != '' && tag == 'Event'){
     let eventDate = document.getElementById('date').value;
     eventArr[title] = eventDate;
     console.log(eventArr);
-  }
 
-  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
-  // Also resets the forms to be empty
-  if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
+    // update event date field and save object in tempArray
+    entry = {...entry, eventDate: eventDate};
+    console.log(entry);
+    tempArray.set(entry.id, entry);
 
-    // let newPost = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
-
-
-    // tempArray[title] = newPost;
-    document.getElementsByName('title')[0].value = ''; // did this to fix a strange bug
-    document.getElementById("info").value = '';
-    document.getElementById('tag').selectedIndex = 0;
-    // filterArr[title] = tag;
-    //console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
-    title = undefined;
-  }
-
-
-  var buttons = document.getElementsByClassName("notes");
-  for (let button of buttons) {
-    button.addEventListener('click', function () {
-      var temp = tempArray.get(button.id);
-      document.getElementById('title').value = temp.title;
-      document.getElementById('info').value = temp.content;
-      document.getElementById('tag').value = temp.tag;
-    });
   }
 
   if (document.getElementById('date') != null) {
@@ -215,6 +194,11 @@ saveButton.addEventListener('click', function () {
   }
 
   updateReminders();
+
+
+
+  // save to Firebase
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
 });
 
@@ -238,6 +222,7 @@ dropMenu.addEventListener('change', function () {
       button.style.display = "block";
     }
   }
+
 });
 
 // *********************************************
