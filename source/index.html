@@ -33,7 +33,6 @@
   <main>
     
   <section class="container">
-    
     <!-- LEFT HALF -->
     <div class="left-half">
       <!-- Search bar -->
@@ -138,8 +137,20 @@
           <p>Weekly Reminders</p>
           <ul id='eventsList'></ul>
         </div>
-      <div>
- 
+      </div>
+
+      <!-- To-do List -->
+      <div id="tasker" class="tasker">
+        <hr>
+        <div id="error" class="error">Tasks</div>
+        <div id="tasker-header" class="tasker-header">
+          <input type="text" id="input-task" placeholder="Enter a task">
+          <button id="add-task-btn">+</button>
+        </div>
+        <div class="tasker-body">
+          <ul id="tasks"></ul>
+        </div>
+      </div>
     </div>
   </section>
   </main>

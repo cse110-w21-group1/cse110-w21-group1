@@ -291,3 +291,23 @@ hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
+
+/* To-do List Styling */
+.tasker {
+  width: 25%;
+  float: right;
+  padding-top: 25px;
+}
+
+input[id="input-task"] {
+  width: 85%;
+  margin: 0;
+}
+
+#tasks {
+  margin: 0;
+}
+
+.taskcomplete {
+  text-decoration: line-through;
+}
