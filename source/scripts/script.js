@@ -77,7 +77,27 @@ bold.addEventListener('click', function () {
 // });
 
 
+// document.querySelector("div.sidenav").click(function(){
+//   document.querySelector(this).animate({width :"0%"});
+//   document.querySelector("div.content").animate({width:"100%"});
+//   document.querySelector("#click").show();
+// });
 
+// let side = document.getElementById('sidenav');
+// side.addEventListener('click', function () {
+//   document.getElementById('sidenav').animate({color : rgb(106, 0, 244, 255)});
+// });
+
+// var prevScrollpos = window.pageYOffset;
+// window.onscroll = function() {
+// var currentScrollPos = window.pageYOffset;
+//   if (prevScrollpos > currentScrollPos) {
+//     document.getElementById("navbar").style.top = "0";
+//   } else {
+//     document.getElementById("navbar").style.top = "-50px";
+//   }
+//   prevScrollpos = currentScrollPos;
+// }
 
 // *********************************************
 // 'New Note' onclick

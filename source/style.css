@@ -10,6 +10,12 @@
   background-color: rgb(106, 184, 244, 255); 
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
+  /* display: none; */
+}
+
+.sidenav:hover {
+  /* display: block; */
+  left: 0;
 }
 
 /* Determines which element is currently being displayed */
@@ -161,11 +167,12 @@ body.calendar main {
     border: none;
     padding-left:10%;
     padding-right:10%;
-    margin-left: 5%;
+    margin-left: 9%;
   }
 
   .notes_dropdown{
-    margin-left: 5%;
+    margin-left: 14%;
+    padding-left:10%;
   }
   
   .bold{
@@ -233,7 +240,7 @@ body.calendar main {
 
   .search{
     width: 80%;
-    padding-left: 5%;
+    padding-left: 15%;
   }
   
   .greeting{
