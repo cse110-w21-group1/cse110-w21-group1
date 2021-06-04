@@ -24,6 +24,3 @@ function signUp() {
     }
 }
 
-export{
-    signUp
-};
