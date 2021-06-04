@@ -295,7 +295,7 @@ hr {
 /* To-do List Styling */
 .tasker {
   width: 25%;
-  float: left;
+  float: right;
   padding-top: 25px;
 }
 
