@@ -138,37 +138,38 @@ newNote.addEventListener('click', function () {
     document.getElementById('info').value = entry.content;
     document.getElementById('tag').value = entry.tag;
     if(entry.tag == 'Event'){
-      console.log('we in');
-      let mainDiv = document.querySelector('.float-child-three');
-      let tagDiv = document.createElement('div');
-      tagDiv.setAttribute('id', 'tagDiv');
-      let dateInfo = document.createElement('p');
-      dateInfo.innerHTML = 'Select Start And End Date:';
+      if(document.getElementById('tagDiv') == null){
+        let mainDiv = document.querySelector('.float-child-three');
+        let tagDiv = document.createElement('div');
+        tagDiv.setAttribute('id', 'tagDiv');
+        let dateInfo = document.createElement('p');
+        dateInfo.innerHTML = 'Select Start And End Date:';
 
-      let dateSelectStart = document.createElement('input');
-      dateSelectStart.setAttribute('type', 'date');
-      dateSelectStart.setAttribute('id', 'date1');
-      let dateSelectEnd = document.createElement('input');
-      dateSelectEnd.setAttribute('type', 'date');
-      dateSelectEnd.setAttribute('id', 'date2');
+        let dateSelectStart = document.createElement('input');
+        dateSelectStart.setAttribute('type', 'date');
+        dateSelectStart.setAttribute('id', 'date1');
+        let dateSelectEnd = document.createElement('input');
+        dateSelectEnd.setAttribute('type', 'date');
+        dateSelectEnd.setAttribute('id', 'date2');
 
-      tagDiv.appendChild(dateInfo);
-      tagDiv.appendChild(dateSelectStart);
-      tagDiv.appendChild(dateSelectEnd);
+        tagDiv.appendChild(dateInfo);
+        tagDiv.appendChild(dateSelectStart);
+        tagDiv.appendChild(dateSelectEnd);
 
-      let timeInfo = document.createElement('p');
-      timeInfo.innerHTML = 'Select Start And End Time:';
-      let timeStart = document.createElement('input');
-      timeStart.setAttribute('type', 'time')
-      timeStart.setAttribute('id', 'time1');
-      let timeEnd = document.createElement('input');
-      timeEnd.setAttribute('type', 'time');
-      timeEnd.setAttribute('id', 'time2');
+        let timeInfo = document.createElement('p');
+        timeInfo.innerHTML = 'Select Start And End Time:';
+        let timeStart = document.createElement('input');
+        timeStart.setAttribute('type', 'time')
+        timeStart.setAttribute('id', 'time1');
+        let timeEnd = document.createElement('input');
+        timeEnd.setAttribute('type', 'time');
+        timeEnd.setAttribute('id', 'time2');
 
-      tagDiv.appendChild(timeInfo);
-      tagDiv.appendChild(timeStart);
-      tagDiv.appendChild(timeEnd);
-      mainDiv.appendChild(tagDiv);
+        tagDiv.appendChild(timeInfo);
+        tagDiv.appendChild(timeStart);
+        tagDiv.appendChild(timeEnd);
+        mainDiv.appendChild(tagDiv);
+      }
       let startDate = entry.eventStart;
       let endDate = entry.eventEnd;
       if(startDate != ''){
@@ -245,23 +246,6 @@ saveButton.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   entry.tag = tag;
 
-  if (!(currId in eventArr) && title != '' && tag == 'Event'){
-    let eventDate = document.getElementById('date').value;
-    eventArr[title] = eventDate;
-    console.log(eventArr);
-
-    // update event date field and save object in tempArray
-    entry = {...entry, eventDate: eventDate};
-    console.log(entry);
-    tempArray.set(entry.id, entry);
-
-  }
-
-  if (document.getElementById('date') != null) {
-
-    let dateElem = document.getElementById('date');
-    dateElem.remove();
-  }
 
   updateReminders();
 
@@ -517,105 +501,17 @@ function updateReminders() {
   for (const [key, value] of tempArray.entries()) {
     if (value.tag == 'Event') {
       let today = new Date();
-      today.setHours(0, 0, 0, 0)
-      let day = String(today.getDate()).padStart(2, '0');
-      let month = String(today.getMonth() + 1).padStart(2, '0');
-      let year = today.getFullYear();
-
+      today.setHours(0, 0, 0, 0);
+      let maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() + 7);
+      maxDate.setHours(0, 0, 0, 0);
 
       let eventDate = String(value.eventStart).substring(0,10);
-      if(month == '02'){
-        if(Number(day) > 21){
-
-          let maxDay = 7 - 28 + Number(day);
-          let maxDate = year + '-03-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-02-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-      }
-      else if (month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12') {
-        if (Number(day) > 24) {
-          let maxDate;
-          let maxDay = 7 - 31 + Number(day);
-          if (month == '12') {
-            maxDate = year + '-01-' + String(maxDay);
-          }
-          else {
-            let newMonth = Number(month) + 1;
-            maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
-          }
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-' + month + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-      }
-      else {
-        if (Number(day) > 24) {
-          let maxDay = 7 - 30 + Number(day);
-          let newMonth = Number(month) + 1;
-          let maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-' + month + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
+      let compEvent = new Date(eventDate);
+      if (compEvent <= maxDate && compEvent >= today) {
+        let item = document.createElement('li');
+        item.innerHTML = value.title;
+        remindersUl.appendChild(item);
       }
     }
   }
