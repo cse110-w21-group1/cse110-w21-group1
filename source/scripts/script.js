@@ -246,23 +246,6 @@ saveButton.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   entry.tag = tag;
 
-  if (!(currId in eventArr) && title != '' && tag == 'Event'){
-    let eventDate = document.getElementById('date').value;
-    eventArr[title] = eventDate;
-    console.log(eventArr);
-
-    // update event date field and save object in tempArray
-    entry = {...entry, eventDate: eventDate};
-    console.log(entry);
-    tempArray.set(entry.id, entry);
-
-  }
-
-  if (document.getElementById('date') != null) {
-
-    let dateElem = document.getElementById('date');
-    dateElem.remove();
-  }
 
   updateReminders();
 
@@ -518,105 +501,17 @@ function updateReminders() {
   for (const [key, value] of tempArray.entries()) {
     if (value.tag == 'Event') {
       let today = new Date();
-      today.setHours(0, 0, 0, 0)
-      let day = String(today.getDate()).padStart(2, '0');
-      let month = String(today.getMonth() + 1).padStart(2, '0');
-      let year = today.getFullYear();
-
+      today.setHours(0, 0, 0, 0);
+      let maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() + 7);
+      maxDate.setHours(0, 0, 0, 0);
 
       let eventDate = String(value.eventStart).substring(0,10);
-      if(month == '02'){
-        if(Number(day) > 21){
-
-          let maxDay = 7 - 28 + Number(day);
-          let maxDate = year + '-03-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-02-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-      }
-      else if (month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12') {
-        if (Number(day) > 24) {
-          let maxDate;
-          let maxDay = 7 - 31 + Number(day);
-          if (month == '12') {
-            maxDate = year + '-01-' + String(maxDay);
-          }
-          else {
-            let newMonth = Number(month) + 1;
-            maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
-          }
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-' + month + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-      }
-      else {
-        if (Number(day) > 24) {
-          let maxDay = 7 - 30 + Number(day);
-          let newMonth = Number(month) + 1;
-          let maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
-        else {
-          let maxDay = 7 + Number(day);
-          let maxDate = year + '-' + month + '-' + String(maxDay);
-          let compDate = new Date(maxDate);
-          compDate.setHours(0, 0, 0, 0);
-          let compEvent = new Date(eventDate);
-          compEvent.setHours(0, 0, 0, 0);
-          if (compEvent <= compDate && compEvent >= today) {
-            let item = document.createElement('li');
-            item.innerHTML = value.title;
-            remindersUl.appendChild(item);
-          }
-        }
+      let compEvent = new Date(eventDate);
+      if (compEvent <= maxDate && compEvent >= today) {
+        let item = document.createElement('li');
+        item.innerHTML = value.title;
+        remindersUl.appendChild(item);
       }
     }
   }
