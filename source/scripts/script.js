@@ -137,37 +137,38 @@ newNote.addEventListener('click', function () {
     document.getElementById('info').value = entry.content;
     document.getElementById('tag').value = entry.tag;
     if(entry.tag == 'Event'){
-      console.log('we in');
-      let mainDiv = document.querySelector('.float-child-three');
-      let tagDiv = document.createElement('div');
-      tagDiv.setAttribute('id', 'tagDiv');
-      let dateInfo = document.createElement('p');
-      dateInfo.innerHTML = 'Select Start And End Date:';
+      if(document.getElementById('tagDiv') == null){
+        let mainDiv = document.querySelector('.float-child-three');
+        let tagDiv = document.createElement('div');
+        tagDiv.setAttribute('id', 'tagDiv');
+        let dateInfo = document.createElement('p');
+        dateInfo.innerHTML = 'Select Start And End Date:';
 
-      let dateSelectStart = document.createElement('input');
-      dateSelectStart.setAttribute('type', 'date');
-      dateSelectStart.setAttribute('id', 'date1');
-      let dateSelectEnd = document.createElement('input');
-      dateSelectEnd.setAttribute('type', 'date');
-      dateSelectEnd.setAttribute('id', 'date2');
+        let dateSelectStart = document.createElement('input');
+        dateSelectStart.setAttribute('type', 'date');
+        dateSelectStart.setAttribute('id', 'date1');
+        let dateSelectEnd = document.createElement('input');
+        dateSelectEnd.setAttribute('type', 'date');
+        dateSelectEnd.setAttribute('id', 'date2');
 
-      tagDiv.appendChild(dateInfo);
-      tagDiv.appendChild(dateSelectStart);
-      tagDiv.appendChild(dateSelectEnd);
+        tagDiv.appendChild(dateInfo);
+        tagDiv.appendChild(dateSelectStart);
+        tagDiv.appendChild(dateSelectEnd);
 
-      let timeInfo = document.createElement('p');
-      timeInfo.innerHTML = 'Select Start And End Time:';
-      let timeStart = document.createElement('input');
-      timeStart.setAttribute('type', 'time')
-      timeStart.setAttribute('id', 'time1');
-      let timeEnd = document.createElement('input');
-      timeEnd.setAttribute('type', 'time');
-      timeEnd.setAttribute('id', 'time2');
+        let timeInfo = document.createElement('p');
+        timeInfo.innerHTML = 'Select Start And End Time:';
+        let timeStart = document.createElement('input');
+        timeStart.setAttribute('type', 'time')
+        timeStart.setAttribute('id', 'time1');
+        let timeEnd = document.createElement('input');
+        timeEnd.setAttribute('type', 'time');
+        timeEnd.setAttribute('id', 'time2');
 
-      tagDiv.appendChild(timeInfo);
-      tagDiv.appendChild(timeStart);
-      tagDiv.appendChild(timeEnd);
-      mainDiv.appendChild(tagDiv);
+        tagDiv.appendChild(timeInfo);
+        tagDiv.appendChild(timeStart);
+        tagDiv.appendChild(timeEnd);
+        mainDiv.appendChild(tagDiv);
+      }
       let startDate = entry.eventStart;
       let endDate = entry.eventEnd;
       if(startDate != ''){
