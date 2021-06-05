@@ -17,13 +17,15 @@ const setState = router.setState;
 var userId = "";
 
 var tempArray = new Map();   // hashmap to store notes locally
+var taskMap = new Map();   // map to store tasks locally
 var currId = "";
 //console.log(tempArray.size);
 
 
 var filterArr = {}; // arr to filter for specific notes
 
-  // temp arr for storing notes until Firebase is fully implemented
+
+// temp arr for storing notes until Firebase is fully implemented
 
 var eventArr = {};
 
@@ -42,8 +44,7 @@ let calendarLogo = document.querySelector('#calendar')
 let calendar = document.querySelector('calendar-elem');
 calendarLogo.addEventListener('click', function () {
   setState({ state: 'calendar' }, false);
-  calendar.render();
-
+  calendar.render(tempArray);
 });
 
 
@@ -209,16 +210,16 @@ saveButton.addEventListener('click', function () {
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
   var content = document.getElementById('info').value;  // main text; the body of the note
-  var tag = document.getElementById('tag').value;
 
+  var tag = document.getElementById('tag').value;      // note tag
 
   // entry already exists, update contents only
   let entry = tempArray.get(String(currId));
-  // console.log(tempArray);
-  // console.log(entry);
+  console.log(tempArray);
   entry.title = title;
   entry.content = content;
   entry.tag = tag;
+
   if(tag == 'Event'){
     let eventStartDate = document.getElementById('date1').value;
     let eventStartTime = document.getElementById('time1').value;
@@ -229,42 +230,69 @@ saveButton.addEventListener('click', function () {
     let eventEndTime = document.getElementById('time2').value;
     let eventEnd = eventEndDate + 'T' + eventEndTime;
     entry.eventEnd = eventEnd;
+
+
   }
+
 
 
   let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
 
+
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
-  
+
   var tag = document.getElementById('tag').value;      // note tag
+  entry.tag = tag;
 
-  // if (!(title in tempArray) && title != '' && tag == 'Event'){
-  //   let eventDate = document.getElementById('date').value;
-  //   eventArr[title] = eventDate;
-  //   //console.log(eventArr);
-  // }
+  if (!(currId in eventArr) && title != '' && tag == 'Event'){
+    let eventDate = document.getElementById('date').value;
+    eventArr[title] = eventDate;
+    console.log(eventArr);
 
-  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
-  // Also resets the forms to be empty
-  if (!(title in tempArray) && title != '') { // it will only save if title is unique or not empty
-    // newPost.entry = { "title": title, "content": content, "date": "10/10/10", "tag": tag }
-    // tempArray[title] = newPost;
-    document.getElementsByName('title')[0].value = ''; // did this to fix a strange bug
-    document.getElementById("info").value = '';
-    document.getElementById('tag').selectedIndex = 0;
-    filterArr[title] = tag;
-    //console.log(document.getElementsByName('title')[0]); // did this to fix a strange bug
-    title = undefined;
+    // update event date field and save object in tempArray
+    entry = {...entry, eventDate: eventDate};
+    console.log(entry);
+    tempArray.set(entry.id, entry);
+
   }
 
-  if(document.getElementById('date') != null){
+  if (document.getElementById('date') != null) {
+
     let dateElem = document.getElementById('date');
     dateElem.remove();
   }
 
   updateReminders();
+
+
+
+  // save to Firebase
+  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
+
+});
+
+// *********************************************
+// Filter
+// *********************************************
+var dropMenu = document.getElementById('Notes');
+dropMenu.addEventListener('change', function () {
+  //console.log('test');
+  var buttons = document.getElementsByClassName("notes");
+  for (let button of buttons) {
+    let entry = tempArray.get(button.id);
+    if (dropMenu.value == 'All') {
+      //console.log('All')
+      button.style.display = "block"
+    } else if (entry.tag != dropMenu.value) {
+      //console.log('hide')
+      button.style.display = "none";
+    } else if (entry.tag == dropMenu.value) {
+      //console.log('none')
+      button.style.display = "block";
+    }
+  }
 
 });
 
@@ -320,7 +348,7 @@ search.addEventListener('input', function () {
         document.getElementById('title').value = value.title;
         document.getElementById('info').value = value.content;
         document.getElementById('tag').value = value.tag;
-  
+
       });
 
       newList.appendChild(currButton);
@@ -342,6 +370,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     //console.log(firebaseUser);
     var notes_list = document.getElementById('noteslist');
     var greeting = document.getElementsByClassName("greeting")[0].children[0];
+    let tasklist = document.getElementById("tasks");
+
     greeting.innerHTML = "Hi, " + firebaseUser.displayName;
     userId = firebaseUser.uid;
     firebase.database().ref().child("users/" + userId + "/entries/").once("value").then(function (e) {
@@ -363,6 +393,62 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
       }
 
     });
+
+    firebase.database().ref().child("users/" + userId + "/tasks/").once("value").then(function (e) {
+      for (var key in e.val()) {
+        let task = e.val()[key];
+        //BUILD HTML
+        let taskLi = document.createElement("li");
+        if (task.check == true) 
+          taskLi.className = "taskcomplete";
+        else 
+          taskLi.className = "taskincomplete";
+        
+        //CHECKBOX
+        let taskChkbx = document.createElement("input");
+        taskChkbx.setAttribute("type", "checkbox");
+        taskChkbx.checked = task.check;
+
+        //USER TASK
+        let taskVal = document.createTextNode(task.title);
+
+        //DELETE BUTTON
+        let taskBtn = document.createElement("button");
+        taskBtn.innerHTML = "x";
+
+        //APPEND ELEMENTS TO TASKLI
+        taskLi.appendChild(taskChkbx);
+        taskLi.appendChild(taskVal);
+        taskLi.appendChild(taskBtn);
+
+        //ADD TASK TO TASK LIST
+        tasklist.appendChild(taskLi);
+
+        // task on click
+        taskChkbx.addEventListener('click', () => {
+          task.check = taskChkbx.checked;
+          if (task.check == true) {
+            taskLi.className = "taskcomplete";
+          }
+          else {
+            taskLi.className = "taskincomplete";
+          }
+          taskMap.set(task.id, task);
+          firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).update({ 'check': task.check });
+          console.log(taskMap);
+        });
+
+        // delete task
+        taskBtn.addEventListener('click', () => {
+          taskMap.delete(task.id, task);
+          taskLi.remove();
+          firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).remove();
+        });
+
+        taskMap.set(task.id, task);
+      }
+
+    });
   } else {
     console.log('Not logged in');
   }
@@ -371,62 +457,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
 
-
-// works very similarly to the search method
-var dropMenu = document.getElementById('Notes');
-dropMenu.addEventListener('change', function () {
-  //console.log('test');
-  //console.log(filterArr);
-  //Delete current note list to make room for filtered search
-  let currList = document.getElementById('noteslist');
-  currList.remove();
-  //Create new list which we will append searched values to
-  let newList = document.createElement('ul');
-  newList.setAttribute('class', 'notes_arr');
-  newList.setAttribute('id', 'noteslist');
-  let searchDiv = document.querySelector('.left-half');
-
-  let filterStr = dropMenu.value;
-  if (filterStr == 'All') {
-    for (let title in filterArr) {
-      let currButton = document.createElement('button');
-      currButton.innerHTML = title;
-      currButton.id = title;
-      currButton.className = "notes";
-      newList.appendChild(currButton);
-    }
-  } else {
-    for (let title in filterArr) {
-      if (filterArr[title] == filterStr) {
-        let currButton = document.createElement('button');
-        currButton.innerHTML = title;
-        currButton.id = title;
-        currButton.className = "notes";
-        newList.appendChild(currButton);
-      }
-    }
-  }
-  searchDiv.appendChild(newList);
-
-
-  let buttons2 = document.getElementsByClassName("notes");
-
-  for (let button of buttons2) {
-    button.addEventListener('click', function () {
-      var temp = tempArray[button.id];
-      document.getElementById('title').value = temp.entry.title;
-      document.getElementById('info').value = temp.entry.content;
-      document.getElementById('tag').value = temp.entry.tag;
-
-
-
-
-    });
-  }
-});
-
-
 var tagSelect = document.getElementById('tag');
+
 tagSelect.addEventListener('input', function(){
   if(tagSelect.value == 'Event'){
     let mainDiv = document.querySelector('.float-child-three');
@@ -464,6 +496,8 @@ tagSelect.addEventListener('input', function(){
     if(document.getElementById('tagDiv') != null){
       let eventSelect = document.getElementById('tagDiv');
       eventSelect.remove();
+
+
     }
   }
 });
@@ -472,109 +506,112 @@ tagSelect.addEventListener('input', function(){
 // Reminders Tab
 // *********************************************
 // Checks if an event is within the next week and will display the event in the case that it is.
-function updateReminders(){
-  if(document.getElementById('eventsList') != null){
+function updateReminders() {
+  if (document.getElementById('eventsList') != null) {
     let reminders = document.getElementById('eventsList');
     reminders.remove()
   }
   let container = document.querySelector('.reminders');
   let remindersUl = document.createElement('ul');
   remindersUl.setAttribute('id', 'eventsList');
-  for(const [key, value] of tempArray.entries()){
-    if(value.tag == 'Event'){
+
+  for (const [key, value] of tempArray.entries()) {
+    if (value.tag == 'Event') {
       let today = new Date();
-      today.setHours(0,0,0,0)
+      today.setHours(0, 0, 0, 0)
       let day = String(today.getDate()).padStart(2, '0');
       let month = String(today.getMonth() + 1).padStart(2, '0');
       let year = today.getFullYear();
 
+
       let eventDate = String(value.eventStart).substring(0,10);
       if(month == '02'){
         if(Number(day) > 21){
+
           let maxDay = 7 - 28 + Number(day);
           let maxDate = year + '-03-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-02-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
       }
-      else if(month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12'){
-        if(Number(day) > 24){
+      else if (month == '01' || month == '03' || month == '05' || month == '07' || month == '08' || month == '10' || month == '12') {
+        if (Number(day) > 24) {
           let maxDate;
           let maxDay = 7 - 31 + Number(day);
-          if(month == '12'){
+          if (month == '12') {
             maxDate = year + '-01-' + String(maxDay);
           }
-          else{
+          else {
             let newMonth = Number(month) + 1;
-            maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+            maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
           }
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-' + month + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
       }
-      else{
-        if(Number(day) > 24){
+      else {
+        if (Number(day) > 24) {
           let maxDay = 7 - 30 + Number(day);
           let newMonth = Number(month) + 1;
-          let maxDate = year + '-' + String(newMonth).padStart(2,0) + '-' + String(maxDay);
+          let maxDate = year + '-' + String(newMonth).padStart(2, 0) + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
           }
         }
-        else{
+        else {
           let maxDay = 7 + Number(day);
           let maxDate = year + '-' + month + '-' + String(maxDay);
           let compDate = new Date(maxDate);
-          compDate.setHours(0,0,0,0);
+          compDate.setHours(0, 0, 0, 0);
           let compEvent = new Date(eventDate);
-          compEvent.setHours(0,0,0,0);
-          if(compEvent <= compDate && compEvent >= today){
+          compEvent.setHours(0, 0, 0, 0);
+          if (compEvent <= compDate && compEvent >= today) {
             let item = document.createElement('li');
             item.innerHTML = value.title;
             remindersUl.appendChild(item);
@@ -587,3 +624,75 @@ function updateReminders(){
   container.appendChild(remindersUl);
 }
 
+// *********************************************
+// To-Do Tasks
+// *********************************************
+
+// *********************************************
+// New Task
+// *********************************************
+var taskbutton = document.getElementById("add-task-btn");
+taskbutton.addEventListener('click', () => {
+  let tasklist = document.getElementById("tasks");
+
+  let title = document.getElementById('input-task').value ? document.getElementById('input-task').value : "Untitled";
+  let id = Math.floor(Math.random() * 1000000000);
+
+  //BUILD HTML
+  let taskLi = document.createElement("li");
+  taskLi.setAttribute("class", "taskincomplete");
+
+  //CHECKBOX
+  let taskChkbx = document.createElement("input");
+  taskChkbx.setAttribute("type", "checkbox");
+
+  //USER TASK
+  let taskVal = document.createTextNode(title);
+
+  //DELETE BUTTON
+  let taskBtn = document.createElement("button");
+  taskBtn.innerHTML = "x";
+
+  //APPEND ELEMENTS TO TASKLI
+  taskLi.appendChild(taskChkbx);
+  taskLi.appendChild(taskVal);
+  taskLi.appendChild(taskBtn);
+
+  //ADD TASK TO TASK LIST
+  tasklist.appendChild(taskLi);
+
+  let task = { "title": taskVal, "id": id, "check": taskChkbx.checked };
+
+  // task on click
+  taskChkbx.addEventListener('click', () => {
+    task.check = taskChkbx.checked;
+    if (task.check == true) {
+      taskLi.className = "taskcomplete";
+    }
+    else {
+      taskLi.className = "taskincomplete";
+    }
+    taskMap.set(id, task);
+    firebase.database().ref().child("users/" + userId + "/tasks/" + pushID).update({ 'check': task.check });
+    console.log(taskMap);
+  });
+
+  // delete task
+  taskBtn.addEventListener('click', () => {
+    taskMap.delete(id, task);
+    taskLi.remove();
+    firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).remove();
+  });
+
+  task = { "title": title, "id": id, "check": taskChkbx.checked };
+
+  // clear input data
+  document.getElementById('input-task').value = "";
+
+  // save to Firebase
+  let pushID = firebase.database().ref().child("users/" + userId + "/tasks").push(task).getKey();
+  firebase.database().ref().child("users/" + userId + "/tasks/" + pushID).update({ 'firebaseID': pushID });
+
+  task = { "title": title, "id": id, "check": taskChkbx.checked, "firebaseID": pushID };
+  taskMap.set(id, task);
+});
