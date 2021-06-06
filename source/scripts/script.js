@@ -591,3 +591,7 @@ taskbutton.addEventListener('click', () => {
   task = { "title": title, "id": id, "check": taskChkbx.checked, "firebaseID": pushID };
   taskMap.set(id, task);
 });
+
+// *********************************************
+// Bulletpoints
+// *********************************************
