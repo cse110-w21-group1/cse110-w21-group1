@@ -24,12 +24,36 @@ var currId = "";
 
 var filterArr = {}; // arr to filter for specific notes
 
-
-// temp arr for storing notes until Firebase is fully implemented
-
 var eventArr = {};
 
+// *********************************************
+// Instantiate a Quill editor
+// *********************************************
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
 
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+var editor = new Quill('#editor', {
+  modules: { 
+    toolbar: toolbarOptions
+  },
+  theme: 'snow'
+});
 
 // *********************************************
 // state changes
@@ -65,11 +89,11 @@ logoutLogo.addEventListener('click', function () {
 // *********************************************
 // Enable/Disable 'bold' for notes
 // *********************************************
-var text = document.getElementById("info");
-let bold = document.querySelector('img[class="bold"]');
-bold.addEventListener('click', function () {
-  text.style.fontWeight = text.style.fontWeight == 'bold' ? 'normal' : 'bold';
-});
+// var text = document.getElementById("info");
+// let bold = document.querySelector('img[class="bold"]');
+// bold.addEventListener('click', function () {
+//   text.style.fontWeight = text.style.fontWeight == 'bold' ? 'normal' : 'bold';
+// });
 
 // Enable/Disable 'italics' for notes
 // let italics = document.querySelector('img[class="italics"]');
@@ -89,7 +113,8 @@ newNote.addEventListener('click', function () {
   var form = document.getElementById("noteinput");
   form.style.display = "block";
   document.getElementById("title").value = "";
-  document.getElementById("info").value = "";
+  // document.querySelector("p").innerHTML = "";
+  editor.setText('');
   document.getElementById('tag').selectedIndex = 0;
   title = undefined;
   if(document.getElementById('tagDiv') != null){
@@ -99,7 +124,7 @@ newNote.addEventListener('click', function () {
 
   // create new entry
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
-  var content = document.getElementById('info').value;  // main text; the body of the note
+  var content = editor.getContents();  // main text; the body of the note
   var tag = document.getElementById('tag').value;       // note tag
   // let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
   var newButton = document.createElement("button");                                                         // button for the new note
@@ -135,7 +160,7 @@ newNote.addEventListener('click', function () {
     let entry = tempArray.get(newButton.id);
     form.style.display = "block";
     document.getElementById('title').value = entry.title;
-    document.getElementById('info').value = entry.content;
+    editor.setContents(entry.content);
     document.getElementById('tag').value = entry.tag;
     if(entry.tag == 'Event'){
       if(document.getElementById('tagDiv') == null){
@@ -209,8 +234,7 @@ let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
-  var content = document.getElementById('info').value;  // main text; the body of the note
-
+  var content = editor.getContents();  // main text; the body of the note
   var tag = document.getElementById('tag').value;      // note tag
 
   // entry already exists, update contents only
@@ -329,7 +353,7 @@ search.addEventListener('input', function () {
       currButton.addEventListener('click', function () {
 
         document.getElementById('title').value = value.title;
-        document.getElementById('info').value = value.content;
+        editor.setContents(value.content);
         document.getElementById('tag').value = value.tag;
 
       });
@@ -370,7 +394,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         newButton.addEventListener('click', function () {
           document.getElementById("noteinput").style.display = "block";
           document.getElementById('title').value = entry.title;
-          document.getElementById('info').value = entry.content;
+          editor.setContents(entry.content);
           currId = newButton.id;
         });
       }
@@ -591,7 +615,3 @@ taskbutton.addEventListener('click', () => {
   task = { "title": title, "id": id, "check": taskChkbx.checked, "firebaseID": pushID };
   taskMap.set(id, task);
 });
-
-// *********************************************
-// Bulletpoints
-// *********************************************
