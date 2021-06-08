@@ -114,7 +114,7 @@ newNote.addEventListener('click', function () {
   form.style.display = "block";
   document.getElementById("title").value = "";
   // document.querySelector("p").innerHTML = "";
-  editor.setText('');
+  editor.setContents('');
   document.getElementById('tag').selectedIndex = 0;
   title = undefined;
   if(document.getElementById('tagDiv') != null){

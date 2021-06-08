@@ -11,8 +11,12 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
+  
   <!-- Include Quill stylesheet -->
   <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+  
+  <!-- Include the Quill library -->
+  <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 </head>
 
 <body>
@@ -70,37 +74,12 @@
     
     <!-- RIGHT HALF -->
     <div class="right-half">
-      <div class="float-container">
 
-        <!-- Create the toolbar container -->
+      <div class="float-container">
+        <!-- Create the Quill toolbar container -->
         <!-- <div id="toolbar">
           <button class="ql-bold">Bold</button>
           <button class="ql-italic">Italic</button>
-        </div> -->
-
-        <!-- Font selection -->
-        <!-- <div class="float-child">
-          <form action="/action_page.php">
-            <select name="font" id="font">
-              <option value="Times New Roman">Times New Roman</option>
-            </select>
-          </form>
-        </div> -->
-
-        <!-- Font size -->
-        <!-- <div class="float-child">
-          <form action="/action_page.php">
-            <select name="font_size" id="font_size">
-              <option value="12">12</option>
-            </select>
-          </form>
-        </div> -->
-
-        <!-- Font formatting -->
-        <!-- <div class="float-child">
-          <button type="bold"> <img class="bold" src="./components/bold.png"></button>
-          <button type="italics"><img class="italics" src="./components/italic.png"></button>
-          <button type="underline"><img class="underline" src="./components/underline.png"></button>
         </div> -->
       </div>
 
@@ -115,26 +94,12 @@
           <!-- Textbox for title -->
           <form>
             <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
-            
-            <!-- Text area for main notes -->
-            <!-- <textarea id="info" name="info" rows="30" cols="100"></textarea> -->
           </form>
           
-          <!-- Create the editor container -->
+          <!-- Create the Quill editor container -->
           <div id="editor">
             <p id="info"></p>
           </div>
-
-          <!-- Include the Quill library -->
-          <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
-
-          <!-- Initialize Quill editor -->
-          <!-- <script>
-            var editor = new Quill('#editor', {
-              modules: { toolbar: '#toolbar' },
-              theme: 'snow'
-            });
-          </script> -->
 
           <button class="save" type="button">Save</button>
           <button class="delete" type="button">Delete</button>
