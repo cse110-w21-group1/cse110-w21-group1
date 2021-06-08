@@ -86,23 +86,6 @@ logoutLogo.addEventListener('click', function () {
   window.location.href = "login.html";
 });
 
-// *********************************************
-// Enable/Disable 'bold' for notes
-// *********************************************
-// var text = document.getElementById("info");
-// let bold = document.querySelector('img[class="bold"]');
-// bold.addEventListener('click', function () {
-//   text.style.fontWeight = text.style.fontWeight == 'bold' ? 'normal' : 'bold';
-// });
-
-// Enable/Disable 'italics' for notes
-// let italics = document.querySelector('img[class="italics"]');
-// italics.addEventListener('click', function() {
-//   text.value.italics();
-// });
-
-
-
 
 // *********************************************
 // 'New Note' onclick
