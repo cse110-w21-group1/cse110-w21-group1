@@ -8,7 +8,9 @@
     "test": "jest --env=jsdom",
     "coverage": "jest --coverage"
   },
-  "dependencies": {},
+  "dependencies": {
+    "quill": "^1.3.7"
+  },
   "directories": {
     "test": "tests"
   },
