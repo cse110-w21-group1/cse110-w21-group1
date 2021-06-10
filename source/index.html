@@ -27,28 +27,26 @@
 
   <!-- NAV BAR -->
   <div class="sidenav">
-    
-    <img src = "images/logo.png" alt = "Page One Logo" id = "logo" width = 80 height = 80>
-    <img src = "images/home.png" alt = "Home Button" id = "home" class = "icon" width = 70 height = 70>
-    <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 55 height = 55>
-    <img src = "images/logout-icon.png" alt = "Logout Button" id = "logout" class = "icon" width = 70 height = 70>
-
-
+    <img src = "images/logo.png" alt = "Page One Logo" id = "logo" width = 60%>
+    <img src = "images/home.png" alt = "Home Button" id = "home" class = "icon" width = 60%>
+    <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 60%>
+    <img src = "images/logout-icon.png"  alt = "Logout Button" id = "logout" class = "icon" width = 60%>
   </div>
 
   <main>
-    
   <section class="container">
+
     <!-- LEFT HALF -->
     <div class="left-half">
+      
       <!-- Search bar -->
       <div class="search">
-        <input type="search" id="search" placeholder="Search..." size=29>
+        <input type="search" id="search" placeholder="Search..." size=20>
       </div>
       
       <!-- Firebase Username -->
       <div class = "greeting">
-        <p></p>
+        <p class="greeting_text"></p>
       </div>
       
       
@@ -62,6 +60,7 @@
             <option value="All">All</option>
             <option value="Event">Events</option>
             <option value="Notes">Notes</option>
+            <option value="Reflections">Reflections</option>
           </select>
         </form>
       </div>
@@ -75,22 +74,14 @@
     <!-- RIGHT HALF -->
     <div class="right-half">
 
-      <div class="float-container">
-        <!-- Create the Quill toolbar container -->
-        <!-- <div id="toolbar">
-          <button class="ql-bold">Bold</button>
-          <button class="ql-italic">Italic</button>
-        </div> -->
-      </div>
-
       <br> <br>
       <div class = "line">
         <hr>
       </div>
-      
+            
       <div class="float-container" style="display:none" id="noteinput">
         <div class="float-child-two">
-
+          
           <!-- Textbox for title -->
           <form>
             <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
@@ -111,7 +102,7 @@
         <!-- I changed the values of the tag to make it easier to read-->
         <div class="float-child-three">
           <form action="/action_page.php">
-            <select name="type" id="tag">
+            <select name="type" id="tag" class = "dropdown">
               <option value="Add a tag">Add a tag</option>
               <option value="Event">Event</option>
               <option value="Notes">Notes</option>
@@ -120,32 +111,34 @@
             <!--<br><br> -->
           </form>
         </div>
-      <div>
+      </div>
 
-      <!-- To-do List -->
-      <div id="tasker" class="tasker">
-        <hr>
-        <div id="error" class="error">Tasks</div>
-        <div id="tasker-header" class="tasker-header">
-          <input type="text" id="input-task" placeholder="Enter a task">
-          <button id="add-task-btn">+</button>
+      <div class="lists">
+        <!-- Weekly Reminders -->
+        <div class="reminders">
+          <p>Weekly Reminders</p>
+          <ul id='eventsList'></ul>
         </div>
-        <div class="tasker-body">
-          <ul id="tasks"></ul>
+
+        <!-- To-do List -->
+        <div id="tasker" class="tasker">
+          <hr>
+          <div id="error" class="error">Tasks</div>
+          <div id="tasker-header" class="tasker-header">
+            <input type="text" id="input-task" placeholder="Enter a task">
+            <button id="add-task-btn">+</button>
+          </div>
+          <div class="tasker-body">
+            <ul id="tasks"></ul>
+          </div>
         </div>
       </div>
-      <div class="reminders">
-        <p>Weekly Reminders</p>
-        <ul id='eventsList'></ul>
-      </div>
+    
     </div>
   </section>
   </main>
 
   <calendar-elem></calendar-elem>
-
-  <!-- journal-entry web component -->
-  <script src="./components/notes.js" type="module"></script>
 
   <!-- calendar web component -->
   <script src="./components/calendar.js" type="module"></script>

@@ -92,11 +92,11 @@ logoutLogo.addEventListener('click', function () {
 // *********************************************
 let newNote = document.querySelector('button[type="new_note"]');
 newNote.addEventListener('click', function () {
-  // shows input form when pressing 'New Note' button
+  
+  // shows input form when pressing 'New Note' button, sets elements to be blank
   var form = document.getElementById("noteinput");
   form.style.display = "block";
   document.getElementById("title").value = "";
-  // document.querySelector("p").innerHTML = "";
   editor.setContents('');
   document.getElementById('tag').selectedIndex = 0;
   title = undefined;
@@ -107,9 +107,8 @@ newNote.addEventListener('click', function () {
 
   // create new entry
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
-  var content = editor.getContents();  // main text; the body of the note
-  var tag = document.getElementById('tag').value;       // note tag
-  // let newPost = document.createElement('note-elem');    // new Notes obj as defined in notes.js
+  var content = editor.getContents();                                                                       // main text; the body of the note
+  var tag = document.getElementById('tag').value;                                                           // note tag
   var newButton = document.createElement("button");                                                         // button for the new note
   var notes_list = document.getElementById('noteslist');                                                    // list of note buttons
 
@@ -131,7 +130,6 @@ newNote.addEventListener('click', function () {
 
   let eventStart = '';
   let eventEnd = '';
-  //newPost.entry = { "title": title, "content": content, "date": date, "tag": tag };
   let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd };
 
   // Saves the new Note obj in tempArray, then empties the form
@@ -217,8 +215,8 @@ let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
   var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
   var notes_list = document.getElementById('noteslist');
-  var content = editor.getContents();  // main text; the body of the note
-  var tag = document.getElementById('tag').value;      // note tag
+  var content = editor.getContents();
+  var tag = document.getElementById('tag').value;
 
   // entry already exists, update contents only
   let entry = tempArray.get(String(currId));
@@ -240,11 +238,8 @@ saveButton.addEventListener('click', function () {
     entry.eventEnd = eventEnd;
   }
 
-
-
   let currButton = document.querySelector(`button[id="${currId}"]`);
   currButton.innerHTML = title;
-
 
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
@@ -252,10 +247,7 @@ saveButton.addEventListener('click', function () {
   var tag = document.getElementById('tag').value;      // note tag
   entry.tag = tag;
 
-
   updateReminders();
-
-
 
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
