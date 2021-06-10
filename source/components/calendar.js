@@ -98,9 +98,10 @@ class CalendarElem extends HTMLElement {
         const event = {
           id: value.id,
           title: value.title,
-          start: value.eventDate, // TODO: needs to be changed to the event date instead of the date of creation
+          start: value.eventStart, // TODO: needs to be changed to the event date instead of the date of creation
+          end: value.eventEnd,
+
         };
-        allDay: true
         eventsList.push(event);
       }
     });
@@ -113,7 +114,7 @@ class CalendarElem extends HTMLElement {
       },
       handleWindowResize: true,  // Set to true to enable resizing of calendar with window
       aspectRatio: 2,             // Changed from 1.35 to 2 to better fit the window space
-      events: eventsList
+      events: eventsList,
     });
     console.log(eventsList);
     this.cal.render();
@@ -121,4 +122,3 @@ class CalendarElem extends HTMLElement {
 }
 
 customElements.define('calendar-elem', CalendarElem);
-
