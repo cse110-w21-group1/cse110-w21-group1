@@ -311,40 +311,18 @@ deleteButton.addEventListener('click', function () {
 var search = document.getElementById('search');
 search.addEventListener('input', function () {
 
-  //console.log(searchArr);
-
-
-  //Delete current note list to make room for filtered search
-  let currList = document.getElementById('noteslist');
-  currList.remove();
-  //Create new list which we will append searched values to
-  let newList = document.createElement('ul');
-  newList.setAttribute('class', 'notes_arr');
-  newList.setAttribute('id', 'noteslist');
-  let searchDiv = document.querySelector('.left-half');
-
   let searchStr = search.value;
-  for (const [key, value] of tempArray.entries()) {
 
-    let currTitle = value.title;
-
-    if (currTitle.includes(searchStr)) {
-      let currButton = document.createElement('button');
-      currButton.innerHTML = currTitle;
-      currButton.className = "notes";
-
-      currButton.addEventListener('click', function () {
-
-        document.getElementById('title').value = value.title;
-        editor.setContents(value.content);
-        document.getElementById('tag').value = value.tag;
-
-      });
-
-      newList.appendChild(currButton);
+  let buttons = document.getElementsByClassName("notes");
+  for (let button of buttons) {
+    let entry = tempArray.get(button.id);
+    if (entry.title.includes(searchStr)) {
+      button.style.display = "block";
+    } 
+    else{
+      button.style.display = "none";
     }
   }
-  searchDiv.appendChild(newList);
 
 });
 
