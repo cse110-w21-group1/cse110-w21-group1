@@ -230,15 +230,14 @@ saveButton.addEventListener('click', function () {
   if(tag == 'Event'){
     let eventStartDate = document.getElementById('date1').value;
     let eventStartTime = document.getElementById('time1').value;
-    let eventStart = eventStartDate + 'T' + eventStartTime;
+    let eventStart = (eventStartTime == '') ? eventStartDate : eventStartDate + 'T' + eventStartTime;
     entry.eventStart = eventStart;
 
     let eventEndDate = document.getElementById('date2').value;
+    eventEndDate = (eventEndDate == '') ? eventStartDate : eventEndDate;
     let eventEndTime = document.getElementById('time2').value;
-    let eventEnd = eventEndDate + 'T' + eventEndTime;
+    let eventEnd = (eventEndTime == '') ? eventEndDate : eventEndDate + 'T' + eventEndTime;
     entry.eventEnd = eventEnd;
-
-
   }
 
 
