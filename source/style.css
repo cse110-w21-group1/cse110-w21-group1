@@ -2,7 +2,7 @@
 .sidenav {
 
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 130px; /* Set the width of the sidebar */
+  width: 7%; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
@@ -44,25 +44,31 @@ body.calendar main {
 }
 
 #logo {
-  margin-left: 25px; 
+  margin-left: 20%;
 }
 
 #home {
-  position: absolute;
-  left: 30px;
-  top: 150px;
+  margin-top: 25%;
+  margin-left: 20%;
 }
 
 #calendar {
-  position:absolute;
-  left: 37px;
-  top: 270px;
+  margin-top: 25%;
+  margin-left: 20%;
 }
 
 #logout {
-  position: absolute;
-  left: 30px;
-  bottom: 50px;
+  /* margin-top: 25%;
+  margin-left: 20%;
+  position: fixed;
+  bottom: 0px;
+  margin-left: 20%;
+  margin-bottom: 10%;
+  bottom: 50px; */
+
+  position:relative; 
+  margin-top:100%; 
+  margin-left: 20%;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -106,12 +112,14 @@ body.calendar main {
     font-size: 20px;
     /* background-color: #ebf7ff; */
     list-style: none;
-    width: 100%;
-    margin-left: -2.5%;
+    width: 103%;
+    margin-left: -7.5%;
+    height: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   /* Each individual note button */
-
   .notes{
     font-size: 20px;
     color: rgb(106, 184, 244, 255); 
@@ -125,7 +133,6 @@ body.calendar main {
     align-items: center;
     text-align: left;
     border: none;
-
   }
 
   .float-child-three {
@@ -139,7 +146,8 @@ body.calendar main {
   .left-half {
     height: 100%;
     background-color: #f0f0f0;
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     left: 0px;
     width: 30%;
     top: 0;
@@ -147,7 +155,8 @@ body.calendar main {
     padding-top: 0%;
     color: rgb(106, 184, 244, 255);
     font-family: 'Open Sans', sans-serif;
-    font-size: 40px;
+    font-size: 240%;
+    overflow-y: hidden;
   }
 
   .newNotesButton{
@@ -203,6 +212,14 @@ body.calendar main {
     border: none;
   }
 
+
+  #tag{
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
   /* Notes dropdown */
   .Notes{
     background-color: #cacaca;
@@ -231,13 +248,19 @@ body.calendar main {
     font-family: 'Open Sans', sans-serif;
   }
 
-  .search{
+  input[id=search]{
     width: 80%;
-    padding-left: 5%;
+    background-color: #ffffff;
+    border: none;
+    margin-left:8%;
   }
   
   .greeting{
     padding-left: 5%;
+  }
+
+  .greeting_text {
+    word-wrap: break-word;
   }
   
   /* The navigation menu links */
@@ -287,16 +310,36 @@ input[type=text]:focus, input[type=password]:focus {
   outline: none;
 }
 
+
+button{
+  color: #ffffff;
+  background-color: #3498DB;
+  border: none;
+  margin-left: 1px;
+} 
+
+
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
 
+.reminders {
+  margin-right: 10%;
+  /* margin-right: 95px; */
+}
+
+.lists{
+  float: right;
+  width: 23%;
+}
+
+
 /* To-do List Styling */
 .tasker {
-  width: 25%;
-  float: right;
-  padding-top: 25px;
+  width: 85%;
+  /* float: right; */
+  padding-top: 40px;
 }
 
 input[id="input-task"] {
