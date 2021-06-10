@@ -356,6 +356,57 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
           document.getElementById("noteinput").style.display = "block";
           document.getElementById('title').value = entry.title;
           editor.setContents(entry.content);
+          document.getElementById('tag').value = entry.tag;
+          if(entry.tag == 'Event'){
+            if(document.getElementById('tagDiv') == null){
+              let mainDiv = document.querySelector('.float-child-three');
+              let tagDiv = document.createElement('div');
+              tagDiv.setAttribute('id', 'tagDiv');
+              let dateInfo = document.createElement('p');
+              dateInfo.innerHTML = 'Select Start And End Date:';
+
+              let dateSelectStart = document.createElement('input');
+              dateSelectStart.setAttribute('type', 'date');
+              dateSelectStart.setAttribute('id', 'date1');
+              let dateSelectEnd = document.createElement('input');
+              dateSelectEnd.setAttribute('type', 'date');
+              dateSelectEnd.setAttribute('id', 'date2');
+
+              tagDiv.appendChild(dateInfo);
+              tagDiv.appendChild(dateSelectStart);
+              tagDiv.appendChild(dateSelectEnd);
+
+              let timeInfo = document.createElement('p');
+              timeInfo.innerHTML = 'Select Start And End Time:';
+              let timeStart = document.createElement('input');
+              timeStart.setAttribute('type', 'time')
+              timeStart.setAttribute('id', 'time1');
+              let timeEnd = document.createElement('input');
+              timeEnd.setAttribute('type', 'time');
+              timeEnd.setAttribute('id', 'time2');
+
+              tagDiv.appendChild(timeInfo);
+              tagDiv.appendChild(timeStart);
+              tagDiv.appendChild(timeEnd);
+              mainDiv.appendChild(tagDiv);
+            }
+            let startDate = entry.eventStart;
+            let endDate = entry.eventEnd;
+            if(startDate != ''){
+              document.getElementById('date1').value = startDate.substring(0,10);
+              document.getElementById('time1').value = startDate.substring(11,startDate.length);
+            }
+            if(endDate != ''){
+              document.getElementById('date2').value = endDate.substring(0,10);
+              document.getElementById('time2').value = endDate.substring(11,startDate.length);
+            }
+          }
+          else{
+            if(document.getElementById('tagDiv') != null){
+              let eventSelect = document.getElementById('tagDiv');
+              eventSelect.remove();
+            }
+          }
           currId = newButton.id;
         });
       }
