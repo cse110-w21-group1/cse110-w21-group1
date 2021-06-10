@@ -66,8 +66,8 @@ body.calendar main {
   margin-bottom: 10%;
   bottom: 50px; */
 
-  position:relative; 
-  margin-top:100%; 
+  /* position:relative;  */
+  margin-top: 25%; 
   margin-left: 20%;
 }
 
@@ -114,7 +114,8 @@ body.calendar main {
     list-style: none;
     width: 103%;
     margin-left: -7.5%;
-    height: auto;
+    /* height: auto; */
+    max-height: 350px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -176,42 +177,11 @@ body.calendar main {
   .notes_dropdown{
     margin-left: 5%;
   }
-  
-  .bold{
-    width: 15px;
-    height: 15px;
-  }
-
-  button[type=bold]{
-    background-color: #ffffff;
-    border: none;
-  }
 
   .title{
     margin-top: 1%;
     font-size: 45px;
   }
-
-  .italics{
-    width: 15px;
-    height: 15px;
-  }
-
-  button[type=italics]{
-    background-color: #ffffff;
-    border: none;
-  }
-
-  .underline{
-    width: 15px;
-    height: 15px;
-  }
-
-  button[type=underline]{
-    background-color: #ffffff;
-    border: none;
-  }
-
 
   #tag{
     background-color: #3498DB;
@@ -246,6 +216,10 @@ body.calendar main {
     padding-top:2%;
     color: rgb(106, 184, 244, 255);
     font-family: 'Open Sans', sans-serif;
+  }
+
+  #editor {
+    color: black;
   }
 
   input[id=search]{
@@ -354,3 +328,4 @@ input[id="input-task"] {
 .taskcomplete {
   text-decoration: line-through;
 }
+
