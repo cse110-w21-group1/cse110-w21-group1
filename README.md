@@ -54,4 +54,4 @@ We used Jest for the unit testing and jest puppeteer to test the features like a
 npm test source/tests/
 ```
 
-
+![test](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/source/images/Screen%20Shot%202021-06-10%20at%2010.20.25%20PM.png)
