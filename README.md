@@ -43,13 +43,13 @@ Sprint 2 documents:
 - [Team Contract](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/misc/rules.md)
 - [Meeting Notes](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/admin/meetings)
 
-##Source
+## Source
 
-Most of our code is contained under the /source folder
+Most of our code is contained under the /source folder. When running locally make sure that you are in the source folder
 
 ## Tests
 
-We used Jest for the testing 
+We used Jest for the unit testing and jest puppeteer to test the features like adding notes, to-do list and event dates.
 
 
 
