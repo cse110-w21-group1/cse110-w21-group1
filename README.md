@@ -22,9 +22,11 @@ Full description of our CI/CD pipleine is located at admin/cipipeline
 
 All our design documentation is under the /specs folder
 - First stage was branstorming activity
-    - [Fat Marker and Wireframe](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/specs/brainstorm/basic-fatmarker-and-wireframes.png)    
+    - [Fat Marker and Wireframe](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/specs/brainstorm/basic-fatmarker-and-wireframes.png)
+    - [Map of Features](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/specs/brainstorm/features.png)
 - List of our ADR Decisions [ADRs](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/adr)
-- [Pitch Files](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/pitch)
+- The pitch document contains the topics of risks and rabbit holes as well as a visual representation of what we are doing in the form of system diagrams and wireframes. It also has a statement of purpose as well as a section on user personas.
+    - [Pitch Files](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/pitch)
 
 
 
