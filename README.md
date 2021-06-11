@@ -8,8 +8,8 @@
 ![BulletJournal](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/misc/LandingPage.png)
 
 ## Final project videos
-- [final video public version]()
-- [final video private version]()
+- [final video public version](https://www.youtube.com/watch?v=DFtsaCRu2A8)
+- [final video private version](https://www.youtube.com/watch?v=i86XrnXfDmU)
 
 ## CI/CD Pipeline
 
