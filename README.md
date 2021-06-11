@@ -14,15 +14,15 @@
 ## CI/CD Pipeline
 
 Full description of our CI/CD pipleine is located at admin/cipipeline
-[Description](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/development/admin/cipipeline/phase1.md)
-[Video Walkthrough](https://www.youtube.com/watch?v=wvAZC1AsWd8)
-Documentation could be found [here]()
+- [Description](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/development/admin/cipipeline/phase1.md)
+- [Video Walkthrough](https://www.youtube.com/watch?v=wvAZC1AsWd8)
+- Documentation could be found [here]()
 
 ## Design
 
 All our design documentation is under the /specs folder
-List of our ADR Decisions [ADRs](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/adr)
-[Pitch Files](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/pitch)
+- List of our ADR Decisions [ADRs](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/adr)
+- [Pitch Files](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/pitch)
 
 
 
