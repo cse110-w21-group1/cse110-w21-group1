@@ -6,7 +6,7 @@
         div {
             background-color: white;
             width: 350px;
-            height: 450px;
+            height: 500px;
             /* border: 5px solid dodgserblue; */
             padding: 50px;
             /* margin: auto; */
@@ -41,6 +41,7 @@
             cursor: pointer;
             width: 100%;
             opacity: 0.9;
+            position: relative; top:20px;
         }
 
         button:hover {
@@ -66,8 +67,8 @@
             /* background-color: white; */
             color: dodgerblue;
         }
-
-        /* Float cancel and signup buttons and add an equal width */
+ 
+        /* Fix margins and width of buttons */
         .loginbtn,
         .signupbtn,
         .loginbtn2,
@@ -78,21 +79,21 @@
             margin: auto;
         }
 
-        /* Add padding to container elements */
+        /* Add padding */
         .container {
             padding: 16px;
         }
 
-        /* Clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
+        /* error message */
+        .error {
+            font-family: Arial, Helvetica, sans-serif;
+            color: red;
+            font-size: 12px;
+            position: relative;
         }
 
-        /* Change styles for cancel button and signup button on extra small screens */
+        /* Change styles for login button and signup button on extra small screens */
         @media screen and (max-width: 300px) {
-
             .loginbtn,
             .signupbtn,
             .loginbtn2,
@@ -102,13 +103,12 @@
         }
 
         ::placeholder {
-            /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: rgb(106, 184, 244, 255);
             opacity: 1;
             font-size: 15px;
-            /* Firefox */
         }
     </style>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,46 +116,67 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+    <!-- Additional Firebase libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 </head>
 
 <body>
     <main>
-        <form>
+        <!--Log In Tab -->
+        <form id="loginform">
             <div class="container" style="display:block" id="page1">
                 <h1><b>Login</b></h1>
                 <hr>
+                <input type="text" id="username" placeholder="Email" name="username" required>
 
-                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" id="password" placeholder="Password" name="psw" required>
 
-                <input type="password" placeholder="Password" name="psw" required>
+                <output class="error" name="loginError"></output>
 
-                <!-- <div class="clearfix"> -->
-                <button type="submit" class="loginbtn" onclick="changePage();">Login</button> <br><br>
-                <button type="submit" class="signupbtn" onclick="signUp()">Sign Up</button>
-
-                <!-- </div> -->
+                <!-- login/signup buttons -->
+                <button type="submit" class="loginbtn">Login</button> <br><br>
+                <button type="reset" class="signupbtn" onclick="moveSignup()">Sign Up</button>
             </div>
+        </form>
+
+        <!--Sign Up Tab -->
+        <form id="signupform">
             <div class="container" style="display:none" id="page2">
                 <h1><b>Sign Up</b></h1>
                 <hr>
+                <input type="text" id="nameUser" placeholder="Enter Name*" name="nameUser" required>
 
-                <input type="text" placeholder="Username" name="username" required>
+                <input type="text" id="username2" placeholder="Enter Email*" name="username" required>
 
-                <input type="password" placeholder="Password" name="psw" required>
+                <input type="password" id="password2" placeholder="Enter Password*" name="psw" required>
 
-                <!-- <div class="clearfix"> -->
-                <button type="submit" class="signupbtn2" onclick="changePage();">Sign Up</button> <br><br>
-                <button type="submit" class="loginbtn2" onclick="signUp()">Log In</button>
+                <output class="error" name="signinError"></output>
 
-                <!-- </div> -->
+                <!-- login/signup buttons -->
+                <button type="submit" class="signupbtn2">Sign Up</button> <br><br>
+                <button type="reset" class="loginbtn2" onclick="moveLogin()">Log In</button>
             </div>
         </form>
+
+        <div class="container" style="display:none" id="page3">
+            <h1><b>Congratulations!</b></h1>
+            <h1><b>You have signed up.</b></h1>
+            <button type="button" class="" onclick="moveLogin()">Go to Log In</button>
+        </div>
     </main>
 
     <entry-page></entry-page>
 
-    <script src="./components/login.js"></script>
+    <!-- Script for login.html -->
+    <script src="./scripts/login.js"></script>
 
+    <!-- Firebase functionality -->
+    <script src="./scripts/app.js"></script>
 </body>
 
 </html>

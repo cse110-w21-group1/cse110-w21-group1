@@ -11,6 +11,12 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Include Quill stylesheet -->
+  <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+  
+  <!-- Include the Quill library -->
+  <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 </head>
 
 <body>
@@ -21,117 +27,130 @@
 
   <!-- NAV BAR -->
   <div class="sidenav">
-    
-    <img src = "images/logo.png" alt = "Page One Logo" id = "logo" width = 80 height = 80>
-    <img src = "images/home.png" alt = "Home Button" id = "home" class = "icon" width = 70 height = 70>
-    <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 55 height = 55>
-    <img src = "images/logout-icon.png" alt = "Logout Button" id = "logout" class = "icon" width = 70 height = 70>
-
-
+    <img src = "images/logo.png" alt = "Page One Logo" id = "logo" width = 60%>
+    <img src = "images/home.png" alt = "Home Button" id = "home" class = "icon" width = 60%>
+    <img src = "images/calendar-icon.png" alt = "Calendar Button" id = "calendar" class = "icon" width = 60%>
+    <img src = "images/logout-icon.png"  alt = "Logout Button" id = "logout" class = "icon" width = 60%>
   </div>
 
   <main>
-    
   <section class="container">
-    
+
     <!-- LEFT HALF -->
     <div class="left-half">
+      
       <!-- Search bar -->
       <div class="search">
-        <form action="/action_page.php">
-          <input type="search" id="search" placeholder="Search...">
-        </form>
+        <input type="search" id="search" placeholder="Search..." size=20>
       </div>
       
+      <!-- Firebase Username -->
       <div class = "greeting">
-        <p>Hi, User</p>
+        <p class="greeting_text"></p>
       </div>
       
       
       <!-- New Note -->
-      <button class="button" type="new_note">New Note</button>
+      <button class="newNotesButton" type="new_note">New Note</button>
 
       <!-- Notes dropdown menu -->
       <div class="notes_dropdown">
         <form action="/action_page.php">
           <select class="Notes" name="Notes" id="Notes">
-            <option value="note1">Notes</option>
+            <option value="All">All</option>
+            <option value="Event">Events</option>
+            <option value="Notes">Notes</option>
+            <option value="Reflections">Reflections</option>
           </select>
         </form>
       </div>
       
-      <ul class = "dates">
-        <li> 4/22/2021 </li>
+      <!-- List of note buttons -->
+      <ul class = "notes_arr", id = "noteslist">
       </ul>
 
     </div>
     
     <!-- RIGHT HALF -->
     <div class="right-half">
-      <div class="float-container">
-
-        <div class="float-child">
-          <form action="/action_page.php">
-            <select name="font" id="font">
-              <option value="Times New Roman">Times New Roman</option>
-            </select>
-          </form>
-        </div>
-
-        <div class="float-child">
-          <form action="/action_page.php">
-            <select name="font_size" id="font_size">
-              <option value="12">12</option>
-            </select>
-          </form>
-        </div>
-
-        <div class="float-child">
-          <button type="bold"> <img class="bold" src="./components/bold.png"></button>
-          <button type="italics"><img class="italics" src="./components/italic.png"></button>
-          <button type="underline"><img class="underline" src="./components/underline.png"></button>
-        </div>
-      </div>
 
       <br> <br>
       <div class = "line">
         <hr>
       </div>
-      
-      <div class="float-container">
+            
+      <div class="float-container" style="display:none" id="noteinput">
         <div class="float-child-two">
-          <p  class = "title">My day today</p> 
+          
+          <!-- Textbox for title -->
+          <form>
+            <input type="text" id="title" name="title" placeholder="Enter notes title" onkeydown="return (event.keyCode!=13);">
+          </form>
+          
+          <!-- Create the Quill editor container -->
+          <div id="editor">
+            <p id="info"></p>
+          </div>
+
+          <button class="save" type="button">Save</button>
+          <button class="delete" type="button">Delete</button>
+        
+
         </div>
 
+        <!-- Tags --> 
+        <!-- I changed the values of the tag to make it easier to read-->
         <div class="float-child-three">
           <form action="/action_page.php">
-            <select name="cars" id="cars">
-              <option value="volvo">Add a tag</option>
-              <option value="saab">Dummy</option>
-              <option value="opel">Foo</option>
-              <option value="audi">Bar</option>
+            <select name="type" id="tag" class = "dropdown">
+              <option value="Add a tag">Add a tag</option>
+              <option value="Event">Event</option>
+              <option value="Notes">Notes</option>
+              <option value="Reflections">Reflections</option>
             </select>
-            <br><br>
+            <!--<br><br> -->
           </form>
         </div>
-      <div>
+      </div>
 
+      <div class="lists">
+        <!-- Weekly Reminders -->
+        <div class="reminders">
+          <p>Weekly Reminders</p>
+          <ul id='eventsList'></ul>
+        </div>
+
+        <!-- To-do List -->
+        <div id="tasker" class="tasker">
+          <hr>
+          <div id="error" class="error">Tasks</div>
+          <div id="tasker-header" class="tasker-header">
+            <input type="text" id="input-task" placeholder="Enter a task">
+            <button id="add-task-btn">+</button>
+          </div>
+          <div class="tasker-body">
+            <ul id="tasks"></ul>
+          </div>
+        </div>
+      </div>
+    
     </div>
   </section>
   </main>
 
   <calendar-elem></calendar-elem>
 
-  <!-- journal-entry web component -->
+  <!-- calendar web component -->
   <script src="./components/calendar.js" type="module"></script>
-  <script src="./components/notes.js" type="module"></script>
+  <script src="./fullcalendar-5.7.0/lib/main.js"></script>
 
   <!-- Router Script -->
   <script src="./scripts/router.js" type="module"></script>
 
   <!-- Main Script -->
 
-  <script src="/scripts/script.js" type="module"></script>
+  <script src="./scripts/script.js" type="module"></script>
+
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
@@ -139,22 +158,7 @@
   <!-- Additional Firebase libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-
-  <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
-      authDomain: "pageone-c741e.firebaseapp.com",
-      projectId: "pageone-c741e",
-      storageBucket: "pageone-c741e.appspot.com",
-      messagingSenderId: "752294608481",
-      appId: "1:752294608481:web:2bad0f544ed9d91584b420"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
-
-  <script src="./scripts/script.js" type="module"></script>
+  
 
 </body>
 
