@@ -7,7 +7,7 @@
 
 describe('Basic user flow for SPA ', () => {
     beforeAll(async () => {
-      await page.goto('http://localhost:5501/source/index.html');
+      await page.goto('http://localhost:5500/source/index.html');
       await page.waitForTimeout(1000);
     }, 10000);
 
@@ -44,13 +44,8 @@ describe('Basic user flow for SPA ', () => {
         await page.type('#time1','0504p');
         await page.type('#time2','0705p');
         await page.click('button.save');
-
-        const timeField = await page.$('#date1');
-        const time = await page.evaluate((textField) => textField.value, timeField);
-        expect(time).toEqual('2021-06-14');
-
         const remindersLength = (await page.$$('ul[id="eventsList"] > li')).length;
-        // expect(remindersLength).toEqual(1);
+        expect(remindersLength).toEqual(1);
     }, 20000);
 
     it('Test 5: Check if calendar updated with event', async () =>{
@@ -81,21 +76,5 @@ describe('Basic user flow for SPA ', () => {
         await page.click('#add-task-btn');
         const taskLength = (await page.$$('ul[id="tasks"] > li')).length;
         expect(taskLength).toEqual(2);
-    }, 10000);
-    
-
-    it('Test 8: Check if filtering, displays the correct notes', async () =>{
-        //await page.click('input#title');
-        await page.type('input#title', 'Test Note');
-        
-        await page.select('select#tag', 'Notes');
-        await page.click('button.save');
-        await page.click('button.newNotesButton');
-        await page.click('select#Notes', 'Notes');
-        const filteredLength = (await page.$$('ul[id="noteslist"] > button[style*="display: block]"')).length;
-        // await page.click('ul#noteslist > button:first-child');
-        // const noteTitleElem = await page.$('input#title');
-        // const noteTitle = await page.evaluate((textField) => textField.value, noteTitleElem);
-        expect(filteredLength).toEqual(1);
     }, 10000);
 });
