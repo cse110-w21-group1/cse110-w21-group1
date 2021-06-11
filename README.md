@@ -21,6 +21,8 @@ Full description of our CI/CD pipleine is located at admin/cipipeline
 ## Design
 
 All our design documentation is under the /specs folder
+- First stage was branstorming activity
+    - [Fat Marker and Wireframe](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/specs/brainstorm/basic-fatmarker-and-wireframes.png)    
 - List of our ADR Decisions [ADRs](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/adr)
 - [Pitch Files](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/specs/pitch)
 
