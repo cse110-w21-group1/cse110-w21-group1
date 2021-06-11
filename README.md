@@ -1,6 +1,6 @@
 # CSE 110 Team 1 - PageOne <img src="admin/branding/logo.png" width="50">
 
-[Team Page](admin/team.md)
+[Team Page](admin/team.md)  
 **Page One** - *the beginning of your book and the start of a new story.* 
 
 [Current App](https://cse110-w21-group1.github.io/cse110-w21-group1/source/login.html)
@@ -31,12 +31,25 @@ All our design documentation is under the /specs folder
 ## Sprints
 
 Overall we had 2 Sprints during which we followed Agile methods
-Sprint 1 documents:
+Sprint 1 documents: 
 - [Sprint 1 review](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/051621-sprint-1-review.md)
-- [Sprint 1 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/05182021-retrospective.md)
-Sprint 2 documents:
+- [Sprint 1 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/05182021-retrospective.md) 
+Sprint 2 documents:  
 - [Sprint 2 review](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/060121-sprint-2-review.md)
-- [Sprint 2 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/Retrospective2.png)
+- [Sprint 2 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/Retrospective2.png) 
+
+## Admin
+
+- [Team Contract](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/misc/rules.md)
+- [Meeting Notes](https://github.com/cse110-w21-group1/cse110-w21-group1/tree/main/admin/meetings)
+
+##Source
+
+Most of our code is contained under the /source folder
+
+## Tests
+
+We used Jest for the testing 
 
 
 
