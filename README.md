@@ -16,7 +16,7 @@
 Full description of our CI/CD pipleine is located at admin/cipipeline
 - [CI/CD Description](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/development/admin/cipipeline/phase1.md)
 - [Video Walkthrough](https://www.youtube.com/watch?v=wvAZC1AsWd8)
-- Documentation could be found [here]()
+- Documentation could be found [here](https://vedeeva.github.io/JSDocs/)
 
 ## Design
 
