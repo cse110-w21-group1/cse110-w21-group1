@@ -30,7 +30,8 @@ All our design documentation is under the /specs folder
 
 ## Sprints
 
-Overall we had 2 Sprints during which we followed Agile methods. 
+Overall we had 2 Sprints during which we followed Agile methods.   
+
 Sprint 1 documents: 
 - [Sprint 1 review](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/051621-sprint-1-review.md)
 - [Sprint 1 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/05182021-retrospective.md)   
