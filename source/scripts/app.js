@@ -75,7 +75,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     }
 });
 
-// writes to the database
+/** 
+ * Writes a new user to the database.
+ * 
+ * @param {string} userId - Unique ID of user.
+ * @param {string} name - Name of the user.
+ * @param {string} email - Email of the user.
+ */
 function writeUserData(userId, name, email) {
     firebase.database().ref('users/' + userId).set({
       username: name,

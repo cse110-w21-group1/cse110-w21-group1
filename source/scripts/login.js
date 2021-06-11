@@ -1,4 +1,10 @@
-// moves to signup page
+
+
+/**
+ * Move to the signup page
+ *
+ */
+
 function moveSignup() {
     document.querySelector('.error').innerHTML = "";
     document.querySelectorAll('.error')[1].innerHTML = "";
@@ -7,7 +13,9 @@ function moveSignup() {
     document.getElementById("page3").style.display = "none";
 }
 
-// moves to login page
+/** 
+ * Move to the signin page
+ */
 function moveLogin() {
     document.querySelector('.error').innerHTML = "";
     document.querySelectorAll('.error')[1].innerHTML = "";

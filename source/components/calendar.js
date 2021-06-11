@@ -3,6 +3,9 @@
  * Uses FullCalendar API to automatically generate the calendar.
  */
 class CalendarElem extends HTMLElement {
+  /**
+   * Constructor for a calendar elem. Initializes the shadow root.
+   */
   constructor() {
     super();
 

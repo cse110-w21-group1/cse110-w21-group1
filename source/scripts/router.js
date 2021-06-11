@@ -4,6 +4,9 @@ export const router = {};
 
 /**
  * Changes the "page" (state) that your SPA app is currently set to
+ * 
+ * @param {Object} state - the current state
+ * @param {Bool} pop - true if we want to go back, false otherwise
  */
 router.setState = function(state, pop) {
   /**

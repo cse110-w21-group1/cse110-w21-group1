@@ -1,6 +1,6 @@
 
 // Initialize Firebase
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyAaAx6HT1qq_mZIZLggvj8EzL5ctI0mQfA",
   authDomain: "pageone-c741e.firebaseapp.com",
   projectId: "pageone-c741e",
@@ -14,29 +14,28 @@ firebase.initializeApp(firebaseConfig);
 import { router } from './router.js'
 const setState = router.setState;
 
-var userId = "";
+let userId = "";
 
-var tempArray = new Map();   // hashmap to store notes locally
-var taskMap = new Map();   // map to store tasks locally
-var currId = "";
-//console.log(tempArray.size);
+let tempArray = new Map();   // hashmap to store notes locally
+let taskMap = new Map();   // map to store tasks locally
+let currId = "";
 
 
-var filterArr = {}; // arr to filter for specific notes
+let filterArr = {}; // arr to filter for specific notes
 
-var eventArr = {};
+let eventArr = {};
 
 // *********************************************
 // Instantiate a Quill editor
 // *********************************************
-var toolbarOptions = [
+let toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
   ['blockquote', 'code-block'],
 
   [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+  [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
   [{ 'direction': 'rtl' }],                         // text direction
 
   [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
@@ -48,8 +47,8 @@ var toolbarOptions = [
 
   ['clean']                                         // remove formatting button
 ];
-var editor = new Quill('#editor', {
-  modules: { 
+let editor = new Quill('#editor', {
+  modules: {
     toolbar: toolbarOptions
   },
   theme: 'snow'
@@ -92,119 +91,25 @@ logoutLogo.addEventListener('click', function () {
 // *********************************************
 let newNote = document.querySelector('button[type="new_note"]');
 newNote.addEventListener('click', function () {
-  
+
   // shows input form when pressing 'New Note' button, sets elements to be blank
-  var form = document.getElementById("noteinput");
+  let form = document.getElementById("noteinput");
   form.style.display = "block";
   document.getElementById("title").value = "";
   editor.setContents('');
   document.getElementById('tag').selectedIndex = 0;
-  title = undefined;
-  if(document.getElementById('tagDiv') != null){
+
+  if (document.getElementById('tagDiv') != null) {
     let tagDiv = document.getElementById('tagDiv');
     tagDiv.remove();
   }
 
-  // create new entry
-  var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
-  var content = editor.getContents();                                                                       // main text; the body of the note
-  var tag = document.getElementById('tag').value;                                                           // note tag
-  var newButton = document.createElement("button");                                                         // button for the new note
-  var notes_list = document.getElementById('noteslist');                                                    // list of note buttons
-
-  // sets the text inside the button to the note's title, then appends it to the list
-  newButton.innerHTML = title;
-
-  // hashing for unique entry id
-  let id = Math.floor(Math.random() * 1000000000);
-  newButton.id = id;
-  newButton.className = "notes";
-
-
-  // add to notelist
-  notes_list.appendChild(newButton);
-
-  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
-  let eventStart = '';
-  let eventEnd = '';
-  let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd };
-
-  // Saves the new Note obj in tempArray, then empties the form
+  // get the entry and the new button to add to tempArray
+  let [entry, newButton] = createNoteObject();
   tempArray.set(newButton.id, entry);
 
   // new note, currId should be empty
   currId = newButton.id;
-  newButton.addEventListener('click', function () {
-    let entry = tempArray.get(newButton.id);
-    form.style.display = "block";
-    document.getElementById('title').value = entry.title;
-    editor.setContents(entry.content);
-    document.getElementById('tag').value = entry.tag;
-    if(entry.tag == 'Event'){
-      if(document.getElementById('tagDiv') == null){
-        let mainDiv = document.querySelector('.float-child-three');
-        let tagDiv = document.createElement('div');
-        tagDiv.setAttribute('id', 'tagDiv');
-        let dateInfo = document.createElement('p');
-        dateInfo.innerHTML = 'Select Start And End Date:';
-
-        let dateSelectStart = document.createElement('input');
-        dateSelectStart.setAttribute('type', 'date');
-        dateSelectStart.setAttribute('id', 'date1');
-        let dateSelectEnd = document.createElement('input');
-        dateSelectEnd.setAttribute('type', 'date');
-        dateSelectEnd.setAttribute('id', 'date2');
-
-        tagDiv.appendChild(dateInfo);
-        tagDiv.appendChild(dateSelectStart);
-        tagDiv.appendChild(dateSelectEnd);
-
-        let timeInfo = document.createElement('p');
-        timeInfo.innerHTML = 'Select Start And End Time:';
-        let timeStart = document.createElement('input');
-        timeStart.setAttribute('type', 'time')
-        timeStart.setAttribute('id', 'time1');
-        let timeEnd = document.createElement('input');
-        timeEnd.setAttribute('type', 'time');
-        timeEnd.setAttribute('id', 'time2');
-
-        tagDiv.appendChild(timeInfo);
-        tagDiv.appendChild(timeStart);
-        tagDiv.appendChild(timeEnd);
-        mainDiv.appendChild(tagDiv);
-      }
-      let startDate = entry.eventStart;
-      let endDate = entry.eventEnd;
-      if(startDate != ''){
-        document.getElementById('date1').value = startDate.substring(0,10);
-        document.getElementById('time1').value = startDate.substring(11,startDate.length);
-      }
-      if(endDate != ''){
-        document.getElementById('date2').value = endDate.substring(0,10);
-        document.getElementById('time2').value = endDate.substring(11,startDate.length);
-      }
-    }
-    else{
-      if(document.getElementById('tagDiv') != null){
-        let eventSelect = document.getElementById('tagDiv');
-        eventSelect.remove();
-      }
-    }
-    console.log(newButton.id);
-    currId = newButton.id;
-  });
-
-  // save to Firebase
-  var pushID = firebase.database().ref().child("users/" + userId + "/entries").push(entry).getKey();
-  //console.log(entry.id + " saved");
-  //console.log(pushID);
-  firebase.database().ref().child("users/" + userId + "/entries/" + pushID).update({ 'firebaseID': pushID });
-
-  entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd, "firebaseID": pushID };
-  tempArray.set(newButton.id, entry);
 });
 
 
@@ -213,19 +118,18 @@ newNote.addEventListener('click', function () {
 // *********************************************
 let saveButton = document.querySelector('button[class="save"]');
 saveButton.addEventListener('click', function () {
-  var title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
-  var notes_list = document.getElementById('noteslist');
-  var content = editor.getContents();
-  var tag = document.getElementById('tag').value;
+  let title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled";
+  let notes_list = document.getElementById('noteslist');
+  let content = editor.getContents();
+  let tag = document.getElementById('tag').value;
 
   // entry already exists, update contents only
   let entry = tempArray.get(String(currId));
-  console.log(tempArray);
   entry.title = title;
   entry.content = content;
   entry.tag = tag;
 
-  if(tag == 'Event'){
+  if (tag == 'Event') {
     let eventStartDate = document.getElementById('date1').value;
     let eventStartTime = document.getElementById('time1').value;
     let eventStart = (eventStartTime == '') ? eventStartDate : eventStartDate + 'T' + eventStartTime;
@@ -244,33 +148,24 @@ saveButton.addEventListener('click', function () {
   // save to Firebase
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
-  var tag = document.getElementById('tag').value;      // note tag
-  entry.tag = tag;
-
   updateReminders();
 
-  // save to Firebase
-  firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).set(entry);
 
 });
 
 // *********************************************
 // Filter
 // *********************************************
-var dropMenu = document.getElementById('Notes');
+let dropMenu = document.getElementById('Notes');
 dropMenu.addEventListener('change', function () {
-  //console.log('test');
-  var buttons = document.getElementsByClassName("notes");
+  let buttons = document.getElementsByClassName("notes");
   for (let button of buttons) {
     let entry = tempArray.get(button.id);
     if (dropMenu.value == 'All') {
-      //console.log('All')
       button.style.display = "block"
     } else if (entry.tag != dropMenu.value) {
-      //console.log('hide')
       button.style.display = "none";
     } else if (entry.tag == dropMenu.value) {
-      //console.log('none')
       button.style.display = "block";
     }
   }
@@ -284,9 +179,6 @@ let deleteButton = document.querySelector('button[class="delete"]');
 deleteButton.addEventListener('click', function () {
   // delete from Firebase
   let entry = tempArray.get(currId);
-  // console.log(tempArray);
-  // console.log(entry);
-  // console.log(currId);
   firebase.database().ref().child("users/" + userId + "/entries/" + entry.firebaseID).remove();
 
   tempArray.delete(currId);
@@ -299,7 +191,7 @@ deleteButton.addEventListener('click', function () {
 // *********************************************
 // Search bar
 // *********************************************
-var search = document.getElementById('search');
+let search = document.getElementById('search');
 search.addEventListener('input', function () {
 
   let searchStr = search.value;
@@ -309,8 +201,8 @@ search.addEventListener('input', function () {
     let entry = tempArray.get(button.id);
     if (entry.title.includes(searchStr)) {
       button.style.display = "block";
-    } 
-    else{
+    }
+    else {
       button.style.display = "none";
     }
   }
@@ -326,15 +218,14 @@ search.addEventListener('input', function () {
 // Loads the notes
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-    //console.log(firebaseUser);
-    var notes_list = document.getElementById('noteslist');
-    var greeting = document.getElementsByClassName("greeting")[0].children[0];
+    let notes_list = document.getElementById('noteslist');
+    let greeting = document.getElementsByClassName("greeting")[0].children[0];
     let tasklist = document.getElementById("tasks");
 
     greeting.innerHTML = "Hi, " + firebaseUser.displayName;
     userId = firebaseUser.uid;
     firebase.database().ref().child("users/" + userId + "/entries/").once("value").then(function (e) {
-      for (var key in e.val()) {
+      for (let key in e.val()) {
         let entry = e.val()[key];
         let newButton = document.createElement("button");
         newButton.className = "notes";
@@ -344,76 +235,22 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         notes_list.appendChild(newButton);
 
         newButton.addEventListener('click', function () {
-          document.getElementById("noteinput").style.display = "block";
-          document.getElementById('title').value = entry.title;
-          editor.setContents(entry.content);
-          document.getElementById('tag').value = entry.tag;
-          if(entry.tag == 'Event'){
-            if(document.getElementById('tagDiv') == null){
-              let mainDiv = document.querySelector('.float-child-three');
-              let tagDiv = document.createElement('div');
-              tagDiv.setAttribute('id', 'tagDiv');
-              let dateInfo = document.createElement('p');
-              dateInfo.innerHTML = 'Select Start And End Date:';
-
-              let dateSelectStart = document.createElement('input');
-              dateSelectStart.setAttribute('type', 'date');
-              dateSelectStart.setAttribute('id', 'date1');
-              let dateSelectEnd = document.createElement('input');
-              dateSelectEnd.setAttribute('type', 'date');
-              dateSelectEnd.setAttribute('id', 'date2');
-
-              tagDiv.appendChild(dateInfo);
-              tagDiv.appendChild(dateSelectStart);
-              tagDiv.appendChild(dateSelectEnd);
-
-              let timeInfo = document.createElement('p');
-              timeInfo.innerHTML = 'Select Start And End Time:';
-              let timeStart = document.createElement('input');
-              timeStart.setAttribute('type', 'time')
-              timeStart.setAttribute('id', 'time1');
-              let timeEnd = document.createElement('input');
-              timeEnd.setAttribute('type', 'time');
-              timeEnd.setAttribute('id', 'time2');
-
-              tagDiv.appendChild(timeInfo);
-              tagDiv.appendChild(timeStart);
-              tagDiv.appendChild(timeEnd);
-              mainDiv.appendChild(tagDiv);
-            }
-            let startDate = entry.eventStart;
-            let endDate = entry.eventEnd;
-            if(startDate != ''){
-              document.getElementById('date1').value = startDate.substring(0,10);
-              document.getElementById('time1').value = startDate.substring(11,startDate.length);
-            }
-            if(endDate != ''){
-              document.getElementById('date2').value = endDate.substring(0,10);
-              document.getElementById('time2').value = endDate.substring(11,startDate.length);
-            }
-          }
-          else{
-            if(document.getElementById('tagDiv') != null){
-              let eventSelect = document.getElementById('tagDiv');
-              eventSelect.remove();
-            }
-          }
-          currId = newButton.id;
+          handleNoteButtonClick(newButton);
         });
       }
 
     });
 
     firebase.database().ref().child("users/" + userId + "/tasks/").once("value").then(function (e) {
-      for (var key in e.val()) {
+      for (let key in e.val()) {
         let task = e.val()[key];
         //BUILD HTML
         let taskLi = document.createElement("li");
-        if (task.check == true) 
+        if (task.check == true)
           taskLi.className = "taskcomplete";
-        else 
+        else
           taskLi.className = "taskincomplete";
-        
+
         //CHECKBOX
         let taskChkbx = document.createElement("input");
         taskChkbx.setAttribute("type", "checkbox");
@@ -445,7 +282,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
           }
           taskMap.set(task.id, task);
           firebase.database().ref().child("users/" + userId + "/tasks/" + task.firebaseID).update({ 'check': task.check });
-          console.log(taskMap);
         });
 
         // delete task
@@ -462,52 +298,20 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
   } else {
     console.log('Not logged in');
   }
-
 });
 
 
 
-var tagSelect = document.getElementById('tag');
+let tagSelect = document.getElementById('tag');
 
-tagSelect.addEventListener('input', function(){
-  if(tagSelect.value == 'Event'){
-    let mainDiv = document.querySelector('.float-child-three');
-    let tagDiv = document.createElement('div');
-    tagDiv.setAttribute('id', 'tagDiv');
-    let dateInfo = document.createElement('p');
-    dateInfo.innerHTML = 'Select Start And End Date:';
-
-    let dateSelectStart = document.createElement('input');
-    dateSelectStart.setAttribute('type', 'date');
-    dateSelectStart.setAttribute('id', 'date1');
-    let dateSelectEnd = document.createElement('input');
-    dateSelectEnd.setAttribute('type', 'date');
-    dateSelectEnd.setAttribute('id', 'date2');
-
-    tagDiv.appendChild(dateInfo);
-    tagDiv.appendChild(dateSelectStart);
-    tagDiv.appendChild(dateSelectEnd);
-
-    let timeInfo = document.createElement('p');
-    timeInfo.innerHTML = 'Select Start And End Time:';
-    let timeStart = document.createElement('input');
-    timeStart.setAttribute('type', 'time')
-    timeStart.setAttribute('id', 'time1');
-    let timeEnd = document.createElement('input');
-    timeEnd.setAttribute('type', 'time');
-    timeEnd.setAttribute('id', 'time2');
-
-    tagDiv.appendChild(timeInfo);
-    tagDiv.appendChild(timeStart);
-    tagDiv.appendChild(timeEnd);
-    mainDiv.appendChild(tagDiv);
+tagSelect.addEventListener('input', function () {
+  if (tagSelect.value == 'Event') {
+    eventInput();
   }
-  else{
-    if(document.getElementById('tagDiv') != null){
+  else {
+    if (document.getElementById('tagDiv') != null) {
       let eventSelect = document.getElementById('tagDiv');
       eventSelect.remove();
-
-
     }
   }
 });
@@ -515,7 +319,11 @@ tagSelect.addEventListener('input', function(){
 // *********************************************
 // Reminders Tab
 // *********************************************
-// Checks if an event is within the next week and will display the event in the case that it is.
+// 
+/**
+ * Checks if an event is within the next week and will display the event in the weekly reminders section if it is.
+ * 
+ */
 function updateReminders() {
   if (document.getElementById('eventsList') != null) {
     let reminders = document.getElementById('eventsList');
@@ -533,7 +341,7 @@ function updateReminders() {
       maxDate.setDate(maxDate.getDate() + 7);
       maxDate.setHours(0, 0, 0, 0);
 
-      let eventDate = String(value.eventStart).substring(0,10);
+      let eventDate = String(value.eventStart).substring(0, 10);
       let compEvent = new Date(eventDate);
       compEvent.setHours(0, 0, 0, 0);
       if (compEvent <= maxDate && compEvent >= today) {
@@ -554,7 +362,7 @@ function updateReminders() {
 // *********************************************
 // New Task
 // *********************************************
-var taskbutton = document.getElementById("add-task-btn");
+let taskbutton = document.getElementById("add-task-btn");
 taskbutton.addEventListener('click', () => {
   let tasklist = document.getElementById("tasks");
 
@@ -597,7 +405,6 @@ taskbutton.addEventListener('click', () => {
     }
     taskMap.set(id, task);
     firebase.database().ref().child("users/" + userId + "/tasks/" + pushID).update({ 'check': task.check });
-    console.log(taskMap);
   });
 
   // delete task
@@ -619,3 +426,124 @@ taskbutton.addEventListener('click', () => {
   task = { "title": title, "id": id, "check": taskChkbx.checked, "firebaseID": pushID };
   taskMap.set(id, task);
 });
+
+/**
+ * Creates all the event inputs that are needed for the events tag
+ *
+ */
+function eventInput() {
+  let mainDiv = document.querySelector('.float-child-three');
+  let tagDiv = document.createElement('div');
+  tagDiv.setAttribute('id', 'tagDiv');
+  let dateInfo = document.createElement('p');
+  dateInfo.innerHTML = 'Select Start And End Date:';
+
+  let dateSelectStart = document.createElement('input');
+  dateSelectStart.setAttribute('type', 'date');
+  dateSelectStart.setAttribute('id', 'date1');
+  let dateSelectEnd = document.createElement('input');
+  dateSelectEnd.setAttribute('type', 'date');
+  dateSelectEnd.setAttribute('id', 'date2');
+
+  tagDiv.appendChild(dateInfo);
+  tagDiv.appendChild(dateSelectStart);
+  tagDiv.appendChild(dateSelectEnd);
+
+  let timeInfo = document.createElement('p');
+  timeInfo.innerHTML = 'Select Start And End Time:';
+  let timeStart = document.createElement('input');
+  timeStart.setAttribute('type', 'time')
+  timeStart.setAttribute('id', 'time1');
+  let timeEnd = document.createElement('input');
+  timeEnd.setAttribute('type', 'time');
+  timeEnd.setAttribute('id', 'time2');
+
+  tagDiv.appendChild(timeInfo);
+  tagDiv.appendChild(timeStart);
+  tagDiv.appendChild(timeEnd);
+  mainDiv.appendChild(tagDiv);
+}
+
+/** 
+ * Fills in the HTML elements with the notes' saved contents
+ * 
+ * @param {Element} newButton - The button that corresponds to the note used to fill in HTLE
+ */
+function handleNoteButtonClick(newButton) {
+  let entry = tempArray.get(newButton.id);
+  document.getElementById("noteinput").style.display = "block";
+  document.getElementById('title').value = entry.title;
+  editor.setContents(entry.content);
+  document.getElementById('tag').value = entry.tag;
+  if (entry.tag == 'Event') {
+    if (document.getElementById('tagDiv') == null) {
+      eventInput();
+    }
+    let startDate = entry.eventStart;
+    let endDate = entry.eventEnd;
+    if (startDate != '') {
+      document.getElementById('date1').value = startDate.substring(0, 10);
+      document.getElementById('time1').value = startDate.substring(11, startDate.length);
+    }
+    if (endDate != '') {
+      document.getElementById('date2').value = endDate.substring(0, 10);
+      document.getElementById('time2').value = endDate.substring(11, startDate.length);
+    }
+  }
+  else {
+    if (document.getElementById('tagDiv') != null) {
+      let eventSelect = document.getElementById('tagDiv');
+      eventSelect.remove();
+    }
+  }
+  currId = newButton.id;
+}
+
+/** 
+ * Function that creates a note object and button given the contents of the note page. 
+ * 
+ * @return {[Object,Element]} An array containing the note object and the element corresponding to the new button
+ */
+function createNoteObject() {
+  // create new entry
+  let title = document.getElementById('title').value ? document.getElementById('title').value : "Untitled"; // title of the note
+  let content = editor.getContents();                                                                       // main text; the body of the note
+  let tag = document.getElementById('tag').value;                                                           // note tag
+  let newButton = document.createElement("button");                                                         // button for the new note
+  let notes_list = document.getElementById('noteslist');                                                    // list of note buttons
+
+  // sets the text inside the button to the note's title, then appends it to the list
+  newButton.innerHTML = title;
+
+  // hashing for unique entry id
+  let id = Math.floor(Math.random() * 1000000000);
+  newButton.id = id;
+  newButton.className = "notes";
+
+  // add event listener to the button
+  newButton.addEventListener('click', function () {
+    handleNoteButtonClick(newButton);
+  });
+
+
+  // add to notelist
+  notes_list.appendChild(newButton);
+
+  // Saves the title, main content, and a date into the the Notes obj, and also addes it to the tempArray
+  let today = new Date();
+  let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+  let eventStart = '';
+  let eventEnd = '';
+  let entry = { "title": title, "content": content, "date": date, "id": String(id), "tag": tag, "eventStart": eventStart, "eventEnd": eventEnd }; 
+
+  // save to Firebase
+  let pushID = firebase.database().ref().child("users/" + userId + "/entries").push(entry).getKey();
+
+
+  firebase.database().ref().child("users/" + userId + "/entries/" + pushID).update({ 'firebaseID': pushID });
+
+  // update entry with firebase key
+  entry = {...entry, "firebaseID": pushID };
+  return [entry,newButton];
+}
