@@ -535,6 +535,7 @@ function updateReminders() {
 
       let eventDate = String(value.eventStart).substring(0,10);
       let compEvent = new Date(eventDate);
+      compEvent.setHours(0, 0, 0, 0);
       if (compEvent <= maxDate && compEvent >= today) {
         let item = document.createElement('li');
         item.innerHTML = value.title;
