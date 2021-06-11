@@ -30,10 +30,10 @@ All our design documentation is under the /specs folder
 
 ## Sprints
 
-Overall we had 2 Sprints during which we followed Agile methods
+Overall we had 2 Sprints during which we followed Agile methods. 
 Sprint 1 documents: 
 - [Sprint 1 review](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/051621-sprint-1-review.md)
-- [Sprint 1 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/05182021-retrospective.md) 
+- [Sprint 1 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/05182021-retrospective.md)   
 Sprint 2 documents:  
 - [Sprint 2 review](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/060121-sprint-2-review.md)
 - [Sprint 2 retrospective](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/admin/meetings/Retrospective2.png) 
@@ -54,4 +54,4 @@ We used Jest for the unit testing and jest puppeteer to test the features like a
 npm test source/tests/
 ```
 
-
+![test](https://github.com/cse110-w21-group1/cse110-w21-group1/blob/main/source/images/Screen%20Shot%202021-06-10%20at%2010.20.25%20PM.png)
