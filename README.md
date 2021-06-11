@@ -50,6 +50,8 @@ Most of our code is contained under the /source folder. When running locally mak
 ## Tests
 
 We used Jest for the unit testing and jest puppeteer to test the features like adding notes, to-do list and event dates.
-
+```
+npm test source/tests/
+```
 
 
