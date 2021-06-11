@@ -14,12 +14,12 @@
  ```
  npm test source/tests/
  ```
-- Unit tests that are located in `cse110-w21-group1/source/__tests__/` by running jest, `npm run test`.
-- To get the code coverage report, please run: `npm run coverage`.
+- Unit tests that are located in `cse110-w21-group1/source/tests/` by running jest, `npm test ./tests/`.
+- To get the code coverage report, run: `npm run coverage`.
 
-### Branches
+## Contributing/ branch structure
+- to work on a new feature: `git checkout -b <branch_name>`
+- then make a pull request to the development
+- make sure all the checks run successfully
 
-- To make sure your code is synced with the repo, and up-to-date, run `git fetch --all`.
-- To remove old/deleted branches from your local machine, run `git fetch --prune`.
-- To make a new branch and check it out, run `git checkout -b <branch_name>`.
- ## Documentation and ADRs 
+ 
