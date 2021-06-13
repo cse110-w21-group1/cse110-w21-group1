@@ -15,7 +15,7 @@ import { router } from './router.js'
 const setState = router.setState;
 
 let userId = "";
-
+// Add a new comment.
 let tempArray = new Map();   // hashmap to store notes locally
 let taskMap = new Map();   // map to store tasks locally
 let currId = "";
